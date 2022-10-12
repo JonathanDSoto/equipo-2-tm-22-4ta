@@ -1,0 +1,4 @@
+Options +FollowSymLinks -MultiViews
+RewriteEngine on
+
+RewriteRule ^products/details/(.+)/$ products/details.php?slug=$1
