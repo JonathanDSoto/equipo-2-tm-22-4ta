@@ -39,10 +39,16 @@ class AuthController{
         
         if(isset($response->code) && $response->code>0)
         {
+            $_SESSION['id']=$response->data->id;
             $_SESSION['name']=$response->data->name;
             $_SESSION['lastname']=$response->data->lastname;
             $_SESSION['avatar']=$response->data->avatar;
             $_SESSION['token']=$response->data->token;
+            $_SESSION['created_by']=$response->data->created_by;
+            $_SESSION['email']=$response->data->email;
+            $_SESSION['phone_number']=$response->data->phone_number;
+            $_SESSION['role']=$response->data->role;
+
             var_dump($response);
             header('location: '.BASE_PATH.'index.php');
         }else{
