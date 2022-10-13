@@ -11,9 +11,13 @@ if(isset($_POST['accion'])){
             $password=strip_tags($_POST['password']);
             $authController -> login($email,$password);
             break;    
+        case 'salir':
+            $authController =new AuthController();
+            $email=$_SESSION['email'];
+            $authController -> logout($email);
+            break;    
         } 
-    }
-     
+    } 
 }
 
 class AuthController{
@@ -36,7 +40,6 @@ class AuthController{
         curl_close($curl);
         $response=json_decode($response);
         
-        
         if(isset($response->code) && $response->code>0)
         {
             $_SESSION['id']=$response->data->id;
@@ -50,7 +53,7 @@ class AuthController{
             $_SESSION['role']=$response->data->role;
 
             var_dump($response);
-            header('location: '.BASE_PATH.'index.php');
+            header('location: '.BASE_PATH.'view/index.php');
         }else{
             var_dump($response);
             header('location: '.BASE_PATH.'?error=true');
@@ -58,7 +61,7 @@ class AuthController{
     }
 
     #Log Out:
-    public function logout($email,$password){
+    public function logout($email){
         $curl = curl_init();
         $token = $_SESSION['token'];
         curl_setopt_array($curl, array(
@@ -79,19 +82,19 @@ class AuthController{
         $response = curl_exec($curl);
         curl_close($curl);
         //echo $response;
+        $response=json_decode($response);
+        var_dump($response);
         if(isset($response->code) && $response->code>0)
         {
             var_dump($response);
-            header('location: '.BASE_PATH);
+            session_destroy();
+            header('location: '.BASE_PATH.'view/profile/logout.php');
         }else{
             var_dump($response);
             header('location: '.BASE_PATH.'?error=true');
         }
-}
-
     }
-
-
+}
 
 #'jeju_19@alu.uabcs.mx'
 #O338lXPk!5k8I6
