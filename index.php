@@ -1,5 +1,9 @@
 <?php
 	include_once "app/config.php";
+
+    if(isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'products');
+	}
 ?> 
 
 <!DOCTYPE html>
@@ -24,23 +28,25 @@
                                     <p class="text-muted">Sign in to continue.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form action="https://themesbrand.com/velzon/html/material/index.html">
+                                    <form method="post" action="<?= BASE_PATH ?>auth" class="form">
 
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label" for="password-input">Password</label>
+                                            <label class="form-label" for="password">Password</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password" name="password">
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="submit" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                             </div>
                                         </div>
 
                                         <div class="mt-4">
-                                            <button class="btn btn-primary w-100 rounded-pill bg-gradient" type="submit">Sign In</button>
+                                            <input type="hidden" name="accion" value="access">
+                                            <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
+                                            <button class="btn btn-primary w-100" type="submit">Sign In</button>
                                         </div>
 
                                     </form>

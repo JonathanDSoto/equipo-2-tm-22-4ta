@@ -1,5 +1,9 @@
 <?php
-	include_once "../../app/config.php"
+	include_once "../../app/config.php";
+
+    if(!isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'login');
+	}
 ?> 
 
 <!DOCTYPE html>
@@ -28,9 +32,9 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                                    <img src="<?= BASE_PATH ?>public/images/users/avatar-1.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                                    <img src="<?= $_SESSION['avatar'] ?>" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                                 </div>
-                                <h4 class="fs-18 mb-1 text-primary">Anna Adame</h4>
+                                <h4 class="fs-18 mb-1 text-primary"><?= $_SESSION['name']." ".$_SESSION['lastname'] ?></h4>
                             </div>
                         </div>
                     </div>
@@ -51,28 +55,28 @@
                                             <div class="col-lg-3">
                                                 <div class="my-3">
                                                     <h6 class="fs-14 mb-1 text-primary">Role</h6>
-                                                    <p class="text">abfhbfhjd</p>
+                                                    <p class="text"><?php if(isset($_SESSION['role'])) echo $_SESSION['role']; else echo "Role not found."; ?></p>
                                                 </div>
                                             </div>
                                             <!--end col-->
                                             <div class="col-lg-3">
                                                 <div class="my-3">
                                                     <h6 class="fs-14 mb-1 text-primary">Created by</h6>
-                                                    <p class="text">abfhbfhjd</p>
+                                                    <p class="text"><?php if(isset($_SESSION['created_by'])) echo $_SESSION['created_by']; else echo "Creator not found"; ?></p>
                                                 </div>
                                             </div>
                                             <!--end col-->
                                             <div class="col-lg-3">
                                                 <div class="my-3">
                                                     <h6 class="fs-14 mb-1 text-primary">Email</h6>
-                                                    <p class="text">abfhbfhjd</p>
+                                                    <p class="text"><?php if(isset($_SESSION['email'])) echo $_SESSION['email']; else echo "Email not found"; ?></p>
                                                 </div>
                                             </div>
                                             <!--end col-->
                                             <div class="col-lg-3">
                                                 <div class="my-3">
                                                     <h6 class="fs-14 mb-1 text-primary">Phone</h6>
-                                                    <p class="text">abfhbfhjd</p>
+                                                    <p class="text"><?php if(isset($_SESSION['phone_number'])) echo $_SESSION['phone_number']; else echo "Phone not found"; ?></p>
                                                 </div>
                                             </div>
                                             <!--end col-->

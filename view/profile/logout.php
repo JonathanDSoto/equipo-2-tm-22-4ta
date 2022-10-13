@@ -1,5 +1,9 @@
 <?php
 	include_once "../../app/config.php";
+
+    if(isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'products');
+	}
 ?> 
 
 <!DOCTYPE html>
@@ -26,7 +30,7 @@
                                     <h5>You are Logged Out</h5>
                                     <p class="text-muted">:)</p>
                                     <div class="mt-4">
-                                        <a href="<?= BASE_PATH ?>index.php" class="btn btn-primary w-100">Sign In</a>
+                                        <a href="<?= BASE_PATH ?>login" class="btn btn-primary w-100">Sign In</a>
                                     </div>
                                 </div>
                             </div>

@@ -66,18 +66,20 @@
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="<?= BASE_PATH ?>public/images/users/avatar-1.jpg" alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user" src="<?= $_SESSION['avatar'] ?>" alt="Header Avatar">
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna Adame</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?= $_SESSION['name']." ".$_SESSION['lastname'] ?></span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Welcome Anna!</h6>
+                        <h6 class="dropdown-header">Welcome <?= $_SESSION['name'] ?></h6>
                         <a class="dropdown-item" href="<?= BASE_PATH ?>profile"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
-                        <form action="">
-                        <a class="dropdown-item" href="<?= BASE_PATH ?>logout"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
+                        <form method="post" action="<?= BASE_PATH ?>auth">
+                            <input type="hidden" name="accion" value="salir">
+                            <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
+                            <button type="submit" class="dropdown-item"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></button>
                         </form>
                     </div>
                 </div>
