@@ -1,5 +1,6 @@
 <?php 
 include_once  "config.php";
+
 #CRUD
 if(isset($_POST['action'])){
     switch($_POST['action']){
@@ -17,23 +18,24 @@ if(isset($_POST['action'])){
             $imagen = $user->consImg($_FILES['uploadedfile']);
 
             $user->create($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at,$imagen);   
-            break;
-            case 'update':
-                $name = strip_tags($_POST['name']);
-                $slug = strip_tags($_POST['slug']);
-                $description = strip_tags($_POST['description']);
-                $features = strip_tags($_POST['features']);
-                $brand_id = strip_tags($_POST['brand']);
-                $id = strip_tags($_POST['id']);
-                $user = new UserController;
-                $user->editProduct($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at, $id);
-                break;
+        break;
+        case 'update':
+            $name = strip_tags($_POST['name']);
+            $slug = strip_tags($_POST['slug']);
+            $description = strip_tags($_POST['description']);
+            $features = strip_tags($_POST['features']);
+            $brand_id = strip_tags($_POST['brand']);
+            $id = strip_tags($_POST['id']);
+            $imagen = $user->consImg($_FILES['uploadedfile']);
+            $user = new UserController;
+            $user->editProduct($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at, $id);
+        break;
 
-                case 'remove':
-                    $id = strip_tags($_POST['id']);
-                    $user = new UserController;
-                    $user->remove($id);
-                break;     
+        case 'remove':
+            $id = strip_tags($_POST['id']);
+            $user = new UserController;
+            $user->remove($id);
+        break;     
     }
 }
 
@@ -49,7 +51,6 @@ class UserController{
             echo "Ha ocurrido un error, trate de nuevo!";
         }
         return $target_path;
-        
     }
 
     #Get todos los usuarios (Users):
@@ -71,6 +72,7 @@ class UserController{
     ));
     $response = curl_exec($curl);
     curl_close($curl);
+    $response = json_decode ($response);
     return $response;
     
     }
@@ -95,7 +97,7 @@ class UserController{
     ));
     $response = curl_exec($curl);
     curl_close($curl);
-
+    $response = json_decode ($response);
     header('location: '.BASE_PATH.'view/index.php');
     var_dump($response);
     }
@@ -113,14 +115,14 @@ class UserController{
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'PUT',
-          CURLOPT_POSTFIELDS => 'name=' . $name.'&lastname='.$lastname.'&email='.$email.'&phone_number='.$phone_number.'&role='.$role.'&created_at='.$created_at.'&updated_at='.$updated_at.'&$id'.$id,
+          CURLOPT_POSTFIELDS => 'name=' . $name.'&lastname='.$lastname.'&email='.$email.'&phone_number='.$phone_number.'&role='.$role.'&created_at='.$created_at.'&updated_at='.$updated_at.'&$id='.$id.'&avatar='. NEW CURLFile($imagen),
           CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$_SESSION['token']
           ),
         ));
     
         $response = curl_exec($curl);
-        
+        $response = json_decode ($response);
         curl_close($curl);
         if (isset ($response->code) && $response->code > 0){
             header('location: '.BASE_PATH.'view/index.php');
@@ -128,8 +130,6 @@ class UserController{
             header('location: '.BASE_PATH.'view/index.php?error=false');
           }
       }
-
-
       #Elminar usuarios (Users) por ID:
       public function remove($id){
         $curl = curl_init();
