@@ -7,15 +7,14 @@ if(isset($_POST['action'])){
     switch($_POST['action']){
         case 'create':
 
-            $id = $_POST['id'];
-            $description = $_POST['description'];
-            $code = $_POST['code'];
-            $weight_in_grams = $_POST['weight_in_grams'];
-            $status = $_POST['status'];
-            $stock = $_POST['stock'];
-            $stock_min = $_POST['stock_min'];
-            $stock_max = $_POST['stock_max'];
-            $product_id = $_POST['product_id'];
+            $description = strip_tags($_POST['description']);
+            $code = strip_tags($_POST['code']);
+            $weight_in_grams = strip_tags($_POST['weight_in_grams']);
+            $status = strip_tags($_POST['status']);
+            $stock = strip_tags($_POST['stock']);
+            $stock_max = strip_tags($_POST['stock_max']);
+            $stock_min = strip_tags($_POST['stock_min']);
+            $product_id = strip_tags($_POST['product_id']);
             #Funcion de  precio...
 
             $imagen = $pres->consImg($_FILES['uploadedfile']);
@@ -23,33 +22,41 @@ if(isset($_POST['action'])){
             $pres = new PresController();
 
             $pres->create( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);   
-            break;
+        
+        break;
             
-            case 'update':
+        case 'update':
 
-                $description = strip_tags($_POST['description']);
-                $code = strip_tags($_POST['code']);
-                $weight_in_grams = strip_tags($_POST['weight_in_grams']);
-                $status = strip_tags($_POST['status']);
-                $stock = strip_tags($_POST['stock']);
-                $stock_max = strip_tags($_POST['stock_max']);
-                $stock_min = strip_tags($_POST['stock_min']);
-                $product_id = strip_tags($_POST['product_id']);
+            $id = strip_tags($_POST['id']);
+            $description = strip_tags($_POST['description']);
+            $code = strip_tags($_POST['code']);
+            $weight_in_grams = strip_tags($_POST['weight_in_grams']);
+            $status = strip_tags($_POST['status']);
+            $stock = strip_tags($_POST['stock']);
+            $stock_max = strip_tags($_POST['stock_max']);
+            $stock_min = strip_tags($_POST['stock_min']);
+            $product_id = strip_tags($_POST['product_id']);
 
-                break;
+            $pres->editPres( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
 
-                case 'remove':
-                    $id = strip_tags($_POST['id']);
-                    $pres = new PresController;
-                    $pres->remove($id);
-                break;
+        break;
 
-                case 'update_p':
-                    $id = strip_tags($_POST['id']);
-                    $monto = strip_tags($_POST['amount']);
-                    $pres = new PresController;
-                    $pres -> upPrice($id);
-                break;
+        case 'remove':
+
+            $id = strip_tags($_POST['id']);
+            $pres = new PresController;
+            $pres->remove($id);
+
+        break;
+
+        case 'update_p':
+
+            $id = strip_tags($_POST['id']);
+            $monto = strip_tags($_POST['amount']);
+            $pres = new PresController;
+            $pres -> upPrice($id);
+            
+        break;
         
     }
 }
@@ -67,6 +74,7 @@ class PresController{
             " ha sido subido";
         } else{
             echo "Ha ocurrido un error, trate de nuevo!";
+            header('location: '.BASE_PATH.'view/index.php?error=false');
         }
         return $target_path;
     }
@@ -127,7 +135,7 @@ class PresController{
     }
 
     #Crear presentacion:
-    public function create($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen){
+    public function create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen){
 
         $token = $_SESSION['token'];    
         $curl = curl_init();
@@ -159,7 +167,7 @@ class PresController{
 
 
     #Editar Presentacion:
-    public function editProduct($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen)
+    public function editPres($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen)
     {
         $$curl = curl_init();
         curl_setopt_array($curl, array(
@@ -171,7 +179,7 @@ class PresController{
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => 'description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id,
+            CURLOPT_POSTFIELDS => 'description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&cover='. NEW CURLFile($imagen),
             CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$_SESSION['token']
             ),

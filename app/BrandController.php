@@ -5,30 +5,33 @@ include_once  "config.php";
 #CRUD
 if(isset($_POST['action'])){
     switch($_POST['action']){
-        case 'create':
-            $name = $_POST['name'];
-            $description= $_POST['description'];
-            $slug = $_POST['slug'];
-
-            $brand = new BrandController();
-
-            $brand->create($id,$name, $description, $slug);   
-            break;
-            case 'update':
-                $id = strip_tags($_POST['id']);
-                $name = strip_tags($_POST['name']);
-                $description = strip_tags($_POST['description']);
-                $slug = strip_tags($_POST['slug']);
-                $brand = new BrandController;
-                $brand->editProduct($id,$name, $description, $slug);
-                break;
-
-                case 'remove':
-                    $id = strip_tags($_POST['id']);
-                    $brand = new BrandController;
-                    $brand->remove($id);
-                break;
+      case 'create':
         
+        $name = strip_tags($_POST['name']);
+        $description = strip_tags($_POST['description']);
+        $slug = strip_tags($_POST['slug']);
+
+        $brand = new BrandController();
+
+        $brand->create($id,$name, $description, $slug);   
+      break;
+      case 'update':
+        $id = strip_tags($_POST['id']);
+        $name = strip_tags($_POST['name']);
+        $description = strip_tags($_POST['description']);
+        $slug = strip_tags($_POST['slug']);
+
+        $brand = new BrandController;
+
+        $brand->editProduct($id,$name, $description, $slug);
+      break;
+      case 'remove':
+        $id = strip_tags($_POST['id']);
+
+        $brand = new BrandController;
+
+        $brand->remove($id);
+      break;
     }
 }
 

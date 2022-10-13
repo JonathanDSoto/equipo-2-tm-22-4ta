@@ -7,13 +7,15 @@ if(isset($_POST['accion'])){
         switch($_POST['accion']){
         case 'access':
             $authController =new AuthController();
+
             $email=strip_tags($_POST['email']);
             $password=strip_tags($_POST['password']);
             $authController -> login($email,$password);
             break;    
         case 'salir':
             $authController =new AuthController();
-            $email=$_SESSION['email'];
+
+            $email=strip_tags($_POST['email']);
             $authController -> logout($email);
             break;    
         } 

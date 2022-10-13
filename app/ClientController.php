@@ -1,47 +1,56 @@
 <?php 
 include_once  "config.php";
+
 #CRUD
 if(isset($_POST['action'])){
     switch($_POST['action']){
         case 'create':
-            $name = $_POST['name'];
-            $lastname = $_POST['lastname'];
-            $email= $_POST['email'];
-            $phone_number = $_POST['phone_number'];
-            $role = $_POST['role'];
-            $created_at = $_POST['created_at'];
-            $updated_at = $_POST['updated_at'];
 
-            $user = new UserController();
+            $name = strip_tags($_POST['name']);
+            $email = strip_tags($_POST['email']);
+            $password=strip_tags($_POST['password']);
+            $phone_number = strip_tags($_POST['phone_number']);
+            $is_suscribed = strip_tags($_POST['is_suscribed']);
+            $level = 1;
 
-            $imagen = $user->consImg($_FILES['uploadedfile']);
+            $cliente = new ClientController();
 
-            $user->create($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at,$imagen);   
-            break;
-            case 'update':
-                $name = strip_tags($_POST['name']);
-                $slug = strip_tags($_POST['slug']);
-                $description = strip_tags($_POST['description']);
-                $features = strip_tags($_POST['features']);
-                $brand_id = strip_tags($_POST['brand']);
-                $id = strip_tags($_POST['id']);
-                $user = new UserController;
-                $user->editProduct($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at, $id);
-                break;
+            $cliente->create($name, $email,$password, $phone_number, $is_suscribed,$level);   
 
-                case 'remove':
-                    $id = strip_tags($_POST['id']);
-                    $user = new UserController;
-                    $user->remove($id);
-                break;     
+        break;
+        case 'update':
+
+            $id = strip_tags($_POST['id']);
+            $name = strip_tags($_POST['name']);
+            $email = strip_tags($_POST['email']);
+            $password=strip_tags($_POST['password']);
+            $phone_number = strip_tags($_POST['phone_number']);
+            $is_suscribed = strip_tags($_POST['is_suscribed']);
+            $level = 1;
+            
+            $cliente = new ClientController;
+
+            $cliente->editProduct($name, $email,$password, $phone_number, $is_suscribed,$level, $id);
+
+        break;
+
+        case 'remove':
+
+            $id = strip_tags($_POST['id']);
+            $cliente = new ClientController;
+            $cliente->remove($id);
+
+        break;     
     }
 }
 
+
 class ClientController{
+
     #Llamar a todos los clientes:
     public function getClientes(){
         $curl = curl_init();
-
+        $token = $_SESSION['token'];
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
         CURLOPT_RETURNTRANSFER => true,
@@ -57,9 +66,17 @@ class ClientController{
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        $response = json_decode ($response);
-        return $response;
-    }
+        $response = json_decode($response);
+        if( isset($response->code) &&  $response->code > 0) {
+            return $response -> data;
+        } else {
+            return array();
+        }}
+
+
+
+
+    
 }
 
 

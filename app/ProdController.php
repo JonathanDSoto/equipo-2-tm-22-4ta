@@ -5,34 +5,43 @@ include_once  "config.php";
 if(isset($_POST['action'])){
     switch($_POST['action']){
         case 'create':
-            $name = $_POST['name'];
-            $slug = $_POST['slug'];
-            $description= $_POST['description'];
-            $features = $_POST['features'];
-            $brand_id = $_POST['brand_id'];
+
+            $name = strip_tags($_POST['name']);
+            $slug = strip_tags($_POST['slug']);
+            $description = strip_tags($_POST['description']);
+            $features = strip_tags($_POST['features']);
+            $brand_id = strip_tags($_POST['brand']);
 
             $p = new ProdController();
 
             $imagen = $p->consImg($_FILES['uploadedfile']);
 
-            $p->create($name, $slug, $description, $features, $brand_id,$imagen);   
-            break;
-            case 'update':
-                $name = strip_tags($_POST['name']);
-                $slug = strip_tags($_POST['slug']);
-                $description = strip_tags($_POST['description']);
-                $features = strip_tags($_POST['features']);
-                $brand_id = strip_tags($_POST['brand']);
-                $id = strip_tags($_POST['id']);
-                $p = new ProdController;
-                $p->editProduct($name, $slug, $description, $features, $brand, $id);
-                break;
+            $p->create($name, $slug, $description, $features, $brand_id,$imagen);  
 
-                case 'remove':
-                    $id = strip_tags($_POST['id']);
-                    $p = new ProdController;
-                    $p->remove($id);
-                break;     
+        break;
+
+        case 'update':
+
+            $id = strip_tags($_POST['id']);
+            $name = strip_tags($_POST['name']);
+            $slug = strip_tags($_POST['slug']);
+            $description = strip_tags($_POST['description']);
+            $features = strip_tags($_POST['features']);
+            $brand_id = strip_tags($_POST['brand']);
+
+            $p = new ProdController;
+
+            $p->editProduct($name, $slug, $description, $features, $brand, $id);
+                
+        break;
+
+        case 'remove':
+            
+            $id = strip_tags($_POST['id']);
+            $p = new ProdController;
+            $p->remove($id);
+
+        break;     
     }
 }
 
