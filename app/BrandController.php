@@ -13,7 +13,7 @@ if(isset($_POST['action'])){
 
         $brand = new BrandController();
 
-        $brand->create($id,$name, $description, $slug);   
+        $brand->create($name, $description, $slug);   
       break;
       case 'update':
         $id = strip_tags($_POST['id']);
@@ -23,7 +23,7 @@ if(isset($_POST['action'])){
 
         $brand = new BrandController;
 
-        $brand->editProduct($id,$name, $description, $slug);
+        $brand->editBrand($id,$name, $description, $slug);
       break;
       case 'remove':
         $id = strip_tags($_POST['id']);
@@ -40,9 +40,8 @@ class BrandController{
     #Get de todas las brands:
     public static function getMarcas(){
         
-        $curl = curl_init();
-        
         $token = $_SESSION['token'];
+        $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://crud.jonathansoto.mx/api/brands',
           CURLOPT_RETURNTRANSFER => true,
@@ -100,7 +99,7 @@ class BrandController{
 
 
     #Editar Marcas (Brands):
-    public function editProduct($id,$name, $description, $slug)
+    public function editBrand($id,$name, $description, $slug)
     {
         $token = $_SESSION['token'];
         $curl = curl_init();
@@ -157,6 +156,32 @@ class BrandController{
       } else {
           return false;
       }
+  }
+
+
+
+  #Get brand especifica:
+    public function getspecificBrand($id){
+
+      $token = $_SESSION['token'];
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://crud.jonathansoto.mx/api/brands/'.$id,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_HTTPHEADER => array(
+          'Authorization: Bearer ' . $_SESSION['token']),
+      ));
+
+      $response = curl_exec($curl);
+
+      curl_close($curl);
+      echo $response;
   }
 
 }

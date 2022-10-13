@@ -118,7 +118,7 @@ class PresController{
         $token = $_SESSION['token'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/1',
+        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/'.$id,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
