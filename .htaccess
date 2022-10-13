@@ -1,4 +1,9 @@
 Options +FollowSymLinks -MultiViews
+RewriteBase /
 RewriteEngine on
 
-RewriteRule ^products/details/(.+)/$ products/details.php?slug=$1
+# RewriteRule ^products/details/(.+)/$ products/details.php?slug=$1
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php
