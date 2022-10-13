@@ -103,7 +103,7 @@ class ProdController{
     $response = curl_exec($curl);
     curl_close($curl);
 
-    #header("Location: ".BASE_PATH."productos/index.php?success=true");
+    header('location: '.BASE_PATH.'view/index.php');
     var_dump($response);
     
     }
@@ -133,9 +133,9 @@ class ProdController{
   
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'productos/index.php?success=true');
+        header('location: '.BASE_PATH.'view/index.php');
       } else {
-        header('location: '.BASE_PATH.'productos/index.php?error=false');
+        header('location: '.BASE_PATH.'view/index.php?error=false');
       }
     }
 
@@ -196,11 +196,11 @@ class ProdController{
 
         curl_close($curl);
         $response = json_decode ($response);
-        if (isset ($response->code) && $response->code > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        if (isset ($response->code) && $response->code > 0){
+            header('location: '.BASE_PATH.'view/index.php');
+          } else {
+            header('location: '.BASE_PATH.'view/index.php?error=false');
+          }
     } 
         
 

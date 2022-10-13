@@ -187,9 +187,9 @@ class PresController{
   
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
-        return true;
+        header('location: '.BASE_PATH.'view/index.php');
       } else {
-        return false;
+        header('location: '.BASE_PATH.'view/index.php?error=false');
       }
     }
 
@@ -215,11 +215,11 @@ class PresController{
         curl_close($curl);
         echo $response;
         $response = json_decode($response);
-        if (isset ($response->code) && $response->code > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        if (isset ($response->code) && $response->code > 0){
+            header('location: '.BASE_PATH.'view/index.php');
+          } else {
+            header('location: '.BASE_PATH.'view/index.php?error=false');
+          }
     } 
 
 
