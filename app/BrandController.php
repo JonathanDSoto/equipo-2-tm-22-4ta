@@ -102,8 +102,8 @@ class BrandController{
     #Editar Marcas (Brands):
     public function editProduct($id,$name, $description, $slug)
     {
+        $token = $_SESSION['token'];
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/brands',
         CURLOPT_RETURNTRANSFER => true,
@@ -131,8 +131,9 @@ class BrandController{
 
     #Elminar  Marcas (Brands) por ID:
     public function remove($id){
+      
+      $token = $_SESSION['token'];
       $curl = curl_init();
-
       curl_setopt_array($curl, array(
       CURLOPT_URL => 'https://crud.jonathansoto.mx/api/brands/'.$id,
       CURLOPT_RETURNTRANSFER => true,

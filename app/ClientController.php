@@ -30,7 +30,7 @@ if(isset($_POST['action'])){
             
             $cliente = new ClientController;
 
-            $cliente->editProduct($name, $email,$password, $phone_number, $is_suscribed,$level, $id);
+            $cliente->editClient($name, $email,$password, $phone_number, $is_suscribed,$level, $id);
 
         break;
 
@@ -49,8 +49,9 @@ class ClientController{
 
     #Llamar a todos los clientes:
     public function getClientes(){
-        $curl = curl_init();
+
         $token = $_SESSION['token'];
+        $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
         CURLOPT_RETURNTRANSFER => true,
@@ -74,9 +75,89 @@ class ClientController{
         }}
 
 
+        #Crear Clientes:
+        public function create($name, $email,$password, $phone_number, $is_suscribed,$level){
+
+            $token = $_SESSION['token'];    
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('name' => $name,'email' => $email,'password' =>$password,'phone_number' => $phone_number,'is_suscribed' => $is_suscribed,'level,' => $level),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$token
+            ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode ($response);
+            header('location: '.BASE_PATH.'view/index.php');
+            var_dump($response);
+        }
+
+        #Editar Cliente:
+        public function editClient($name, $email,$password, $phone_number, $is_suscribed,$level, $id){
+            
+            $token = $_SESSION['token'];
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => 'name=' . $name.'&email='.$email.'&password='.$password.'&phone_number='.$phone_number.'&is_suscribed='.$is_suscribed.'&level='.$level.'&$id='.$id,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$_SESSION['token']
+            ),
+        ));
+            $response = curl_exec($curl);
+            $response = json_decode ($response);
+            curl_close($curl);
+            if (isset ($response->code) && $response->code > 0){
+                header('location: '.BASE_PATH.'view/index.php');
+              } else {
+                header('location: '.BASE_PATH.'view/index.php?error=false');
+              }
+          }
 
 
-    
+        #Elminar usuarios (Users) por ID:
+        public function remove($id){
+
+            $token = $_SESSION['token'];
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients/'.$id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $_SESSION['token']
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode ($response);
+            if (isset ($response->code) && $response->code > 0){
+                header('location: '.BASE_PATH.'view/index.php');
+            } else {
+                header('location: '.BASE_PATH.'view/index.php?error=false');
+            }
+        } 
 }
 
 

@@ -65,25 +65,26 @@ class ProdController{
 
     #Get todos los productos:
     public function getTodo(){
-        $curl = curl_init();
+
         $token = $_SESSION['token'];
+        $curl = curl_init();
         #echo $token;
         curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'GET',
-      CURLOPT_HTTPHEADER => array(
-        "Authorization: Bearer ".$token
+        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer ".$token
     ),
     ));
-    $response = curl_exec($curl);
-    curl_close($curl);
-    return $response;
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
     }
 
 
@@ -120,9 +121,11 @@ class ProdController{
 
     #Editar Productos:
     public function editProduct($name, $slug, $description, $features, $brand_id, $id){
-      $curl = curl_init();
+
+        $token = $_SESSION['token'];
+        $curl = curl_init();
   
-      curl_setopt_array($curl, array(
+        curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
@@ -138,24 +141,22 @@ class ProdController{
       ));
   
       $response = curl_exec($curl);
-      
-  
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
         header('location: '.BASE_PATH.'view/index.php');
       } else {
         header('location: '.BASE_PATH.'view/index.php?error=false');
       }
+
     }
 
     
 
     #Get Producto por Slug
     public static function getPslug($slug){
-                
-        $curl = curl_init();
-        $token = $_SESSION['token'];    
 
+        $token = $_SESSION['token'];    
+        $curl = curl_init();    
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/slug/'.$slug,
         CURLOPT_RETURNTRANSFER => true,
@@ -169,7 +170,7 @@ class ProdController{
             'Authorization: Bearer '.$token
         ),
         ));
- 
+
         $response = curl_exec($curl);
         $response = json_decode($response);
 
@@ -185,8 +186,9 @@ class ProdController{
 
     #Elminar producto por ID:
     public function remove($id){
-        $curl = curl_init();
 
+        $token = $_SESSION['token'];
+        $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/'.$id,
         CURLOPT_RETURNTRANSFER => true,
@@ -212,9 +214,7 @@ class ProdController{
           }
     } 
         
-
     }
-
     
 #'jeju_19@alu.uabcs.mx'
 #O338lXPk!5k8I6

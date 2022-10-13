@@ -86,8 +86,9 @@ class PresController{
 
     #Get Presentacion:
     public function getPres(){
-        $curl = curl_init();
 
+        $token = $_SESSION['token'];
+        $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/product/1',
         CURLOPT_RETURNTRANSFER => true,
@@ -113,6 +114,8 @@ class PresController{
 
     #Get Especific Presentacion:
     public function getEspP($id){
+
+        $token = $_SESSION['token'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/1',
@@ -139,7 +142,6 @@ class PresController{
 
         $token = $_SESSION['token'];    
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations',
           CURLOPT_RETURNTRANSFER => true,
@@ -169,7 +171,8 @@ class PresController{
     #Editar Presentacion:
     public function editPres($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen)
     {
-        $$curl = curl_init();
+        $token = $_SESSION['token'];
+        $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations',
           CURLOPT_RETURNTRANSFER => true,
@@ -205,6 +208,7 @@ class PresController{
 
     #Elminar pres por ID:
     public function remove($id){
+        $token = $_SESSION['token'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/'.$id,
@@ -233,31 +237,31 @@ class PresController{
 
     #Funcion Update price:
     public function upPrice($id,$monto){
-    $curl = curl_init();
-    
 
-    curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/set_new_price',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'PUT',
-    CURLOPT_POSTFIELDS => 'id='.$id.'&amount='.$monto,
-    CURLOPT_HTTPHEADER => array(
-        'Authorization: Bearer '.$token
-    ),
-    ));
+            $token = $_SESSION['token'];
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/set_new_price',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => 'id='.$id.'&amount='.$monto,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$token
+            ),
+            ));
 
-    $response = curl_exec($curl);
+            $response = curl_exec($curl);
 
-    curl_close($curl);
-    echo $response;
-    $response = json_decode($response);
-    return $response;
-        }
+            curl_close($curl);
+            echo $response;
+            $response = json_decode($response);
+            return $response;
+    }
 
 }
 

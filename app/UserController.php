@@ -62,19 +62,20 @@ class UserController{
 
     #Get todos los usuarios (Users):
     public function getUsers(){
-        $curl = curl_init();
+        
         $token = $_SESSION['token'];
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
+         $curl = curl_init();
+         curl_setopt_array($curl, array(
+         CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users',
+         CURLOPT_RETURNTRANSFER => true,
+         CURLOPT_ENCODING => '',
+         CURLOPT_MAXREDIRS => 10,
+         CURLOPT_TIMEOUT => 0,
+         CURLOPT_FOLLOWLOCATION => true,
+         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+         CURLOPT_CUSTOMREQUEST => 'GET',
          CURLOPT_HTTPHEADER => array(
-         "Authorization: Bearer ".$token
+            "Authorization: Bearer ".$token
     ),
     ));
     $response = curl_exec($curl);
@@ -96,17 +97,17 @@ class UserController{
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => array('name' => $name,'lastname' => $lastname,'email' =>$email,'phone_number' => $phone_number,'role' => $role,'created_at,' => $created_at,'updated_at,' => $updated_at,'avatar'=> NEW CURLFile($imagen)),
         CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$token
         ),
-    ));
-    $response = curl_exec($curl);
-    curl_close($curl);
-    $response = json_decode ($response);
-    header('location: '.BASE_PATH.'view/index.php');
-    var_dump($response);
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode ($response);
+        header('location: '.BASE_PATH.'view/index.php');
+        var_dump($response);
     }
 
     #Editar usuarios (Users):
