@@ -55,7 +55,7 @@ class AuthController{
             $_SESSION['role']=$response->data->role;
 
             var_dump($response);
-            header('location: '.BASE_PATH.'view/index.php');
+            header('location: '.BASE_PATH.'products');
         }else{
             var_dump($response);
             header('location: '.BASE_PATH.'?error=true');
@@ -90,7 +90,7 @@ class AuthController{
         {
             var_dump($response);
             session_destroy();
-            header('location: '.BASE_PATH.'view/profile/logout.php');
+            header('location: '.BASE_PATH.'logout');
         }else{
             var_dump($response);
             header('location: '.BASE_PATH.'?error=true');
