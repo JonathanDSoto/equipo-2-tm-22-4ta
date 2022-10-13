@@ -3,7 +3,7 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <!-- Dark Logo-->
-                <a href="<?= BASE_PATH ?>view/index.php" class="logo logo-dark">
+                <a href="<?= BASE_PATH ?>products" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="<?= BASE_PATH ?>public/images/logo-sm.png" alt="" height="22">
                     </span>
@@ -12,7 +12,7 @@
                     </span>
                 </a>
                 <!-- Light Logo-->
-                <a href="<?= BASE_PATH ?>view/index.php" class="logo logo-light">
+                <a href="<?= BASE_PATH ?>products" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="<?= BASE_PATH ?>public/images/logo-sm.png" alt="" height="22">
                     </span>
@@ -528,7 +528,7 @@
                             <div class="collapse menu-dropdown" id="sidebarUsers">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="<?= BASE_PATH ?>view/users/index.php" class="nav-link" data-key="t-one-page"> Users </a>
+                                        <a href="<?= BASE_PATH ?>users" class="nav-link" data-key="t-one-page"> Users </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="nft-landing.html" class="nav-link" data-key="t-nft-landing"> NFT Landing</a>
