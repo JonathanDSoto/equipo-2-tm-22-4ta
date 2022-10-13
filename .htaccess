@@ -10,6 +10,11 @@ RewriteRule ^user/([a-zA-Z0-9-]*)?$ view/users/detail.php?id=$1
 
 RewriteRule ^products/?$ view/index.php
  
+RewriteRule ^auth$ app/AuthController.php
+RewriteRule ^brand$ app/BrandController.php
+RewriteRule ^client$ app/ClientController.php
+RewriteRule ^prod$ app/ProdController.php
+RewriteRule ^userc$ app/UserController.php
 
 # RewriteCond %{REQUEST_FILENAME} !-d
 # RewriteCond %{REQUEST_FILENAME}.php -f
