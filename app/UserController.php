@@ -21,6 +21,13 @@ if (isset($_POST['action'])) {
             
             $user = new UserController();
             $user->create($name, $lastname, $email, $phone_number, $role, $created_by, $password, $imagen);
+
+
+            #if ($user->filtro($name, $lastname, $email, $phone_number, $role, $created_by, $password, $imagen)) {
+              #$user->create($name, $lastname, $email, $phone_number, $role, $created_by, $password, $imagen);
+            #}else{
+            #}
+
           } else {
             header('location: '.BASE_PATH.'users?error=false');
           }
@@ -61,7 +68,18 @@ if (isset($_POST['action'])) {
 
 class UserController {
 
-  
+
+  #Filtro:
+  #public function filtro($name, $lastname, $email, $phone_number, $role, $created_by, $password, $imagen){
+
+    #if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+
+    #}else{
+
+    #}
+  #}
+
+
   #Get todos los usuarios (Users):
   public function getUsers(){
     $token = $_SESSION['token'];
