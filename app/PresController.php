@@ -7,7 +7,7 @@ if(isset($_POST['action'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
         case 'create':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $description = strip_tags($_POST['description']);
             $code = strip_tags($_POST['code']);
             $weight_in_grams = strip_tags($_POST['weight_in_grams']);
@@ -31,7 +31,7 @@ if(isset($_POST['action'])){
         break;
             
         case 'update':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['id']);
             $description = strip_tags($_POST['description']);
             $code = strip_tags($_POST['code']);
@@ -42,12 +42,20 @@ if(isset($_POST['action'])){
             $stock_min = strip_tags($_POST['stock_min']);
             $product_id = strip_tags($_POST['product_id']);
 
-            $pres->editPres( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
+            #Imagen:
+            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
+                $imagen = $_FILES["cover"]["tmp_name"];
+            
+                $pres = new PresController();
+                $pres->editPres( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
+            }else{
+                header('location: '.BASE_PATH.'products?error=false');
+            }
 
         break;
 
         case 'remove':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['id']);
             $pres = new PresController;
             $pres->remove($id);
@@ -55,7 +63,7 @@ if(isset($_POST['action'])){
         break;
 
         case 'update_p':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['id']);
             $monto = strip_tags($_POST['amount']);
             $pres = new PresController;
@@ -70,20 +78,6 @@ if(isset($_POST['action'])){
 
 
 class PresController{
-
-    #Arrastrar el cover:
-    public function consImg($arch){
-        $target_path  = '.public/presImage/';
-        $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
-        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-            echo "El archivo ".  basename( $_FILES['uploadedfile']['name']). 
-            " ha sido subido";
-        } else{
-            echo "Ha ocurrido un error, trate de nuevo!";
-            header('location: '.BASE_PATH.'products?error=false');
-        }
-        return $target_path;
-    }
 
     #Precio:
     public function consPrecio($id){
@@ -114,7 +108,11 @@ class PresController{
         curl_close($curl);
         echo $response;
         $response = json_decode($response);
-        return $response;
+        if (isset ($response->code) && $response->code > 0){
+            return $response->$data;
+          } else {
+            return array();
+          }
 
     }
 

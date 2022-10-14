@@ -7,7 +7,7 @@ if(isset($_POST['action'])){
   if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
       case 'create':
-        
+        #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
         $code = strip_tags($_POST['code']);
         $percentage_discount = strip_tags($_POST['percentage_discount']);
@@ -30,7 +30,7 @@ if(isset($_POST['action'])){
 
       break;
       case 'update':
-
+        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
         $name = strip_tags($_POST['name']);
         $code = strip_tags($_POST['code']);
@@ -53,7 +53,7 @@ if(isset($_POST['action'])){
 
       break;
       case 'remove':
-
+        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
 
         $cupon = new CuponController;
@@ -119,7 +119,7 @@ class CuponController{
         $response = curl_exec($curl);
         curl_close($curl);
 
-        header('location: '.BASE_PATH.'view/index.php');
+        header('location: '.BASE_PATH.'products');
         var_dump($response);
       
       }
@@ -148,9 +148,9 @@ class CuponController{
   
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'view/index.php');
+        header('location: '.BASE_PATH.'products');
       } else {
-        header('location: '.BASE_PATH.'view/index.php?error=false');
+        header('location: '.BASE_PATH.'products?error=false');
       }
     }
 

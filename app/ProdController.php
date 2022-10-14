@@ -6,7 +6,7 @@ if(isset($_POST['action'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
         case 'create':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $name = strip_tags($_POST['name']);
             $slug = strip_tags($_POST['slug']);
             $description = strip_tags($_POST['description']);
@@ -17,8 +17,8 @@ if(isset($_POST['action'])){
             if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
                 $imagen = $_FILES["cover"]["tmp_name"];
             
-                $p = new PresController();
-                $p -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
+                $p = new ProdController();
+                $p -> create($name, $slug, $description, $features, $brand);
             }else{
                 header('location: '.BASE_PATH.'products?error=false');
             }  
@@ -26,7 +26,7 @@ if(isset($_POST['action'])){
         break;
 
         case 'update':
-
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['id']);
             $name = strip_tags($_POST['name']);
             $slug = strip_tags($_POST['slug']);
@@ -34,14 +34,20 @@ if(isset($_POST['action'])){
             $features = strip_tags($_POST['features']);
             $brand_id = strip_tags($_POST['brand']);
 
-            $p = new ProdController;
-
-            $p->editProduct($name, $slug, $description, $features, $brand, $id);
+            #Imagen:
+            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
+                $imagen = $_FILES["cover"]["tmp_name"];
+            
+                $p = new ProdController();
+                $p->editProduct($name, $slug, $description, $features, $brand, $id);
+            }else{
+                header('location: '.BASE_PATH.'products?error=false');
+            }  
                 
         break;
 
         case 'remove':
-            
+            #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['id']);
             $p = new ProdController;
             $p->remove($id);
@@ -54,20 +60,6 @@ if(isset($_POST['action'])){
 
 
 class ProdController{
-
-    #Arrastrar el cover:
-    public function consImg($arch){
-        $target_path  = '.public/image/';
-        $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
-        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-            echo "El archivo ".  basename( $_FILES['uploadedfile']['name']). 
-            " ha sido subido";
-        } else{
-            echo "Ha ocurrido un error, trate de nuevo!";
-        }
-        return $target_path;
-        
-    }
 
     #Get todos los productos:
     public function getTodo(){
@@ -90,7 +82,11 @@ class ProdController{
     ));
         $response = curl_exec($curl);
         curl_close($curl);
-        return $response;
+        if (isset ($response->code) && $response->code > 0){
+            return $response->$data;
+          } else {
+            return array();
+          }
     }
 
 
