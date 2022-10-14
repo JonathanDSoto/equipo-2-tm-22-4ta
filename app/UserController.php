@@ -35,11 +35,15 @@ if(isset($_POST['action'])){
                 $features = strip_tags($_POST['features']);
                 $role = strip_tags($_POST['brand']);
 
-                $imagen = $user->consImg($_FILES['uploadedfile']);
-
-                $user = new UserController;
-
-                $user->editProduct($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at, $id);
+                #Imagen:
+                if(isset($_FILES['avatar']) && $_FILES["avatar"]["error"] == 0) {
+                    $imagen = $_FILES["avatar"]["tmp_name"];
+                
+                    $user = new UserController();
+                    $user->editProduct($name, $lastname, $email, $phone_number, $role,$created_at, $updated_at, $id);
+                }else{
+                    header('location: '.BASE_PATH.'users?error=false');
+                }
             }
         break;
 

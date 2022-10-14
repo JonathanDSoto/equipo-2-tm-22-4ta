@@ -18,12 +18,16 @@ if(isset($_POST['action'])){
             $product_id = strip_tags($_POST['product_id']);
             #Funcion de  precio...
 
-            $imagen = $pres->consImg($_FILES['uploadedfile']);
+            #Imagen:
+            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
+                $imagen = $_FILES["cover"]["tmp_name"];
+            
+                $pres = new PresController();
+                $pres -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
+            }else{
+                header('location: '.BASE_PATH.'products?error=false');
+            }
 
-            $pres = new PresController();
-
-            $pres->create( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);   
-        
         break;
             
         case 'update':
@@ -76,7 +80,7 @@ class PresController{
             " ha sido subido";
         } else{
             echo "Ha ocurrido un error, trate de nuevo!";
-            header('location: '.BASE_PATH.'view/index.php?error=false');
+            header('location: '.BASE_PATH.'products?error=false');
         }
         return $target_path;
     }
@@ -200,9 +204,9 @@ class PresController{
   
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'view/index.php');
+        header('location: '.BASE_PATH.'products');
       } else {
-        header('location: '.BASE_PATH.'view/index.php?error=false');
+        header('location: '.BASE_PATH.'products?error=false');
       }
     }
 
@@ -230,9 +234,9 @@ class PresController{
         echo $response;
         $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0){
-            header('location: '.BASE_PATH.'view/index.php');
+            header('location: '.BASE_PATH.'products');
           } else {
-            header('location: '.BASE_PATH.'view/index.php?error=false');
+            header('location: '.BASE_PATH.'products?error=false');
           }
     } 
 

@@ -13,11 +13,15 @@ if(isset($_POST['action'])){
             $features = strip_tags($_POST['features']);
             $brand_id = strip_tags($_POST['brand']);
 
-            $p = new ProdController();
-
-            $imagen = $p->consImg($_FILES['uploadedfile']);
-
-            $p->create($name, $slug, $description, $features, $brand_id,$imagen);  
+            #Imagen:
+            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
+                $imagen = $_FILES["cover"]["tmp_name"];
+            
+                $p = new PresController();
+                $p -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
+            }else{
+                header('location: '.BASE_PATH.'products?error=false');
+            }  
 
         break;
 
