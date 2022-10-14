@@ -26,3 +26,7 @@
     <script src="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.js"></script>
     <!-- profile init js -->
     <script src="<?= BASE_PATH ?>public/js/pages/profile.init.js"></script>
+    <!--Swiper slider js-->
+    <script src="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.js"></script>
+    <!-- ecommerce product details init -->
+    <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-product-details.init.js"></script>

@@ -9,6 +9,7 @@ RewriteRule ^users/?$ view/users/index.php
 RewriteRule ^user/([a-zA-Z0-9-]*)?$ view/users/detail.php?id=$1
 
 RewriteRule ^products/?$ view/index.php
+RewriteRule ^product/([a-zA-Z0-9-]*)?$ view/users/detail.php?slug=$1
  
 RewriteRule ^auth$ app/AuthController.php
 RewriteRule ^brand$ app/BrandController.php
