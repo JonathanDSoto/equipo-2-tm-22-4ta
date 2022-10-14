@@ -6,17 +6,20 @@ if(isset($_POST['accion'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
         switch($_POST['accion']){
         case 'access':
-            $authController =new AuthController();
+            if(isset($_POST['email'])&& isset($_POST['password'])){
 
-            $email=strip_tags($_POST['email']);
-            $password=strip_tags($_POST['password']);
-            $authController -> login($email,$password);
+                $authController =new AuthController();
+
+                $email=strip_tags($_POST['email']);
+                $password=strip_tags($_POST['password']);
+                $authController -> login($email,$password);
+            }
             break;    
         case 'salir':
-            $authController =new AuthController();
+                $authController =new AuthController();
 
-            $email=strip_tags($_POST['email']);
-            $authController -> logout($email);
+                $email=strip_tags($_POST['email']);
+                $authController -> logout($email);
             break;    
         } 
     } 
@@ -100,5 +103,4 @@ class AuthController{
 
 #'jeju_19@alu.uabcs.mx'
 #O338lXPk!5k8I6
-#OZ4KIABLHJThlRwxS1epezqL37XQAVQjy0oIF5ZI
 ?>
