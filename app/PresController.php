@@ -4,6 +4,7 @@ include_once  "config.php";
 
 #CRUD
 if(isset($_POST['action'])){
+    if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
         case 'create':
 
@@ -58,6 +59,7 @@ if(isset($_POST['action'])){
             
         break;
         
+        }
     }
 }
 
