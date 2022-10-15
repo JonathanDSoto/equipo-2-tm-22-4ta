@@ -33,6 +33,14 @@
                             <div class="text-center">
                                 <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
                                     <img src="<?= $_SESSION['avatar'] ?>" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                                    <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                        <label data-bs-toggle="modal" data-bs-target="#removeItemModal" class="profile-photo-edit avatar-xs">
+                                            <span class="avatar-title rounded-circle bg-light text-body">
+                                                <i class="ri-camera-fill"></i>
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <h4 class="fs-18 mb-1 text-primary"><?= $_SESSION['name']." ".$_SESSION['lastname'] ?></h4>
                             </div>
@@ -85,50 +93,6 @@
                                     </form>
                                 </div>
                                 <!--end tab-pane-->
-                                <div class="tab-pane" id="changePassword" role="tabpanel">
-                                    <form action="javascript:void(0);">
-                                        <div class="row g-2">
-                                            <div class="card">
-
-                                                <x-table>
-                                                    <x-slot name="tools">
-
-                                                    </x-slot>
-                                                    <x-slot name="thead">
-                                                        <th class="sort" data-sort="customer_name">Clave</th>
-                                                        <th class="sort" data-sort="email">Nombre</th>
-                                                        <th class="sort" data-sort="customer_name">Tipo</th>
-                                                        <th class="sort" data-sort="email">Modalidad</th>
-                                                        <th class="sort" data-sort="phone">Constancia</th>
-                                                        <th class="sort" data-sort="phone">Duración en horas</th>
-                                                        <th class="sort" data-sort="action">Acciones</th>
-                                                    </x-slot>
-                                                    <x-slot name="tbody">
-                                                    <tr v-for="student in students">
-
-                                                        <td class="no_control">@{{ student.no_control }}</td>
-                                                        <td class="center">@{{ student.center_id }}</td>
-                                                        <td class="student_name">@{{ student.name }}</td>
-                                                        <td class="no_control">@{{ student.no_control }}</td>
-                                                        <td class="center">@{{ student.center_id }}</td>
-                                                        <td class="student_name">@{{ student.name }}</td>
-                                                        <td>
-                                                            <div class="d-flex gap-2">
-
-                                                                <div class="remove">
-                                                                    <button class="btn btn-sm btn-danger remove-item-btn">Eliminar</button>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </x-slot>
-                                                </x-table>
-                                            </div>
-                                        </div>
-                                        <!--end row-->
-                                    </form>
-                                </div>
-                                <!--end tab-pane-->
                             </div>
                         </div>
                     </div>
@@ -162,11 +126,33 @@
         </div>
     </div>
 
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-        </div>
-    </div>
+    <div id="removeItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="">
+                        <div class="mt-2 text-center">
+                            <div class="my-2 pt-2 fs-15 mx-4 mx-sm-5">
+                                <h4>Select an image</h4>
+                                <div>
+                                    <input class="form-control py-2" type="file" id="formFile">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                            <input type="hidden" name="" value="">
+                            <button type="submit" class="btn w-sm btn-primary" data-bs-dismiss="modal">Submit</button>
+                            <button type="button" class="btn w-sm btn-danger " id="delete-product">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <?php include "../../layout/scripts.template.php" ?>
 </body>

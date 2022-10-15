@@ -4,7 +4,6 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?= BASE_PATH ?>public/images/favicon.ico">
-
     <!-- Layout config Js -->
     <script src="<?= BASE_PATH ?>public/js/layout.js"></script>
     <!-- Bootstrap Css -->
@@ -25,3 +24,8 @@
     <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.css">
     <!--Swiper slider css-->
     <link href="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+    <!-- dropzone css -->
+    <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/dropzone/dropzone.css" type="text/css" />
+    <!-- Filepond css -->
+    <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/filepond/filepond.min.css" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css">

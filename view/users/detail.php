@@ -29,6 +29,14 @@
                             <div class="text-center">
                                 <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
                                     <img src="<?= BASE_PATH ?>public/images/users/avatar-1.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                                    <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                        <label data-bs-toggle="modal" data-bs-target="#removeItemModal" class="profile-photo-edit avatar-xs">
+                                            <span class="avatar-title rounded-circle bg-light text-body">
+                                                <i class="ri-camera-fill"></i>
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <h4 class="fs-18 mb-1 text-primary">Anna Adame</h4>
                             </div>
@@ -141,7 +149,33 @@
     </div>
     <!-- END layout-wrapper -->
 
+    <div id="removeItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="">
+                        <div class="mt-2 text-center">
+                            <div class="my-2 pt-2 fs-15 mx-4 mx-sm-5">
+                                <h4>Select an image</h4>
+                                <div>
+                                    <input class="form-control py-2" type="file" id="formFile">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                            <input type="hidden" name="" value="">
+                            <button type="submit" class="btn w-sm btn-primary" data-bs-dismiss="modal">Submit</button>
+                            <button type="button" class="btn w-sm btn-danger " id="delete-product">Cancel</button>
+                        </div>
+                    </form>
+                </div>
 
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">

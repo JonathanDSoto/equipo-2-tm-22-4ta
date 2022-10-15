@@ -30,3 +30,12 @@
     <script src="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.js"></script>
     <!-- ecommerce product details init -->
     <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-product-details.init.js"></script>
+    <!-- dropzone min -->
+    <script src="<?= BASE_PATH ?>public/libs/dropzone/dropzone-min.js"></script>
+    <!-- filepond js -->
+    <script src="<?= BASE_PATH ?>public/libs/filepond/filepond.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/js/pages/form-file-upload.init.js"></script>
