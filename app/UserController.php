@@ -83,7 +83,7 @@ class UserController{
     $response = json_decode ($response);
 
     if (isset ($response->code) && $response->code > 0){
-        return $response->$data;
+        return $response->data;
       } else {
         return array();
       }
@@ -147,6 +147,8 @@ class UserController{
             header('location: '.BASE_PATH.'users?error=false');
           }
       }
+
+      
       #Elminar usuarios (Users) por ID:
       public function remove($id){
         $curl = curl_init();
@@ -203,7 +205,7 @@ class UserController{
         $response = json_decode ($response);
 
         if (isset ($response->code) && $response->code > 0){
-            return $response->$data;
+            return $response->data;
           } else {
             return array();
           }
