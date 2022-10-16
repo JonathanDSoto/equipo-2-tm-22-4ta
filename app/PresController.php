@@ -84,13 +84,13 @@ class PresController{
 
     }
 
-    #Get Presentacion por id de producto:
-    public function getPres($product_id){
+    #Get Presentacion:
+    public function getPres($id){
 
         $token = $_SESSION['token'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/product/'.$product_id,
+        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/product/'.$id,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -106,13 +106,13 @@ class PresController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        //echo $response;
         $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0){
-            return $response->$data;
-          } else {
+            return $response->data;
+        } else {
             return array();
-          }
+        }
 
     }
 
@@ -135,15 +135,14 @@ class PresController{
         ),
         ));
         $response = curl_exec($curl);
-
         curl_close($curl);
-        echo $response;
+        //echo $response;
         $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0){
-            return $response->$data;
-          } else {
+            return $response->data;
+        } else {
             return array();
-          }
+        }
     }
 
     #Crear presentacion:
@@ -160,7 +159,7 @@ class PresController{
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS => 'description' => $description ,'code'=> $code,'weight_in_grams'=>$weight_in_grams,'status'=> $status,'stock'=>$stock,'stock_min'=>$stock_min,'stock_max'=>$stock_max,'product_id'=>$product_id,'cover'=> NEW CURLFile($imagen),
+          CURLOPT_POSTFIELDS => array( 'description' => $description ,'code'=> $code,'weight_in_grams'=> $weight_in_grams,'status'=> $status,'stock'=>$stock,'stock_min'=>$stock_min,'stock_max'=>$stock_max,'product_id'=>$product_id,'cover'=> NEW CURLFile($imagen)),
           CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$_SESSION['token']
             ),
