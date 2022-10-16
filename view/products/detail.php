@@ -213,7 +213,6 @@
                                                                             <th scope="col">Total</th>
                                                                             <th scope="col">Paid</th>
                                                                             <th scope="col">Status</th>
-                                                                            <th scope="col">Actions</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -228,18 +227,6 @@
                                                                             <td>$2,300</td>
                                                                             <td>$2,300</td>
                                                                             <td><span class="badge bg-success">active</span></td>
-                                                                            <td>
-                                                                                <div class="dropdown ms-2">
-                                                                                    <a class="btn btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                        <i class="ri-more-2-fill"></i>
-                                                                                    </a>
-                                                                                
-                                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                        <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#modalOrder" href="#">Edit</a></li>
-                                                                                        <li><a class="dropdown-item " data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -322,137 +309,6 @@
                                         <option selected disabled>Select a status</option>
                                         <option value="1">Active</option>
                                         <option value="2">Inactive</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Grids in modals -->
-    <div class="modal fade" id="modalOrder" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Order</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);">
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="firstName" class="form-label">First name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="Enter client's first name">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="lastName" class="form-label">Last name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Enter client's last name">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="emailInput" class="form-label">Payment type</label>
-                                    <input type="email" class="form-control" id="emailInput" placeholder="Enter payment type">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Presentation</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select a presentation</option>
-                                        <option value="1">blue</option>
-                                        <option value="2">pink</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Quantity</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter quantity">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Coupon</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select a coupon</option>
-                                        <option value="1">25OFF</option>
-                                        <option value="2">None</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Paid</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select an option</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Status</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select a status</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">Inactive</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <h5 class="modal-title" id="exampleModalgridLabel">Address</h5>
-                            </div>
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Street and number</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter the street and number">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Postal code</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter the postal code">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter the city">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Province</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter the province">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter the phone number">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Use as billing address</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select an option</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
                                     </select>
                                 </div>
                             </div><!--end col-->

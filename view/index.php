@@ -50,8 +50,8 @@
                                         <div class="row g-4">
                                             <div class="col-sm-auto">
                                                 <div>
-                                                    <!-- <a href="apps-ecommerce-add-product.html" class="btn btn-success" id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add Product</a> -->
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Product</button>
+                                                    <a href="<?= BASE_PATH ?>view/products/create.php" class="btn btn-success waves-effect waves-light rounded-pill" id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add Product</a>
+                                                    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Product</button> -->
                                                 </div>
                                             </div>
                                             <div class="col-sm">
@@ -71,6 +71,7 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">ID</th>
+                                                    <th scope="col">Cover</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Slug</th>
                                                     <th scope="col">Description</th>
@@ -82,6 +83,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td>01</td>
+                                                    <td>
+                                                        <div class="avatar-sm bg-light rounded p-1">
+                                                            <img src="<?= BASE_PATH ?>public/images/products/img-1.png" alt="" class="img-fluid d-block">
+                                                        </div>
+                                                    </td>
                                                     <td>Bobby Davis</td>
                                                     <td>October 15, 2021</td>
                                                     <td>$2,300</td>
@@ -95,7 +101,7 @@
                                                         
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                 <li><a class="dropdown-item" href="<?= BASE_PATH ?>view/products/detail.php">View</a></li>
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalgrid" href="#">Edit</a></li>
+                                                                <li><a class="dropdown-item" href="<?= BASE_PATH ?>view/products/create.php">Edit</a></li>
                                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
                                                             </ul>
                                                         </div>
@@ -149,96 +155,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
-    <!-- Grids in modals -->
-    <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Product</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);">
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="firstName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="Enter name">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="lastName" class="form-label">Slug</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Enter slug">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="emailInput" class="form-label">Description</label>
-                                    <input type="email" class="form-control" id="emailInput" placeholder="Enter description">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="phoneInput" class="form-label">Features</label>
-                                    <input type="text" class="form-control" id="phoneInput" placeholder="Enter features">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Brand</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected disabled>Select a brand</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="lastName" class="form-label">Cover image</label>
-                                <div class="input-group">
-                                    <input type="file" class="form-control" id="inputGroupFile01">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                            <label for="roleInput" class="form-label">Category</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                        <option selected disabled>Select a category</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <button class="btn btn-secondary shadow-none" type="button"><i class="ri-add-line"></i></button>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="roleInput" class="form-label">Tags</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                        <option selected disabled>Select a tag</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <button class="btn btn-secondary shadow-none" type="button"><i class="ri-add-line"></i></button>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-secondary btn-icon" id="back-to-top">
         <i class="ri-arrow-up-line"></i>

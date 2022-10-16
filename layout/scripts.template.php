@@ -51,3 +51,16 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <!-- Tables -->
     <script src="<?= BASE_PATH ?>public/js/datatables.init.js"></script>
+    <!-- ckeditor -->
+    <script src="<?= BASE_PATH ?>public/libs/%40ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+    <!-- dropzone js -->
+    <script src="<?= BASE_PATH ?>public/libs/dropzone/dropzone-min.js"></script>
+    <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-product-create.init.js"></script>
+    <!-- list.js min js -->
+    <script src="<?= BASE_PATH ?>public/libs/list.js/list.min.js"></script>
+    <!--list pagination js-->
+    <script src="<?= BASE_PATH ?>public/libs/list.pagination.js/list.pagination.min.js"></script>
+    <!-- ecommerce-order init js -->
+    <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-order.init.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.js"></script>

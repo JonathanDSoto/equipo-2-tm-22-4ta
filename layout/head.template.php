@@ -35,3 +35,5 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
     <!-- Datatable buttons css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <!-- Sweet Alert css-->
+    <link href="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />

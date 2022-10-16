@@ -33,14 +33,6 @@
                             <div class="text-center">
                                 <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
                                     <img src="<?= $_SESSION['avatar'] ?>" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
-                                    <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input">
-                                        <label data-bs-toggle="modal" data-bs-target="#removeItemModal" class="profile-photo-edit avatar-xs">
-                                            <span class="avatar-title rounded-circle bg-light text-body">
-                                                <i class="ri-camera-fill"></i>
-                                            </span>
-                                        </label>
-                                    </div>
                                 </div>
                                 <h4 class="fs-18 mb-1 text-primary"><?= $_SESSION['name']." ".$_SESSION['lastname'] ?></h4>
                             </div>
