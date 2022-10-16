@@ -84,13 +84,13 @@ class PresController{
 
     }
 
-    #Get Presentacion:
-    public function getPres(){
+    #Get Presentacion por id de producto:
+    public function getPres($product_id){
 
         $token = $_SESSION['token'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/product/1',
+        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations/product/'.$product_id,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -135,10 +135,15 @@ class PresController{
         ),
         ));
         $response = curl_exec($curl);
+
         curl_close($curl);
         echo $response;
         $response = json_decode($response);
-        return $response;
+        if (isset ($response->code) && $response->code > 0){
+            return $response->$data;
+          } else {
+            return array();
+          }
     }
 
     #Crear presentacion:
@@ -167,7 +172,11 @@ class PresController{
         echo $response;
         $response = json_decode($response);
 
-        var_dump($response);
+        if (isset($response->code) && $response->code > 0) {
+            header('location: '.BASE_PATH.'products?success=true');
+          } else {
+            header('location: '.BASE_PATH.'products?error=false');
+          }
     
     }
 
@@ -186,7 +195,7 @@ class PresController{
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => 'description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&cover='. NEW CURLFile($imagen),
+            CURLOPT_POSTFIELDS => 'id=' .$id.'&description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&cover='. NEW CURLFile($imagen),
             CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$_SESSION['token']
             ),
@@ -197,15 +206,15 @@ class PresController{
         curl_close($curl);
         echo $response;
   
-      $response = curl_exec($curl);
-      $response = json_decode($response);
-  
-      curl_close($curl);
-      if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'products');
-      } else {
-        header('location: '.BASE_PATH.'products?error=false');
-      }
+        $response = curl_exec($curl);
+        $response = json_decode($response);
+    
+        curl_close($curl);
+        if (isset ($response->code) && $response->code > 0){
+            header('location: '.BASE_PATH.'products');
+        } else {
+            header('location: '.BASE_PATH.'products?error=false');
+        }
     }
 
 
