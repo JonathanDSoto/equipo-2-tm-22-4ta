@@ -116,23 +116,32 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <a href="#addCategory" data-bs-toggle="collapse" class="float-end text-decoration-underline">Add New</a>
                                         <h5 class="card-title mb-0">Product Categories</h5>
                                     </div>
-                                    <div class="card-body">
-                                        <select class="form-select" data-trigger name="productname-field" id="productname-field">
-                                            <option value="" selected disabled>Select product category</option>
-                                            <option value="Puma Tshirt">Puma Tshirt</option>
-                                            <option value="Adidas Sneakers">Adidas Sneakers</option>
-                                        </select>
-                                        <div class="collapse menu-dropdown mt-2" id="addCategory">
-                                            <div class="input-group">
-                                            <select class="form-select" data-trigger name="productname-field" id="productname-field">
-                                            <option value="" selected disabled>Select product category</option>
-                                            <option value="Puma Tshirt">Puma Tshirt</option>
-                                            <option value="Adidas Sneakers">Adidas Sneakers</option>
-                                            </select>
-                                            </div>
+                                    <div class="card-body overflow-scroll" style="height: 100px">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <label class="form-check-label" for="formCheck6">
+                                                Category
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <label class="form-check-label" for="formCheck6">
+                                                Category
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <label class="form-check-label" for="formCheck6">
+                                                Category
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <label class="form-check-label" for="formCheck6">
+                                                Category
+                                            </label>
                                         </div>
                                     </div>
                                     <!-- end card body -->
@@ -141,23 +150,32 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <a href="#addTag" data-bs-toggle="collapse" class="float-end text-decoration-underline">Add New</a>
                                         <h5 class="card-title mb-0">Product Tags</h5>
                                     </div>
-                                    <div class="card-body">
-                                        <select class="form-select" data-trigger name="productname-field" id="productname-field">
-                                            <option value="" selected disabled>Select product tag</option>
-                                            <option value="Puma Tshirt">Puma Tshirt</option>
-                                            <option value="Adidas Sneakers">Adidas Sneakers</option>
-                                        </select>
-                                        <div class="collapse menu-dropdown mt-2" id="addTag">
-                                            <div class="input-group">
-                                            <select class="form-select" data-trigger name="productname-field" id="productname-field">
-                                            <option value="" selected disabled>Select product tag</option>
-                                            <option value="Puma Tshirt">Puma Tshirt</option>
-                                            <option value="Adidas Sneakers">Adidas Sneakers</option>
-                                            </select>
-                                            </div>
+                                    <div class="card-body overflow-scroll" style="height: 100px">
+                                        <div class="form-check form-check-secondary mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <label class="form-check-label" for="formCheck7">
+                                                Tag
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-secondary mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <label class="form-check-label" for="formCheck7">
+                                                Tag
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-secondary mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <label class="form-check-label" for="formCheck7">
+                                                Tag
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-secondary mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <label class="form-check-label" for="formCheck7">
+                                                Tag
+                                            </label>
                                         </div>
                                     </div>
                                     <!-- end card body -->
