@@ -127,7 +127,7 @@ class CathController{
         ),
       ));
       $response = curl_exec($curl);
-  
+      $response = json_decode($response);
       curl_close($curl);
       if (isset ($response->code) && $response->code > 0){
         header('location: '.BASE_PATH.'products');
@@ -160,7 +160,7 @@ class CathController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $response = json_decode ($response);
+        $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0) {
             return true;
         } else {
@@ -190,7 +190,12 @@ class CathController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        $response = json_decode($response);
+        if (isset ($response->code) && $response->code > 0){
+            return $response->data;
+        } else {
+            return array();
+        }
     }
 
 }

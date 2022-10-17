@@ -109,7 +109,7 @@ class OrderController{
         echo $response;
         $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0){
-            return $response->$data;
+            return $response->data;
           } else {
             return array();
           }
@@ -141,7 +141,7 @@ class OrderController{
         echo $response;
         $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0){
-            return $response->$data;
+            return $response->data;
           } else {
             return array();
           }
@@ -275,12 +275,12 @@ class OrderController{
             echo $response;
             $response = json_decode($response);
             if (isset ($response->code) && $response->code > 0){
-                return $response->$data;
+                return $response->data;
               } else {
                 return array();
               }
         }
-        
+
 }
 
 

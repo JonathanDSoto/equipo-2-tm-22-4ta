@@ -97,7 +97,7 @@ class TagController{
          ));
         $response = curl_exec($curl);
         curl_close($curl);
-
+        $response = json_decode($response);
         header('location: '.BASE_PATH.'products');
         var_dump($response);
       
@@ -126,6 +126,7 @@ class TagController{
       $response = curl_exec($curl);
   
       curl_close($curl);
+      $response = json_decode($response);
       if (isset ($response->code) && $response->code > 0){
         header('location: '.BASE_PATH.'products');
       } else {
@@ -157,7 +158,7 @@ class TagController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $response = json_decode ($response);
+        $response = json_decode($response);
         if (isset ($response->code) && $response->code > 0) {
             return true;
         } else {
@@ -186,7 +187,12 @@ class TagController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        $response = json_decode($response);
+        if (isset ($response->code) && $response->code > 0){
+            return $response->data;
+        } else {
+            return array();
+        }
     }
 
 }
