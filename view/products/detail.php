@@ -211,7 +211,7 @@
                                                                             <th scope="col">Quantity</th>
                                                                             <th scope="col">Coupon</th>
                                                                             <th scope="col">Total</th>
-                                                                            <th scope="col">Paid</th>
+                                                                            <th scope="col">Paid out</th>
                                                                             <th scope="col">Status</th>
                                                                         </tr>
                                                                     </thead>

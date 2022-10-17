@@ -14,7 +14,7 @@ RewriteRule ^products/edit/([a-zA-Z0-9-]*)?$ view/products/create.php?slug=$1
 RewriteRule ^product/([a-zA-Z0-9-]*)?$ view/products/detail.php?slug=$1
 
 RewriteRule ^orders/?$ view/orders/index.php
-RewriteRule ^orders/([a-zA-Z0-9-]*)?$ view/orders/detail.php?folio=$1
+RewriteRule ^order/([a-zA-Z0-9-]*)?$ view/orders/detail.php?folio=$1
  
 RewriteRule ^auth$ app/AuthController.php
 RewriteRule ^brand$ app/BrandController.php

@@ -64,3 +64,15 @@
     <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-order.init.js"></script>
     <!-- Sweet Alerts js -->
     <script src="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- prismjs plugin -->
+    <script src="<?= BASE_PATH ?>public/libs/prismjs/prism.js"></script>
+    <!-- list.js min js -->
+    <script src="<?= BASE_PATH ?>public/libs/list.js/list.min.js"></script>
+    <!--list pagination js-->
+    <script src="<?= BASE_PATH ?>public/libs/list.pagination.js/list.pagination.min.js"></script>
+    <!-- ecommerce-order init js -->
+    <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-order.init.js"></script>
+    <!-- Modern colorpicker bundle -->
+    <script src="<?= BASE_PATH ?>public/libs/%40simonwep/pickr/pickr.min.js"></script>
+    <!-- init js -->
+    <script src="<?= BASE_PATH ?>public/js/pages/form-pickers.init.js"></script>

@@ -120,25 +120,25 @@
                                     </div>
                                     <div class="card-body overflow-scroll" style="height: 100px">
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck6">
                                             <label class="form-check-label" for="formCheck6">
                                                 Category
                                             </label>
                                         </div>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck6">
                                             <label class="form-check-label" for="formCheck6">
                                                 Category
                                             </label>
                                         </div>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck6">
                                             <label class="form-check-label" for="formCheck6">
                                                 Category
                                             </label>
                                         </div>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck6">
                                             <label class="form-check-label" for="formCheck6">
                                                 Category
                                             </label>
@@ -154,25 +154,25 @@
                                     </div>
                                     <div class="card-body overflow-scroll" style="height: 100px">
                                         <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck7">
                                             <label class="form-check-label" for="formCheck7">
                                                 Tag
                                             </label>
                                         </div>
                                         <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck7">
                                             <label class="form-check-label" for="formCheck7">
                                                 Tag
                                             </label>
                                         </div>
                                         <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck7">
                                             <label class="form-check-label" for="formCheck7">
                                                 Tag
                                             </label>
                                         </div>
                                         <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7" checked>
+                                            <input class="form-check-input" type="checkbox" id="formCheck7">
                                             <label class="form-check-label" for="formCheck7">
                                                 Tag
                                             </label>
