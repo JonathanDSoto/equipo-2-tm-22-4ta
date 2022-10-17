@@ -70,7 +70,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="" role="button" aria-expanded="false" aria-controls="sidebarPages">
+                            <a class="nav-link" href="<?= BASE_PATH ?>customers" role="button" aria-expanded="false" aria-controls="sidebarPages">
                                 <i class="ri-account-circle-fill"></i> <span data-key="t-pages">Customers</span>
                             </a>
                         </li>

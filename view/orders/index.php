@@ -89,7 +89,6 @@
                                                     <th scope="col">Customer</th>
                                                     <th scope="col">Address</th>
                                                     <th scope="col">Payment Type</th>
-                                                    <th scope="col">Quantity</th>
                                                     <th scope="col">Coupon</th>
                                                     <th scope="col">Total</th>
                                                     <th scope="col">Paid out</th>
@@ -102,7 +101,6 @@
                                                     <td>Bobby</td>
                                                     <td>Davis</td>
                                                     <td>October</td>
-                                                    <td>$2,300</td>
                                                     <td>$2,300</td>
                                                     <td>$2,300</td>
                                                     <td>$2,300</td>
@@ -262,7 +260,7 @@
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-4">
-                                <label for="roleInput" class="form-label">Paid</label>
+                                <label for="roleInput" class="form-label">Paid Out</label>
                                 <div class="input-group">
                                     <select class="form-select" id="inputGroupSelect01">
                                         <option selected disabled>Select an option</option>

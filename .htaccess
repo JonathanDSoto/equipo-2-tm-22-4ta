@@ -8,6 +8,9 @@ RewriteRule ^profile/?$ view/profile/index.php
 RewriteRule ^users/?$ view/users/index.php
 RewriteRule ^user/([a-zA-Z0-9-]*)?$ view/users/detail.php?id=$1
 
+RewriteRule ^customers/?$ view/customers/index.php
+RewriteRule ^customer/([0-9]*)?$ view/customers/detail.php?phone_number=$1
+
 RewriteRule ^products/?$ view/index.php
 RewriteRule ^products/create/?$ view/products/create.php
 RewriteRule ^products/edit/([a-zA-Z0-9-]*)?$ view/products/create.php?slug=$1

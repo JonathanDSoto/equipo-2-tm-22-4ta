@@ -39,3 +39,10 @@
     <link href="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <!-- One of the following themes -->
     <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/%40simonwep/pickr/themes/classic.min.css" /> <!-- 'classic' theme -->
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/gridjs/theme/mermaid.min.css">
+    <!--Swiper slider css-->
+    <link href="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+    <!-- plugin css -->
+    <link href="<?= BASE_PATH ?>public/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+

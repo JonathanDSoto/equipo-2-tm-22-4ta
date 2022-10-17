@@ -76,3 +76,20 @@
     <script src="<?= BASE_PATH ?>public/libs/%40simonwep/pickr/pickr.min.js"></script>
     <!-- init js -->
     <script src="<?= BASE_PATH ?>public/js/pages/form-pickers.init.js"></script>
+    <!-- apexcharts -->
+    <script src="<?= BASE_PATH ?>public/libs/apexcharts/apexcharts.min.js"></script>
+    <!-- gridjs js -->
+    <script src="<?= BASE_PATH ?>public/libs/gridjs/gridjs.umd.js"></script>
+    <script src="../../../../unpkg.com/gridjs%405.1.0/plugins/selection/dist/selection.umd.js"></script>
+    <!--Swiper slider js-->
+    <script src="<?= BASE_PATH ?>public/libs/swiper/swiper-bundle.min.js"></script>
+    <!--seller-details init js -->
+    <script src="<?= BASE_PATH ?>public/js/pages/seller-details.init.js"></script>
+    <!-- Vector map-->
+    <script src="<?= BASE_PATH ?>public/libs/jsvectormap/js/jsvectormap.min.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/jsvectormap/maps/world-merc.js"></script>
+    <script src="<?= BASE_PATH ?>public/libs/jsvectormap/maps/us-merc-en.js"></script>
+    <!-- Widget init -->
+    <script src="<?= BASE_PATH ?>public/js/pages/widgets.init.js"></script>
+
+
