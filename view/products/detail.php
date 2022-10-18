@@ -188,6 +188,7 @@
                                                                                 
                                                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                                         <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#modalPresentation" href="#">Edit</a></li>
+                                                                                        <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#editPrice" href="#">Update price</a></li>
                                                                                         <li><a class="dropdown-item " data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
                                                                                     </ul>
                                                                                 </div>
@@ -262,6 +263,36 @@
     <!-- END layout-wrapper -->
 
     <!-- Grids in modals -->
+    <div class="modal fade" id="editPrice" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel">Update Price</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="firstName" class="form-label">Price</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="Enter new price">
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grids in modals -->
     <div class="modal fade" id="modalPresentation" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -282,6 +313,20 @@
                                 <div>
                                     <label for="lastName" class="form-label">Weight</label>
                                     <input type="text" class="form-control" id="lastName" placeholder="Enter weight">
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="firstName" class="form-label">Code</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="Enter code">
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="lastName" class="form-label">Cover</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="inputGroupFile01" required>
+                                    </div>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
