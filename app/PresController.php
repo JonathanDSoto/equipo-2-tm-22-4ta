@@ -42,15 +42,8 @@ if(isset($_POST['action'])){
             $stock_min = strip_tags($_POST['stock_min']);
             $product_id = strip_tags($_POST['product_id']);
 
-            #Imagen:
-            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
-                $imagen = $_FILES["cover"]["tmp_name"];
-            
-                $pres = new PresController();
-                $pres->editPres( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen);
-            }else{
-                header('location: '.BASE_PATH.'products?error=false');
-            }
+            $pres = new PresController();
+            $pres->editPres( $id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,);
 
         break;
 
@@ -181,7 +174,7 @@ class PresController{
 
 
     #Editar Presentacion:
-    public function editPres($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen)
+    public function editPres($id,$description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id)
     {
         $token = $_SESSION['token'];
         $curl = curl_init();
@@ -194,7 +187,7 @@ class PresController{
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => 'id=' .$id.'&description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&cover='. NEW CURLFile($imagen),
+            CURLOPT_POSTFIELDS => 'id=' .$id.'&description=' . $description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id,
             CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$_SESSION['token']
             ),
