@@ -4,6 +4,7 @@
     if(isset($_SESSION['token'])){
     	header('location: '.BASE_PATH.'products');
 	}
+    
 ?> 
 
 <!DOCTYPE html>

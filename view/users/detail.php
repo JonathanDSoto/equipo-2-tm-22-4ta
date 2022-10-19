@@ -1,6 +1,6 @@
 <?php
 	include_once "../../app/config.php";
-    include '../../app/UserController.php';
+    include_once '../../app/UserController.php';
 
     if(!isset($_SESSION['token'])){
     	header('location: '.BASE_PATH.'login');
@@ -131,7 +131,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>userc">
+                    <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>user">
                         <div class="mt-2 text-center">
                             <div class="my-2 pt-2 fs-15 mx-4 mx-sm-5">
                                 <h4>Select an image</h4>

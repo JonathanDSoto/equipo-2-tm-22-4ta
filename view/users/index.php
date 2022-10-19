@@ -1,6 +1,6 @@
 <?php
 	include_once "../../app/config.php";
-    include '../../app/UserController.php';
+    include_once '../../app/UserController.php';
 
     if(!isset($_SESSION['token'])){
     	header('location: '.BASE_PATH.'login');
@@ -98,7 +98,7 @@
                                                                 <i class="ri-more-2-fill"></i>
                                                             </a>
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                <li><a class="dropdown-item" href="<?= BASE_PATH.'user/'.$item->id?>">View</a></li>
+                                                                <li><a class="dropdown-item" href="<?= BASE_PATH.'users/'.$item->id?>">View</a></li>
                                                                 <li><a class="dropdown-item" data-user='<?php echo json_encode($item)?>' onclick="editUser(this)" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">Edit</a></li>
                                                                 <li><a class="dropdown-item " onclick="remove(<?php echo $item->id ?>)">Delete</a></li>
                                                             </ul>
@@ -138,7 +138,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>userc" >
+                    <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>users" >
                         <div class="row g-3">
                             <!-- NAME INPUT -->
                             <div class="col-xxl-6">
