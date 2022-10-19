@@ -162,6 +162,10 @@ class UserController{
     curl_close($curl);
     $response = json_decode($response);
     if (isset($response->code) && $response->code > 0) {
+      if($_SESSION['id']==$id){
+        $_SESSION['name']=$response->data->name;
+        $_SESSION['lastname']=$response->data->lastname;
+      }
       header('location: '.BASE_PATH.'users?success=true');
     } else {
       header('location: '.BASE_PATH.'users?error=false');
