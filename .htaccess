@@ -20,6 +20,9 @@ RewriteRule ^brands/?$ view/catalogs/brands.php
 RewriteRule ^categories/?$ view/catalogs/categories.php
 RewriteRule ^tags/?$ view/catalogs/tags.php
 
+RewriteRule ^coupons/?$ view/coupons/index.php
+RewriteRule ^coupons/([a-zA-Z0-9-]*)?$ view/coupons/detail.php?code=$1
+
 RewriteRule ^orders/?$ view/orders/index.php
 RewriteRule ^orders/([a-zA-Z0-9-]*)?$ view/orders/detail.php?folio=$1
  

@@ -47,8 +47,14 @@
                             <div>
                                 <div class="card">
                                     <div class="card-header border-0">
-                                        <div class="row g-4">
-                                            <div class="col-xxl-4 col-sm-6">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12 col-sm-4">
+                                                <div>
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalOrder" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Order</button>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-xxl-6 col-sm-6">
                                                 <div class="search-box">
                                                     <input type="text" class="form-control search" placeholder="Search for order ID, customer, order status or something...">
                                                     <i class="ri-search-line search-icon"></i>
@@ -61,7 +67,7 @@
                                                 </div>
                                             </div>
                                             <!--end col-->
-                                            <div class="col-xxl-3 col-sm-4">
+                                            <div class="col-xxl-2 col-sm-4">
                                                 <div>
                                                     <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
                                                         <option value="all" selected>All</option>
@@ -71,9 +77,11 @@
                                                 </div>
                                             </div>
                                             <!--end col-->
-                                            <div class="col-xxl-2 col-sm-4">
+                                            <div class="col-xxl-1 col-sm-4">
                                                 <div>
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalOrder" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Order</button>
+                                                    <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
+                                                        Filters
+                                                    </button>
                                                 </div>
                                             </div>
                                             <!--end col-->
@@ -112,7 +120,7 @@
                                                                 <i class="ri-more-2-fill"></i>
                                                             </a>                
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <li><a class="dropdown-item" href="<?= BASE_PATH ?>order/1">View</a></li>
+                                                            <li><a class="dropdown-item" href="<?= BASE_PATH ?>orders/1">View</a></li>
                                                                 <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#modalOrder" href="#">Edit</a></li>
                                                                 <li><a class="dropdown-item " data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
                                                             </ul>

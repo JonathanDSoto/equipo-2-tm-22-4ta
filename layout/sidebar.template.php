@@ -58,7 +58,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link" href="<?= BASE_PATH ?>coupons" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="bx bxs-coupon"></i> <span data-key="t-layouts">Coupons</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
