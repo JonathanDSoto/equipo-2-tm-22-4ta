@@ -57,10 +57,10 @@ if(isset($_POST['action'])){
             $user = new UserController;
             $user->UpdateImage($id, $imagen);
           }else{
-            header('location: '.BASE_PATH.'user/'.$id.'?error=false');
+            header('location: '.BASE_PATH.'users/'.$id.'?error=false');
           }  
         } else {
-          header('location: '.BASE_PATH.'user/'.$id.'?error=false');
+          header('location: '.BASE_PATH.'users/'.$id.'?error=false');
         } 
       break;
 
@@ -228,6 +228,7 @@ class UserController{
   #Update Profile Imagen:
   public function UpdateImage($id,$imagen){
 
+
     $token = $_SESSION['token'];
     $curl = curl_init();
     curl_setopt_array($curl, array(
@@ -246,11 +247,11 @@ class UserController{
     $response = curl_exec($curl);
     curl_close($curl);
     $response = json_decode ($response);
-    
     if (isset ($response->code) && $response->code > 0){
-      header('location: '.BASE_PATH.'user/'.$id.'?success=true');
+      $_SESSION['avatar'] = $response->data->avatar;
+      header('location: '.BASE_PATH.'users/'.$id.'?success=true');
     } else {
-      header('location: '.BASE_PATH.'user/'.$id.'?error=false');
+      header('location: '.BASE_PATH.'users/'.$id.'?error=false');
     }
   }
 }
