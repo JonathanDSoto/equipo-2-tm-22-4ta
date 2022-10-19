@@ -1,11 +1,41 @@
 <?php
-	include_once "../../app/config.php"
+	include_once "../../app/config.php";
+    include "../../app/ProdController.php";
+    include "../../app/BrandController.php";
+    include "../../app/TagController.php";
+    include "../../app/CathController.php";
+
+    if(!isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'login');
+	}
+
+    if(isset($_GET['slug'])) {
+        $action = "update"; 
+        $productControl = new ProdController();
+        $productsData = $productControl -> getPslug($_GET['slug']);
+
+        if(!isset($productsData)){
+            header('location: '.BASE_PATH.'products');
+        }
+
+    } else {
+        $action = "create";
+    }
+
+    $brandControl = new BrandController();
+    $brandsData = $brandControl -> getMarcas();
+
+    $tagControl = new TagController();
+    $tagsData = $tagControl -> getTags();
+
+    $categoryControl = new CathController();
+    $categoriesData = $categoryControl -> getCath();
 ?> 
 
 <!DOCTYPE html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 <head>
-    <title>Create Product</title>
+    <title><?php if($action=='create'){ echo "Create Product"; } else if($action=='update') { echo "Edit Product"; } ?></title>
     <?php include "../../layout/head.template.php" ?>
 </head>
 
@@ -28,12 +58,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
+                                <h4 class="mb-sm-0"><?php if($action=='create'){ echo "Create Product"; } else if($action=='update') { echo "Edit Product"; } ?></h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a>Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
+                                        <li class="breadcrumb-item active"><?php if($action=='create'){ echo "Create Product"; } else { echo "Edit Product"; } ?></li>
                                     </ol>
                                 </div>
 
@@ -42,141 +72,142 @@
                     </div>
                     <!-- end page title -->
 
-                    <form id="createproduct-form" autocomplete="off" class="needs-validation" novalidate>
+                    <!---<form id="createproduct-form" autocomplete="off" class="needs-validation" novalidate>-->
+                    <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>prod">
                         <div class="row">
+                            <!-- MAIN INFO (TITLE, COVER, DESCRIPTION AND FEATURES) -->
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
+                                        <!-- TITLE -->
                                         <div class="mb-3">
-                                            <label class="form-label" for="product-title-input">Product Title</label>
-                                            <input type="hidden" class="form-control" id="formAction" name="formAction" value="add">
-                                            <input type="text" class="form-control d-none" id="product-id-input">
-                                            <input type="text" class="form-control" id="product-title-input" value="" placeholder="Enter product title" required>
-                                            <div class="invalid-feedback">Please Enter a product title.</div>
+                                            <label class="form-label" for="name">Product Title</label>
+                                            <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter product title" value="<?php if($action=='update'&&isset($productsData->name)) { echo $productsData->name; } ?>" required>
                                         </div>
 
+                                        <!-- COVER -->
                                         <div class="mb-3">
                                             <label class="form-label" for="product-title-input">Product Cover</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control" id="inputGroupFile01" required>
+                                                <input id="cover" name="cover" type="file" class="form-control" accept="image/*" <?php if($action=='update') { echo 'disabled'; } else { echo 'required'; } ?> >
                                             </div>
                                         </div>
 
+                                        <!-- DESCRIPTION -->
                                         <div class="mb-3">
                                             <label class="form-label" for="product-title-input">Product Description</label>
                                             <div class="input-group">
-                                                <textarea class="form-control" placeholder="Add short description for the product" rows="2"></textarea>
+                                                <textarea id="description" name="description" class="form-control" onkeypress="return basicText(event)" placeholder="Add short description for the product" rows="2"><?php if($action=='update'&&isset($productsData->description)) { echo $productsData->description; } ?></textarea>
                                             </div>
                                         </div>
 
+                                        <!-- FEATURES -->
                                         <div>
                                             <label>Product Features</label>
                                             <div class="input-group">
-                                                <textarea class="form-control" placeholder="Add features for the product" rows="3"></textarea>
+                                                <textarea id="features" name="features" class="form-control" onkeypress="return basicText(event)" placeholder="Add features for the product" rows="3"><?php if($action=='update'&&isset($productsData->features)) { echo $productsData->features; } ?></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- end card -->
 
+                                <!-- SUBMIT -->
                                 <div class="text-start mb-3">
+                                    <input type="hidden" id="action" name="action" value="<?= $action ?>">
+                                    <?php
+                                        if($action=='update'&&isset($productsData->id)) { 
+                                            echo '<input type="hidden" id="id" name="id" value="'.$productsData->id.'">'; 
+                                        } 
+                                    ?>
+                                    <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
                                     <button type="submit" class="btn btn-success w-sm">Submit</button>
                                 </div>
                             </div>
                             <!-- end col -->
 
                             <div class="col-lg-4">
-
+                                <!-- SLUG -->
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Product Slug</h5>
                                     </div>
                                     <div class="card-body">
-                                        <input type="text" class="form-control" id="product-title-input" value="" placeholder="Enter product slug" required>
-                                        <div class="invalid-feedback">Please Enter a product slug.</div>
+                                        <input type="text" id="slugProduct" name="slugProduct" onkeypress="return slug(event)" class="form-control" id="product-title-input" value="<?php if($action=='update'&&isset($productsData->slug)) { echo $productsData->slug; } ?>" placeholder="Enter product slug" required>
                                     </div>
                                     <!-- end card body -->
                                 </div>
                                 <!-- end card -->
 
+                                <!-- BRANDS -->
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Product Brand</h5>
                                     </div>
                                     <div class="card-body">
-                                        <select class="form-select" data-trigger name="productname-field" id="productname-field">
+                                        <select class="form-select" name="brand" id="brand">
                                             <option value="" selected disabled>Select product brand</option>
-                                            <option value="Puma Tshirt">Puma Tshirt</option>
-                                            <option value="Adidas Sneakers">Adidas Sneakers</option>
+                                            <?php foreach($brandsData as $item): ?>      
+                                                <option value="<?php if($action=='update'&&isset($productsData->brand->id)&&$item->id==$productsData->brand->id) { echo $productsData->brand->id; } else { echo $item->id; } ?>" 
+                                                    <?php if($action=='update'&&isset($productsData->brand->id)&&$item->id==$productsData->brand->id) { echo 'selected="selected"'; }?>>
+                                                    <?php if($action=='update'&&isset($productsData->brand->id)&&$item->id==$productsData->brand->id) { echo $productsData->brand->name; } else { echo $item->name; } ?>
+                                            </option> 
+                                                
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <!-- end card body -->
                                 </div>
                                 <!-- end card -->
 
+                                <!-- CATEGORIES -->
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Product Categories</h5>
                                     </div>
                                     <div class="card-body overflow-scroll" style="height: 100px">
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6">
-                                            <label class="form-check-label" for="formCheck6">
-                                                Category
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6">
-                                            <label class="form-check-label" for="formCheck6">
-                                                Category
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6">
-                                            <label class="form-check-label" for="formCheck6">
-                                                Category
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck6">
-                                            <label class="form-check-label" for="formCheck6">
-                                                Category
-                                            </label>
-                                        </div>
+                                        <?php foreach ($categoriesData as $item): ?>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="categories" name="categories[]" 
+                                                value="<?php echo $item->id; ?>"
+                                                <?php
+                                                    if($action=='update'&&isset($productsData->categories)) {
+                                                        foreach ($productsData->categories as $itemCategories){
+                                                            if($item->id==$itemCategories->id) { 
+                                                                echo "checked disabled"; 
+                                                            }
+                                                        }
+                                                    }
+                                                ?>>
+                                                <label class="form-check-label"><?= $item->name ?></label>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                     <!-- end card body -->
                                 </div>
                                 <!-- end card -->
 
+                                <!-- TAGS -->
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Product Tags</h5>
                                     </div>
                                     <div class="card-body overflow-scroll" style="height: 100px">
-                                        <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7">
-                                            <label class="form-check-label" for="formCheck7">
-                                                Tag
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7">
-                                            <label class="form-check-label" for="formCheck7">
-                                                Tag
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7">
-                                            <label class="form-check-label" for="formCheck7">
-                                                Tag
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-secondary mb-3">
-                                            <input class="form-check-input" type="checkbox" id="formCheck7">
-                                            <label class="form-check-label" for="formCheck7">
-                                                Tag
-                                            </label>
-                                        </div>
+                                        <?php foreach ($tagsData as $item): ?>
+                                            <div class="form-check form-check-secondary mb-3">
+                                                <input class="form-check-input" type="checkbox" id="tags" name="tags[]" value="<?= $item->id ?>"
+                                                <?php
+                                                    if($action=='update'&&isset($productsData->tags)) {
+                                                        foreach ($productsData->tags as $itemTags){
+                                                            if($item->id==$itemTags->id) { 
+                                                                echo "checked disabled"; 
+                                                            }
+                                                        }
+                                                    }
+                                                ?>>
+                                                <label class="form-check-label"><?= $item->name ?></label>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                     <!-- end card body -->
                                 </div>
@@ -198,28 +229,6 @@
         </div>
         <!-- end main content-->
 
-    <!-- removeItemModal -->
-    <div id="removeItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-2 text-center">
-                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Are you Sure ?</h4>
-                            <p class="text-muted mx-4 mb-0">Are you sure you want to remove it?</p>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="delete-product">Yes, Delete It!</button>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
     <!--start back-to-top-->

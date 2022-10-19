@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    //TABLE USERS: "view/users/index.php"
     $("#tableUsers").DataTable({
         "language": {
             "decimal":        "",
@@ -25,4 +26,15 @@ $(document).ready(function () {
             }
         }
     });
+
+    //TABLE PRODUCTS: "view/index.php"
+    $("#tableProducts").DataTable();
+    $("#tableProducts").removeAttr('width').DataTable();
+
+    //TABLE DETAILS OF A PRODUCT - PRESENTATIONS: "view/products/detail.php" 
+    $("#tableProductDetailsPresentations").DataTable();
+
+    //TABLE DETAILS OF A PRODUCT - ORDERS: "view/products/detail.php" 
+    $("#tableProductDetailsOrders").DataTable();
+    
 });

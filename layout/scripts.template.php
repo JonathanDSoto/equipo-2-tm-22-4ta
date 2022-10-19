@@ -63,7 +63,7 @@
     <!-- ecommerce-order init js -->
     <script src="<?= BASE_PATH ?>public/js/pages/ecommerce-order.init.js"></script>
     <!-- Sweet Alerts js -->
-    <script src="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!--<script src="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.js"></script>-->
     <!-- prismjs plugin -->
     <script src="<?= BASE_PATH ?>public/libs/prismjs/prism.js"></script>
     <!-- list.js min js -->
@@ -76,6 +76,8 @@
     <script src="<?= BASE_PATH ?>public/libs/%40simonwep/pickr/pickr.min.js"></script>
     <!-- init js -->
     <script src="<?= BASE_PATH ?>public/js/pages/form-pickers.init.js"></script>
+    <!-- Regex Validations -->
+    <script src="<?= BASE_PATH ?>public/js/regexValidations.js"></script>
     <!-- apexcharts -->
     <script src="<?= BASE_PATH ?>public/libs/apexcharts/apexcharts.min.js"></script>
     <!-- gridjs js -->

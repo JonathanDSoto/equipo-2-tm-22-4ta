@@ -1,5 +1,14 @@
 <?php
 	include_once "../app/config.php";
+    include "../app/ProdController.php";
+
+    if(!isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'login');
+	}
+
+    $productControl = new ProdController();
+    $productsData = $productControl -> getTodo();
+    //var_dump($productsData);
 ?> 
 
 <!DOCTYPE html>
@@ -43,23 +52,14 @@
                     <!-- end page title -->
 
                     <!-- Content -->
-                        <div class="col-xl-12 col-lg-10">
+                        <div class="col-xl-12 col-lg-12">
                             <div>
                                 <div class="card">
                                     <div class="card-header border-0">
                                         <div class="row g-4">
                                             <div class="col-sm-auto">
                                                 <div>
-                                                    <a href="<?= BASE_PATH ?>view/products/create.php" class="btn btn-success waves-effect waves-light rounded-pill" id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add Product</a>
-                                                    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Product</button> -->
-                                                </div>
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="d-flex justify-content-sm-end">
-                                                    <div class="search-box ms-2">
-                                                        <input type="text" class="form-control" id="searchProductList" placeholder="Search Products...">
-                                                        <i class="ri-search-line search-icon"></i>
-                                                    </div>
+                                                    <a href="<?= BASE_PATH ?>products/create/" class="btn btn-success waves-effect waves-light rounded-pill" id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add Product</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +67,7 @@
 
                                     <!-- TABLA PRODUCTOS -->
                                     <div class="card-body">
-                                        <table class="table table-nowrap">
+                                        <table id="tableProducts" class="table table-bordered dt-responsive table-striped align-middle " style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">ID</th>
@@ -81,32 +81,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>
-                                                        <div class="avatar-sm bg-light rounded p-1">
-                                                            <img src="<?= BASE_PATH ?>public/images/products/img-1.png" alt="" class="img-fluid d-block">
-                                                        </div>
-                                                    </td>
-                                                    <td>Bobby Davis</td>
-                                                    <td>October 15, 2021</td>
-                                                    <td>$2,300</td>
-                                                    <td>$2,300</td>
-                                                    <td>$2,300</td>
-                                                    <td>
-                                                        <div class="dropdown ms-2">
-                                                            <a class="btn btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="ri-more-2-fill"></i>
-                                                            </a>
-                                                        
-                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                <li><a class="dropdown-item" href="<?= BASE_PATH ?>view/products/detail.php">View</a></li>
-                                                                <li><a class="dropdown-item" href="<?= BASE_PATH ?>view/products/create.php">Edit</a></li>
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <?php foreach ($productsData as $item): ?>
+                                                    <tr>
+                                                        <td class="text-center"><?php if(isset($item->id)) echo $item->id; else echo "ID not found."; ?></td>
+                                                        <td>
+                                                            <div class="">
+                                                                <img src="<?php if(isset($item->cover)) echo $item->cover; else echo "Cover not found."; ?>" alt="Cover not found." class="img-fluid rounded">
+                                                            </div>
+                                                        </td>
+                                                        <td><?php if(isset($item->name)) echo $item->name; else echo "Name not found."; ?></td>
+                                                        <td><?php if(isset($item->slug)) echo $item->slug; else echo "Slug not found."; ?></td>
+                                                        <td style="text-align: justify;"><?php if(isset($item->description)) echo $item->description; else echo "Description not found."; ?></td>
+                                                        <td style="text-align: justify;"><?php if(isset($item->features)) echo $item->features; else echo "Features not found."; ?></td>
+                                                        <td><?php if(isset($item->brand->name)) echo $item->brand->name; else echo "Brand not found."; ?></td>
+                                                        <td>
+                                                            <div class="dropdown ms-2">
+                                                                <a class="btn btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="ri-more-2-fill"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                    <li><a class="dropdown-item" href="<?= BASE_PATH.'products/'.$item->slug?>">View</a></li>
+                                                                    <li><a class="dropdown-item" href="<?= BASE_PATH.'products/edit/'.$item->slug?>">Edit</a></li>
+                                                                    <li><a class="dropdown-item " onclick="remove(<?php echo $item->id ?>)">Delete</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -130,31 +131,6 @@
 
     </div>
     <!-- END layout-wrapper -->
-
-    <!-- removeItemModal -->
-    <div id="removeItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-2 text-center">
-                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Are you Sure ?</h4>
-                            <p class="text-muted mx-4 mb-0">Are you sure you want to remove this product ?</p>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="delete-product">Yes, Delete It!</button>
-                    </div>
-                </div>
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
     
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-secondary btn-icon" id="back-to-top">
@@ -174,5 +150,39 @@
     <?php include "../layout/scripts.template.php" ?>
 </body>
 
+<script>
+    function remove(id) {
+        swal({
+            title: "Are you sure you want to remove this product?",
+            text: "You will not be able to recover this product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            swal("The product has been deleted!", {
+            icon: "success",
+            });
+
+            var bodyFormData = new FormData();
+            bodyFormData.append('id', id);
+            bodyFormData.append('action', 'remove');
+            bodyFormData.append('global_token', '<?= $_SESSION['global_token'] ?>');
+
+            axios.post('<?= BASE_PATH ?>prod', bodyFormData)
+            .then(function (response) {
+                location.reload();
+            })
+            .catch(function (error) {
+                //console.log(error);
+                alert("An error occurred while performing the action.");
+            });
+        } else {
+            swal("This product is safe!");
+        }
+        });
+    }
+</script>
 
 </html>

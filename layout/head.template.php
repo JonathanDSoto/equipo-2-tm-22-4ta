@@ -36,7 +36,7 @@
     <!-- Datatable buttons css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <!-- Sweet Alert css-->
-    <link href="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="<?= BASE_PATH ?>public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />-->
     <!-- One of the following themes -->
     <link rel="stylesheet" href="<?= BASE_PATH ?>public/libs/%40simonwep/pickr/themes/classic.min.css" /> <!-- 'classic' theme -->
     <!-- gridjs css -->
