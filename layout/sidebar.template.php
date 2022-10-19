@@ -45,13 +45,13 @@
                             <div class="collapse menu-dropdown" id="sidebarCatalogs">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> Brands </a>
+                                        <a href="<?= BASE_PATH ?>brands" class="nav-link" data-key="t-analytics"> Brands </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> Categories </a>
+                                        <a href="<?= BASE_PATH ?>categories" class="nav-link" data-key="t-crm"> Categories </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="index.html" class="nav-link" data-key="t-ecommerce"> Tags </a>
+                                        <a href="<?= BASE_PATH ?>tags" class="nav-link" data-key="t-ecommerce"> Tags </a>
                                     </li>
                                 </ul>
                             </div>
