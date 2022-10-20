@@ -158,7 +158,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
                                 </div>
                             </div>
                             <!-- PHONE NUMBER INPUT -->
@@ -189,14 +189,14 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" minlenght="6" maxlength="16" required>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" onkeypress="return noSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- CONFIRM PASSWORD INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="confirmPassword" class="form-label">Confirm password</label>
-                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" minlenght="6" maxlength="16" required>
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" onkeypress="return noSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- CREATED_BY INPUT -->
@@ -212,7 +212,7 @@
                             <!-- INPUTS HIDDEN AND BUTTONS -->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <input type="hidden" id="typeAction" name="action" value="">
+                                    <input type="hidden" id="typeAction" name="action" value="update">
                                     <input type="hidden" id="id" name="id">
                                     <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>

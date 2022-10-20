@@ -134,6 +134,10 @@
                                                                 <table class="table mb-0">
                                                                     <tbody>
                                                                         <tr>
+                                                                            <th scope="row" style="width: 200px;">ID</th>
+                                                                            <td><?php if(isset($productsData->id)) echo $productsData->id; else echo "ID not found."; ?></td>
+                                                                        </tr>
+                                                                        <tr>
                                                                             <th scope="row" style="width: 200px;">Features</th>
                                                                             <td><?php if(isset($productsData->features)) echo $productsData->features; else echo "Features not found."; ?></td>
                                                                         </tr>
@@ -166,6 +170,7 @@
                                                                             <th scope="col">Minimum Stock</th>
                                                                             <th scope="col">Maximum Stock</th>
                                                                             <th scope="col">Stock</th>
+                                                                            <th scope="col">Price</th>
                                                                             <th scope="col">Status</th>
                                                                             <th scope="col">Actions</th>
                                                                         </tr>
@@ -180,6 +185,18 @@
                                                                                 <td><?php if(isset($item->stock_min)) echo $item->stock_min; else echo "Minimum stock not found."; ?></td>
                                                                                 <td><?php if(isset($item->stock_max)) echo $item->stock_max; else echo "Maximum stock not found."; ?></td>
                                                                                 <td><?php if(isset($item->stock)) echo $item->stock; else echo "Stock not found."; ?></td>
+                                                                                <td>
+                                                                                    <?php
+                                                                                        if(isset($item->price)){
+                                                                                            foreach ($item->price as $itemPrice) {
+                                                                                                $lastPrice = $itemPrice->amount;
+                                                                                            }
+                                                                                            echo "$".$lastPrice;
+                                                                                        } else {
+                                                                                            echo "Price not found.";
+                                                                                        }
+                                                                                    ?>
+                                                                                </td>
                                                                                 <td>
                                                                                     <?php 
                                                                                         if(isset($item->status)) {
@@ -203,7 +220,6 @@
                                                                                     
                                                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                                         <li><a class="dropdown-item" data-presentation='<?php echo json_encode($item)?>' onclick="editPresentation(this)" data-bs-toggle="modal" data-bs-target="#modalPresentation" href="#">Edit</a></li>
-                                                                <!-- FALTA EDITAR ESTE --><li><a class="dropdown-item" data-presentation2='<?php echo json_encode($item)?>' onclick="editPricePresentation(this)" data-bs-toggle="modal" data-bs-target="#editPrice" href="#">Update price</a></li>
                                                                                         <li><a class="dropdown-item" onclick="removePresentation(<?php echo $item->id ?>)">Delete</a></li>
                                                                                     </ul>
                                                                                     </div>
@@ -296,7 +312,7 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <?php
-                                                                                             if(isset($item->order_status_id)) {
+                                                                                            if(isset($item->order_status_id)) {
                                                                                                 switch ($item->order_status_id) {
                                                                                                     case '1':
                                                                                                         echo '<span class="badge bg-warning">Pendiente de pago</span>';
@@ -320,9 +336,9 @@
                                                                                                         echo $item->order_status_id;
                                                                                                     break;
                                                                                                 }
-                                                                                             } else {
+                                                                                            } else {
                                                                                                 echo "Status not found.";
-                                                                                             }
+                                                                                            }
                                                                                         ?>
                                                                                     </td>
                                                                                 </tr>
@@ -361,40 +377,6 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <!-- MODAL NUEVO DE UPDATE PRICE -->
-    <!-- Grids in modals -->
-    <div class="modal fade" id="editPrice" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Update Price</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="<?= BASE_PATH ?>pres">
-                        <div class="row g-3">
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="amount" class="form-label">Price</label>
-                                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter new price">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <input type="hidden" id="typeAction" name="action" value="">
-                                    <input type="hidden" id="idPresentation" name="idPresentation">
-                                    <input type="hidden" name="global_token2" value="<?= $_SESSION['global_token'] ?>" >
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- MODAL CREATE PRESENTATION -->
     <!-- Grids in modals -->
     <div class="modal fade" id="modalPresentation" tabindex="-1" aria-labelledby="titleModalPresentation" aria-modal="true">
@@ -410,63 +392,69 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="description" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+                                    <input type="text" class="form-control" id="description" name="description" onkeypress="return basicText(event)" placeholder="Enter description" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="weight_in_grams" class="form-label">Weight</label>
-                                    <input type="text" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Enter weight">
+                                    <input type="text" class="form-control" id="weight_in_grams" name="weight_in_grams" onkeypress="return onlyNumbers(event)" placeholder="Enter weight" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="code" class="form-label">Code</label>
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="Enter code">
+                                    <input type="text" class="form-control" id="code" name="code" onkeypress="return numbersLettersWithoutSpaces(event)" placeholder="Enter code" required>
                                 </div>
                             </div><!--end col-->
                             <div id="divCoverPresentation" class="col-xxl-6">
                                     <label for="coverPresentation" class="form-label">Cover</label>
                                     <div class="input-group">
-                                        <input type="file" class="form-control" id="coverPresentation" name="coverPresentation" accept="image/*">
+                                        <input type="file" class="form-control" id="coverPresentation" name="coverPresentation" accept="image/*" required>
                                     </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_min" class="form-label">Minimum Stock</label>
-                                    <input type="text" class="form-control" id="stock_min" name="stock_min" placeholder="Enter min stock">
+                                    <input type="text" class="form-control" id="stock_min" name="stock_min" onkeypress="return onlyNumbers(event)" placeholder="Enter min stock" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_max" class="form-label">Maximum Stock</label>
-                                    <input type="text" class="form-control" id="stock_max" name="stock_max" placeholder="Enter max stock">
+                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter stock avaliable">
+                                    <input type="text" class="form-control" id="stock" name="stock" onkeypress="return onlyNumbers(event)" placeholder="Enter stock avaliable" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <label for="statusPresentation" class="form-label">Status</label>
                                 <div class="input-group">
-                                    <select class="form-select" id="statusPresentation" name="statusPresentation">
+                                    <select class="form-select" id="statusPresentation" name="statusPresentation" required>
                                         <option selected disabled>Select a status</option>
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
                             </div><!--end col-->
-                            <div  class="col-xxl-6 mb-3">
-                                <div">
-                                    <label id="productIdLabel" for="product_id" class="form-label">Product ID</label>
-                                    <input type="text" class="form-control" id="product_id" name="product_id" placeholder="Enter product ID">
+
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="amount" class="form-label">Price</label>
+                                    <input type="text" class="form-control" id="amount" name="amount" onkeypress="return onlyNumbers(event)" placeholder="Enter price" required>
                                 </div>
                             </div><!--end col-->
 
-
+                            <div  class="col-xxl-6 mb-3">
+                                <div">
+                                    <label id="productIdLabel" for="product_id" class="form-label">Product ID</label>
+                                    <input type="text" class="form-control" id="product_id" name="product_id" onkeypress="return onlyNumbers(event)" placeholder="Enter product ID" required>
+                                </div>
+                            </div><!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
                                     <input type="hidden" id="typeAction" name="action" value="">
@@ -541,9 +529,6 @@
         document.getElementById("typeAction").value = "create";
         document.getElementById("titleModalPresentation").innerHTML = "Add new presentation";
         document.getElementById("divCoverPresentation").hidden = false;
-        //document.getElementById("divProductId").hidden = "true";
-        //document.getElementById("divCoverPresentation").hidden = false;
-        //document.getElementById("divCoverPresentation").hidden = true;
 
         document.getElementById("description").value = "";
         document.getElementById("weight_in_grams").value = "";
@@ -556,24 +541,9 @@
         document.getElementById("product_id").value = product_id;
         document.getElementById("product_id").setAttribute("type", "hidden");
         document.getElementById("productIdLabel").hidden = true;
-        
+        document.getElementById("amount").value = "";
         
         document.getElementById("id").value = product_id;
-    }
-
-    function editPricePresentation(target) {
-        let presentation = JSON.parse(target.getAttribute('data-presentation2'));
-        console.log(presentation);
-
-        document.getElementById("idPresentation").value = presentation.id;
-        if(presentation.price[0].amount!=null||presentation.price[0].amount!=undefined){
-            document.getElementById("amount").value = presentation.price[0].amount;
-        }
-
-        document.getElementById("typeAction").value = "update_p";
-
-        //console.log(presentation.price[0].amount);
-        
     }
 
     function editPresentation(target) {
@@ -600,10 +570,15 @@
 
         document.getElementById("product_id").setAttribute("type", "text");
         document.getElementById("product_id").value = presentation.product_id;
-        //document.getElementById("id").value = <?= $productsData->id ?>;
         document.getElementById("id").value = presentation.id;
         document.getElementById("coverPresentation").disabled = true;
         document.getElementById("productIdLabel").hidden = false;
+        if(presentation.price!=null) {
+            precio = presentation.price.pop();
+            document.getElementById("amount").value = precio.amount;
+        }else{
+            document.getElementById("amount").value = "";
+        } 
     }
 </script>
 
