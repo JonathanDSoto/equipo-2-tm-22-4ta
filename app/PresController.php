@@ -41,9 +41,10 @@ if(isset($_POST['action'])){
             $stock_max = strip_tags($_POST['stock_max']);
             $stock_min = strip_tags($_POST['stock_min']);
             $product_id = strip_tags($_POST['product_id']);
+            $amount = strip_tags($_POST['amount']);
 
             $pres = new PresController();
-            $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id);
+            $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
 
         break;
             
@@ -167,25 +168,25 @@ class PresController{
 
 
     #Editar Presentacion:
-    public function editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id)
+    public function editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount)
     {
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'PUT',
-        CURLOPT_POSTFIELDS => 'description='.$description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'&stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&id='.$id,
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$_SESSION['token'],
-            'Content-Type: application/x-www-form-urlencoded'
-        ),
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => 'description='.$description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'&stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&id='.$id.'&amount='.$amount,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer 1215|7FaczaWqbE0sy444bREnXpDY8y2Ze5rYwW3ipnmv',
+                'Content-Type: application/x-www-form-urlencoded',
+            ),
         ));
 
         $response = curl_exec($curl);
@@ -266,6 +267,7 @@ class PresController{
     }
 
 }
+
 
 
 ?>
