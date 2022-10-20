@@ -444,7 +444,7 @@
 
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="stock" class="form-label">Price</label>
+                                    <label for="amount" class="form-label">Price</label>
                                     <input type="text" class="form-control" id="amount" name="amount" onkeypress="return onlyNumbers(event)" placeholder="Enter price" required>
                                 </div>
                             </div><!--end col-->
