@@ -144,14 +144,14 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">First name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter firstname" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter firstname" onkeypress="return onlyLettersAndSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- LASTNAME INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="lastname" class="form-label">Last name</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname" required>
+                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname" onkeypress="return onlyLettersAndSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- EMAIL INPUT -->
@@ -165,7 +165,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="phone_number" class="form-label">Phone number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" onkeypress="return onlyNumbers(event)" required>
                                 </div>
                             </div>
                             <!-- ROLE INPUT -->
@@ -264,7 +264,7 @@
             bodyFormData.append('action', 'remove');
             bodyFormData.append('global_token', '<?= $_SESSION['global_token'] ?>');
 
-            axios.post('<?= BASE_PATH ?>userc', bodyFormData)
+            axios.post('<?= BASE_PATH ?>user', bodyFormData)
             .then(function (response) {
                 location.reload();
             })
