@@ -26,3 +26,7 @@ function slug(e) {
     return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]/i.test(e.key);
 }
 
+function noSpaces(e) {
+    return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ!#$%&']/i.test(e.key);
+}
+
