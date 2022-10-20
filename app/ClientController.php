@@ -99,8 +99,11 @@ class ClientController{
             $response = curl_exec($curl);
             curl_close($curl);
             $response = json_decode ($response);
-            header('location: '.BASE_PATH.'products');
-            var_dump($response);
+            if (isset ($response->code) && $response->code > 0){
+                header('location: '.BASE_PATH.'client');
+              } else {
+                header('location: '.BASE_PATH.'client?error=false');
+              }
         }
 
         #Editar Cliente:
@@ -126,9 +129,9 @@ class ClientController{
             $response = json_decode ($response);
             curl_close($curl);
             if (isset ($response->code) && $response->code > 0){
-                header('location: '.BASE_PATH.'products');
+                header('location: '.BASE_PATH.'client');
               } else {
-                header('location: '.BASE_PATH.'products?error=false');
+                header('location: '.BASE_PATH.'client?error=false');
               }
           }
 
@@ -155,9 +158,9 @@ class ClientController{
             curl_close($curl);
             $response = json_decode ($response);
             if (isset ($response->code) && $response->code > 0){
-                header('location: '.BASE_PATH.'products');
+                header('location: '.BASE_PATH.'client');
             } else {
-                header('location: '.BASE_PATH.'products?error=false');
+                header('location: '.BASE_PATH.'client?error=false');
             }
         } 
 }
