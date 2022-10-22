@@ -1,5 +1,14 @@
 <?php
 	include_once "../../app/config.php";
+    include_once "../../app/BrandController.php";
+
+    if(!isset($_SESSION['token'])){
+    	header('location: '.BASE_PATH.'login');
+	}
+    
+    $brandControl = new BrandController();
+    $brands = $brandControl -> getMarcas();
+    //var_dump($brands);
 ?> 
 
 <!DOCTYPE html>
@@ -43,58 +52,64 @@
                     <!-- end page title -->
 
                     <!-- Content -->
-                        <div class="col-xl-12 col-lg-10">
+                        <div class="col-xl-12 col-lg-12">
                             <div>
                                 <div class="card">
                                     <div class="card-header border-0">
                                         <div class="row g-4">
                                             <div class="col-sm-auto">
                                                 <div>
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalBrand" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Brand</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="d-flex justify-content-sm-end">
-                                                    <div class="search-box ms-2">
-                                                        <input type="text" class="form-control" id="searchProductList" placeholder="Search Brand...">
-                                                        <i class="ri-search-line search-icon"></i>
-                                                    </div>
+                                                    <button onclick="addBrand()" type="button" data-bs-toggle="modal" data-bs-target="#modalBrand" class="btn btn-success btn-label waves-effect waves-light rounded-pill"><i class="ri-add-line align-bottom me-1 label-icon align-middle rounded-pill fs-16 me-2"></i> Add Brand</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- TABLA PRODUCTOS -->
+                                    <!-- TABLA BRANDS -->
                                     <div class="card-body">
-                                        <table class="table table-nowrap">
+                                        <table id="tableBrands" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col">ID</th>
                                                     <th scope="col">Name</th>
-                                                    <th scope="col">Desciption</th>
+                                                    <th scope="col">Description</th>
                                                     <th scope="col">Slug</th>
+                                                    <th scope="col">Quantity of products</th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Ford</td>
-                                                    <td>marca de autos</td>
-                                                    <td>ford</td>
-                                                    <td>
-                                                        <div class="dropdown ms-2">
-                                                            <a class="btn btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="ri-more-2-fill"></i>
-                                                            </a>
-                                                        
-                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalBrand" href="#">Edit</a></li>
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeItemModal" href="#">Delete</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <?php foreach ($brands as $item): ?>
+                                                    <tr>
+                                                        <td><?php if(isset($item->id)) echo $item->id; else echo "ID not found."; ?></td>
+                                                        <td><?php if(isset($item->name)) echo $item->name; else echo "Name not found."; ?></td>
+                                                        <td><?php if(isset($item->description)) echo $item->description; else echo "Description not found."; ?></td>
+                                                        <td><?php if(isset($item->slug)) echo $item->slug; else echo "Slug not found."; ?></td>
+                                                        <td>
+                                                            <?php
+                                                                if(isset($item->products)) {
+                                                                   echo count($item->products);
+                                                                }else {
+                                                                    echo "Quantity not found.";
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown ms-2">
+                                                                <a class="btn btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="ri-more-2-fill"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                    <li><a class="dropdown-item" data-brand='<?php echo json_encode($item)?>' onclick="editBrand(this)" data-bs-toggle="modal" data-bs-target="#modalBrand" href="#">Edit</a></li>
+                                                                    <li><a class="dropdown-item" onclick="remove(<?php echo $item->id ?>)" href="#">Delete</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
+                                        <!--</table>-->
                                     </div>
                                     <!-- end card body -->
                                 </div>
@@ -126,28 +141,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:void(0);">
+                    <form method="post" action="<?= BASE_PATH ?>brand">
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="nameInput" class="form-label">Name</label>
-                                    <input type="name" class="form-control" id="emailInput" placeholder="Enter brand's name">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter brand's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="phoneInput" class="form-label">Slug</label>
-                                    <input type="phone" class="form-control" id="phoneInput" placeholder="Enter brand's slug">
+                                    <label for="slugBrand" class="form-label">Slug</label>
+                                    <input type="text" class="form-control" id="slugBrand" name="slugBrand" onkeypress="return slug(event)" placeholder="Enter brand's slug" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-12">
                                 <div>
-                                    <label for="emailInput" class="form-label">Description</label>
-                                    <input type="email" class="form-control" id="emailInput" placeholder="Enter a description">
+                                    <label for="description" class="form-label">Description</label>          
+                                    <textarea id="description" name="description" class="form-control" onkeypress="return basicText(event)" placeholder="Enter a description" rows="3" style="resize:none" maxlength="200" required></textarea>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
+                                    <input type="hidden" id="typeAction" name="action" value="">
+                                    <input type="hidden" id="id" name="id">
+                                    <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
@@ -202,5 +220,61 @@
     <?php include "../../layout/scripts.template.php" ?>
 </body>
 
+<script>
+    function remove (id) {
+        swal({
+            title: "Are you sure you want to remove this brand?",
+            text: "You will not be able to recover this brand!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            swal("The brand has been deleted!", {
+            icon: "success",
+            });
+
+            var bodyFormData = new FormData();
+            bodyFormData.append('id', id);
+            bodyFormData.append('action', 'remove');
+            bodyFormData.append('global_token', '<?= $_SESSION['global_token'] ?>');
+
+            axios.post('<?= BASE_PATH ?>brand', bodyFormData)
+            .then(function (response) {
+                location.reload();
+            })
+            .catch(function (error) {
+                //console.log(error);
+                alert("An error occurred while performing the action.");
+            });
+
+        } else {
+            swal("This brand is safe!");
+        }
+        });
+    }
+
+    function addBrand() {
+        document.getElementById("typeAction").value = "create";
+        document.getElementById("exampleModalgridLabel").innerHTML = "Add new brand";
+
+        document.getElementById("name").value = "";
+        document.getElementById("slugBrand").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("id").value = "";
+    }
+
+    function editBrand(target) {
+        let brand = JSON.parse(target.getAttribute('data-brand'));
+        document.getElementById("typeAction").value = "update";
+        document.getElementById("exampleModalgridLabel").innerHTML = "Edit brand";
+
+        document.getElementById("name").value = brand.name;
+        document.getElementById("slugBrand").value = brand.slug;
+        document.getElementById("description").value = brand.description;
+        document.getElementById("id").value = brand.id;
+    }
+</script>
 
 </html>

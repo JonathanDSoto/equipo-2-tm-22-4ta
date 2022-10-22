@@ -36,5 +36,14 @@ $(document).ready(function () {
 
     //TABLE DETAILS OF A PRODUCT - ORDERS: "view/products/detail.php" 
     $("#tableProductDetailsOrders").DataTable();
+
+    //TABLE BRANDS: "view/catalogs/brands.php"
+    $("#tableBrands").DataTable();
+
+    //TABLE CATEGORIES: "view/catalogs/categories.php"
+    $("#tableCategories").DataTable();
+
+    //TABLE TAGS: "view/catalogs/tags.php"
+    $("#tableTags").DataTable();
     
 });
