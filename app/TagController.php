@@ -10,7 +10,7 @@ if(isset($_POST['action'])){
         #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
-        $slug = strip_tags($_POST['slug']);
+        $slug = strip_tags($_POST['slugTag']);
 
         $tag = new TagController();
 
@@ -22,7 +22,7 @@ if(isset($_POST['action'])){
         $id = strip_tags($_POST['id']);
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
-        $slug = strip_tags($_POST['slug']);
+        $slug = strip_tags($_POST['slugTag']);
 
         $tag = new TagController;
 
@@ -98,8 +98,12 @@ class TagController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response);
-        header('location: '.BASE_PATH.'products');
-        var_dump($response);
+        
+        if (isset ($response->code) && $response->code > 0){
+          header('location: '.BASE_PATH.'tags?success=true');
+        } else {
+          header('location: '.BASE_PATH.'tags?error=false');
+        }
       
       }
 
@@ -124,13 +128,13 @@ class TagController{
         ),
       ));
       $response = curl_exec($curl);
-  
       curl_close($curl);
       $response = json_decode($response);
+
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'products');
+        header('location: '.BASE_PATH.'tags?success=true');
       } else {
-        header('location: '.BASE_PATH.'products?error=false');
+        header('location: '.BASE_PATH.'tags?error=false');
       }
     }
 
@@ -156,13 +160,13 @@ class TagController{
         ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
         $response = json_decode($response);
-        if (isset ($response->code) && $response->code > 0) {
-            return true;
+
+        if (isset ($response->code) && $response->code > 0){
+          header('location: '.BASE_PATH.'tags?success=true');
         } else {
-            return false;
+          header('location: '.BASE_PATH.'tags?error=false');
         }
     } 
 
@@ -185,9 +189,9 @@ class TagController{
         ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
         $response = json_decode($response);
+
         if (isset ($response->code) && $response->code > 0){
             return $response->data;
         } else {

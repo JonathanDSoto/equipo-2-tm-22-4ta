@@ -10,7 +10,7 @@ if(isset($_POST['action'])){
         #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
-        $slug = strip_tags($_POST['slug']);
+        $slug = strip_tags($_POST['slugBrand']);
 
         $brand = new BrandController();
 
@@ -21,7 +21,7 @@ if(isset($_POST['action'])){
         $id = strip_tags($_POST['id']);
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
-        $slug = strip_tags($_POST['slug']);
+        $slug = strip_tags($_POST['slugBrand']);
 
         $brand = new BrandController;
 
@@ -58,7 +58,8 @@ class BrandController{
           CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer '.$token
           ),
-        ));$response = curl_exec($curl); 
+        ));
+        $response = curl_exec($curl); 
         curl_close($curl);
         $response = json_decode($response);
         
@@ -96,8 +97,14 @@ class BrandController{
       $response = curl_exec($curl);
       curl_close($curl);
       $response = json_decode($response);
-      header('location: '.BASE_PATH.'products');
+      
       var_dump($response);
+
+      if (isset ($response->code) && $response->code > 0){
+        header('location: '.BASE_PATH.'brands?success=true');
+      } else {
+        header('location: '.BASE_PATH.'brands?error=false');
+      }
       
       }
 
@@ -122,12 +129,13 @@ class BrandController{
         ),
       ));
       $response = curl_exec($curl);
-      $response = json_decode($response);
       curl_close($curl);
+      $response = json_decode($response);
+
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'products');
+        header('location: '.BASE_PATH.'brands?success=true');
       } else {
-        header('location: '.BASE_PATH.'products?error=false');
+        header('location: '.BASE_PATH.'brands?error=false');
       }
     }
 
@@ -150,16 +158,14 @@ class BrandController{
           'Authorization: Bearer ' . $_SESSION['token']
       ),
       ));
-
       $response = curl_exec($curl);
-
       curl_close($curl);
       $response = json_decode($response);
-      curl_close($curl);
+
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'products');
+        header('location: '.BASE_PATH.'brands?success=true');
       } else {
-        header('location: '.BASE_PATH.'products?error=false');
+        header('location: '.BASE_PATH.'brands?error=false');
       }
   }
 
@@ -195,4 +201,3 @@ class BrandController{
   }
 
 }
-?>
