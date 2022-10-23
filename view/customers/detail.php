@@ -7,15 +7,13 @@
 	}
     
     $customerControl = new ClientController();
-    $customersData = $customerControl -> getClienteEspecifico($_GET['id']); /* MODIFICAR ESTA VARIABLE GET POR "ID" */
-    //var_dump($customersData);
+    $customersData = $customerControl -> getClienteEspecifico($_GET['id']);
 
     if(!isset($customersData)) {
         header('location: '.BASE_PATH.'customers');
     }
 
     $customerTotalOrders = $customerControl -> getTotalOrders($_GET['id']);
-    //var_dump($customerTotalOrders);
 ?> 
 
 <!DOCTYPE html>
@@ -580,7 +578,6 @@
                 location.reload();
             })
             .catch(function (error) {
-                //console.log(error);
                 alert("An error occurred while performing the action.");
             });
 

@@ -8,7 +8,6 @@
     
     $customerControl = new ClientController();
     $customers = $customerControl -> getClientes();
-    //var_dump($customers);
 ?> 
 
 <!DOCTYPE html>
@@ -314,7 +313,6 @@
                 location.reload();
             })
             .catch(function (error) {
-                //console.log(error);
                 alert("An error occurred while performing the action.");
             });
 
