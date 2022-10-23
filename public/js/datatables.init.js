@@ -46,4 +46,12 @@ $(document).ready(function () {
     //TABLE TAGS: "view/catalogs/tags.php"
     $("#tableTags").DataTable();
     
+    //TABLE CUSTOMERS: "view/customers/index.php"
+    $("#tableCustomers").DataTable();
+
+    //TABLE DETAILS OF A COSTUMER - ADDRESS: "view/customers/detail.php" 
+    $("#tableCustomerDetailsAddress").DataTable();
+
+    //TABLE DETAILS OF A COSTUMER - ORDERS: "view/customers/detail.php" 
+    $("#tableCustomerDetailsOrders").DataTable();
 });

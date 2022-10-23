@@ -30,3 +30,6 @@ function noSpaces(e) {
     return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ!#$%&']/i.test(e.key);
 }
 
+function streetAndNumber(e) {
+    return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ/#,& ]/i.test(e.key);
+}
