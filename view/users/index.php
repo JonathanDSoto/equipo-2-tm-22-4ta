@@ -189,14 +189,14 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" onkeypress="return noSpaces(event)" required>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" onkeypress="return noSpaces(event)" minlength="8" required>
                                 </div>
                             </div>
                             <!-- CONFIRM PASSWORD INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="confirmPassword" class="form-label">Confirm password</label>
-                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" onkeypress="return noSpaces(event)" required>
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" onkeypress="return noSpaces(event)" oninput="check(this)" required>
                                 </div>
                             </div>
                             <!-- CREATED_BY INPUT -->
@@ -216,7 +216,7 @@
                                     <input type="hidden" id="id" name="id">
                                     <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>" >
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary" id="save">Save</button>
                                 </div>
                             </div>
                         </div><!--end row-->
@@ -316,6 +316,16 @@
         document.getElementById("password").value = "";
         document.getElementById("confirmPassword").value = "";
         document.getElementById("id").value = user.id;
+    }
+
+
+    function check(input) {
+        if (input.value != document.getElementById('password').value) {
+            input.setCustomValidity('Password must be matching.');
+        } else {
+            // input is valid -- reset the error message
+            input.setCustomValidity('');
+        }
     }
 </script>
 
