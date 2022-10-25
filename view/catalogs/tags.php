@@ -145,7 +145,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter tag's name">
+                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter tag's name">
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">

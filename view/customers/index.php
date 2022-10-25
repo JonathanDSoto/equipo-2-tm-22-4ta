@@ -224,7 +224,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="email" class="form-label">Email*</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter an email address" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter an email address" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">

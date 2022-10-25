@@ -1,10 +1,10 @@
 <?php
-	include_once "../../app/config.php";
+    include_once "../../app/config.php";
     include_once '../../app/ClientController.php';
 
     if(!isset($_SESSION['token'])){
-    	header('location: '.BASE_PATH.'login');
-	}
+        header('location: '.BASE_PATH.'login');
+    }
     
     $customerControl = new ClientController();
     $customersData = $customerControl -> getClienteEspecifico($_GET['id']);
@@ -152,7 +152,7 @@
                         <div class="col-xxl-9">
                             <div class="row">
                                 <!-- CUSTOMER LEVEL -->
-                                <div class="col-xxl-6">
+                                <div class="col-xxl-4">
                                     <!-- card -->
                                     <div class="card card-animate <?php if(isset($customersData->level_id)) switch ($customersData->level->id) { case '1': echo 'bg-success'; break; case '2': echo 'bg-secondary'; break; case '3': echo 'bg-primary'; break; default: echo 'bg-success'; break; }?>">
                                         <div class="card-body">
@@ -178,7 +178,7 @@
                                     </div><!-- end card -->
                                 </div>
                                 <!-- CUSTOMER TOTAL ORDERS -->
-                                <div class="col-xxl-6">
+                                <div class="col-xxl-4">
                                     <!-- card -->
                                     <div class="card card-animate bg-info">
                                         <div class="card-body">
@@ -190,6 +190,29 @@
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
                                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white">$<span class="counter-value" data-target="<?= $customerTotalOrders ?>"></span></h4>
+                                                </div>
+                                                <div class="avatar-sm flex-shrink-0">
+                                                    <span class="avatar-title bg-soft-light rounded fs-3 shadow">
+                                                        <i class="bx bx-wallet text-white"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </div>
+                                <!-- CUSTOMER QUANTITY OF ORDERS -->
+                                <div class="col-xxl-4">
+                                    <!-- card -->
+                                    <div class="card card-animate bg-success">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">Quantity of orders</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-end justify-content-between mt-4">
+                                                <div>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="<?php if(isset($customersData->orders)) echo count($customersData->orders); else echo '0'; ?>"></span></h4>
                                                 </div>
                                                 <div class="avatar-sm flex-shrink-0">
                                                     <span class="avatar-title bg-soft-light rounded fs-3 shadow">

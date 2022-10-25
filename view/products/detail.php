@@ -422,7 +422,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_max" class="form-label">Maximum Stock</label>
-                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" required>
+                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" oninput="check(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
@@ -579,6 +579,15 @@
         }else{
             document.getElementById("amount").value = "";
         } 
+    }
+
+    function check(input) {
+        if (input.value < document.getElementById('stock_min').value) {
+            input.setCustomValidity('Value can´t be lower than minimum stock.');
+        } else {
+            // input is valid -- reset the error message
+            input.setCustomValidity('');
+        }
     }
 </script>
 
