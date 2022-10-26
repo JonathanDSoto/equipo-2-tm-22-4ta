@@ -7,12 +7,20 @@ if(isset($_POST['accion'])){
         switch($_POST['accion']){
         case 'access':
             if(isset($_POST['email'])&& isset($_POST['password'])){
-
-                $authController =new AuthController();
-
                 $email=strip_tags($_POST['email']);
-                $password=strip_tags($_POST['password']);
-                $authController -> login($email,$password);
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['errorMessage'] = "Invalid data.";
+                    header('location: '.BASE_PATH.'login');
+                  }
+                  else{
+                    $authController =new AuthController();
+
+                    $password=strip_tags($_POST['password']);
+                    $authController -> login($email,$password);
+                  }
+
+
+                
             }
             break;    
         case 'salir':
@@ -56,10 +64,11 @@ class AuthController{
             $_SESSION['email']=$response->data->email;
             $_SESSION['phone_number']=$response->data->phone_number;
             $_SESSION['role']=$response->data->role;
-
+            $_SESSION['errorMessage'] = "";
             var_dump($response);
             header('location: '.BASE_PATH.'products');
         }else{
+            
             var_dump($response);
             header('location: '.BASE_PATH.'?error=true');
         }
