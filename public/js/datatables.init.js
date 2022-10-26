@@ -54,4 +54,10 @@ $(document).ready(function () {
 
     //TABLE DETAILS OF A COSTUMER - ORDERS: "view/customers/detail.php" 
     $("#tableCustomerDetailsOrders").DataTable();
+
+    //TABLE COUPONS: "view/coupons/index.php"
+    $("#tableCoupons").DataTable();
+
+    //TABLE DETAILS OF A COUPON - ORDERS: "view/coupons/detail.php" 
+    $("#tableCouponsDetailsOrders").DataTable();
 });
