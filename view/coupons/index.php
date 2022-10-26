@@ -392,10 +392,8 @@
                 location.reload();
             })
             .catch(function (error) {
-                //console.log(error);
                 alert("An error occurred while performing the action.");
             });
-
         } else {
             swal("This coupon is safe!");
         }
@@ -427,6 +425,7 @@
     
     function editCoupon(target) {
         let coupon = JSON.parse(target.getAttribute('data-coupon'));
+        let couponPercentage = false, couponAmount = false;
         document.getElementById("typeAction").value = "update";
         document.getElementById("couponModalLabel").innerHTML = "Edit coupon";
         document.getElementById('divPercentageDiscount').hidden = true;
@@ -435,52 +434,44 @@
 
         document.getElementById("name").value = coupon.name;
         document.getElementById("code").value = coupon.code;
+
         if(coupon.couponable_type!=null) {
             document.getElementById("couponable_type").value = coupon.couponable_type;
             if(coupon.couponable_type === "Cupon de descuento fijo") {
-                document.getElementById("couponable_type").selectedIndex = 1;
-                document.getElementById('divPercentageDiscount').hidden = true;
-                document.getElementById("percentage_discount").hidden = true;
-                document.getElementById("percentage_discount").required = false;
-                document.getElementById("percentage_discount").value = "";
-                document.getElementById('divAmountDiscount').hidden = false;
-                document.getElementById("amount_discount").hidden = false;
-                document.getElementById("amount_discount").required = true;
-                document.getElementById("amount_discount").value = coupon.amount_discount;       
+                couponAmount = true;
             }else if(coupon.couponable_type=="Cupon de descuento") {
-                document.getElementById("couponable_type").selectedIndex = 2;
-                document.getElementById('divPercentageDiscount').hidden = false;
-                document.getElementById("percentage_discount").hidden = false;
-                document.getElementById("percentage_discount").required = true;
-                document.getElementById("percentage_discount").value = coupon.percentage_discount;
-                document.getElementById('divAmountDiscount').hidden = true;
-                document.getElementById("amount_discount").hidden = true;
-                document.getElementById("amount_discount").required = false;
-                document.getElementById("amount_discount").value = "";
+                couponPercentage = true;
             }
         } else {
             if(coupon.amount_discount!='0'&&coupon.amount_discount!=null) {
-                document.getElementById("couponable_type").selectedIndex = 1;
-                document.getElementById('divPercentageDiscount').hidden = true;
-                document.getElementById("percentage_discount").hidden = true;
-                document.getElementById("percentage_discount").required = false;
-                document.getElementById("percentage_discount").value = "";
-                document.getElementById('divAmountDiscount').hidden = false;
-                document.getElementById("amount_discount").hidden = false;
-                document.getElementById("amount_discount").required = true;
-                document.getElementById("amount_discount").value = coupon.amount_discount; 
+                couponAmount = true;
             } else if(coupon.percentage_discount!='0'&&coupon.percentage_discount!=null) {
-                document.getElementById("couponable_type").selectedIndex = 2;
-                document.getElementById('divPercentageDiscount').hidden = false;
-                document.getElementById("percentage_discount").hidden = false;
-                document.getElementById("percentage_discount").required = false;
-                document.getElementById("percentage_discount").value = coupon.percentage_discount;
-                document.getElementById('divAmountDiscount').hidden = true;
-                document.getElementById("amount_discount").hidden = true;
-                document.getElementById("amount_discount").required = true;
-                document.getElementById("amount_discount").value = "";
+                couponPercentage = true;
             }
         }
+
+        if(couponPercentage) {
+            document.getElementById("couponable_type").selectedIndex = 2;
+            document.getElementById('divPercentageDiscount').hidden = false;
+            document.getElementById("percentage_discount").hidden = false;
+            document.getElementById("percentage_discount").required = true;
+            document.getElementById("percentage_discount").value = coupon.percentage_discount;
+            document.getElementById('divAmountDiscount').hidden = true;
+            document.getElementById("amount_discount").hidden = true;
+            document.getElementById("amount_discount").required = false;
+            document.getElementById("amount_discount").value = "";
+        } else if(couponAmount) {
+            document.getElementById("couponable_type").selectedIndex = 1;
+            document.getElementById('divPercentageDiscount').hidden = true;
+            document.getElementById("percentage_discount").hidden = true;
+            document.getElementById("percentage_discount").required = false;
+            document.getElementById("percentage_discount").value = "";
+            document.getElementById('divAmountDiscount').hidden = false;
+            document.getElementById("amount_discount").hidden = false;
+            document.getElementById("amount_discount").required = true;
+            document.getElementById("amount_discount").value = coupon.amount_discount;  
+        }
+
         document.getElementById("min_amount_required").value = coupon.min_amount_required;
         document.getElementById("min_product_required").value = coupon.min_product_required;
         document.getElementById("start_date").value = coupon.start_date;
