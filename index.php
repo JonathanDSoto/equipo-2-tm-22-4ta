@@ -41,7 +41,13 @@
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password" name="password" required>
                                                 <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="submit" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <?php 
+                                                    if(isset( $_SESSION['errorMessage'])){
+                                                        echo $_SESSION['errorMessage'];
+                                                    }
+                                                ?>
                                             </div>
+                                            
                                         </div>
 
                                         <div class="mt-4">
