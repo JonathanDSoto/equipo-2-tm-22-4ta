@@ -67,5 +67,8 @@
     <!-- end auth-page-wrapper -->
 
     <?php include "layout/scripts.template.php" ?>
+   
+
 </body>
+
 </html>
