@@ -4,60 +4,82 @@ include_once  "config.php";
 #CRUD
 if(isset($_POST['action'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
-    switch($_POST['action']){
-        case 'create':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
-            $name = strip_tags($_POST['name']);
-            $slug = strip_tags($_POST['slugProduct']);
-            $description = strip_tags($_POST['description']);
-            $features = strip_tags($_POST['features']);
-            $brand_id = strip_tags($_POST['brand']);
-            $categories = $_POST['categories'];
-            $tags = $_POST['tags'];
-
-            #Imagen:
-            if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
-                $imagen = $_FILES["cover"]["tmp_name"];
-            
-                $p = new ProdController();
-                $p -> create($name, $slug, $description, $features, $brand_id, $imagen, $categories, $tags);
-            }else{
-                header('location: '.BASE_PATH.'products?error=false');
-            }  
-
-        break;
-
-        case 'update':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
-            $id = strip_tags($_POST['id']);
-            $name = strip_tags($_POST['name']);
-            $slug = strip_tags($_POST['slugProduct']);
-            $description = strip_tags($_POST['description']);
-            $features = strip_tags($_POST['features']);
-            $brand_id = strip_tags($_POST['brand']);
-            $categories = $_POST['categories'];
-            $tags = $_POST['tags'];
-
-            $p = new ProdController();
-            $p->editProduct($name, $slug, $description, $features, $brand_id, $id, $categories, $tags); 
+         switch($_POST['action']){ 
                 
-        break;
-
-        case 'remove':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
-            $id = strip_tags($_POST['id']);
-            $p = new ProdController;
-            $p->remove($id);
-
-        break;     
+            case 'create':
+                $name = strip_tags($_POST['name']);
+                $slug = strip_tags($_POST['slugProduct']);
+                $description = strip_tags($_POST['description']);
+                $features = strip_tags($_POST['features']);
+                $brand_id = strip_tags($_POST['brand']);
+                $categories = $_POST['categories'];
+                $tags = $_POST['tags'];
+                #Imagen:
+                if(isset($_FILES['cover']) && $_FILES["cover"]["error"] == 0) {
+                    $imagen = $_FILES["cover"]["tmp_name"];     
+                    $p = new ProdController();
+                    if($p->isValid($name, $slug, $description, $features)){
+                        $p -> create($name, $slug, $description, $features, $brand_id, $imagen, $categories, $tags);
+                    }
+                }else{
+                    header('location: '.BASE_PATH.'products?error=false');
+                }  
+                break;
+                
+                case 'update':
+                    $name = strip_tags($_POST['name']);
+                    $slug = strip_tags($_POST['slugProduct']);
+                    $description = strip_tags($_POST['description']);
+                    $features = strip_tags($_POST['features']);
+                    $brand_id = strip_tags($_POST['brand']);
+                    $categories = $_POST['categories'];
+                    $tags = $_POST['tags'];
+                    $id = strip_tags($_POST['id']);
+                    $p = new ProdController();
+                    if($p->isValid($name, $slug, $description, $features)){
+                        $p->editProduct($name, $slug, $description, $features, $brand_id, $id, $categories, $tags); 
+                    }        
+                break;
+                
+                case 'remove':
+                    $id = strip_tags($_POST['id']);
+                    $p = new ProdController;
+                    $p->remove($id);
+                break;     
         }
     }
 }
+        
+
+        
+        
+    
+
 
 
 
 class ProdController{
 
+    public function isValid($name,$slug,$description,$features){
+        #Validacion de contenido en input
+        if(!empty($name)&&
+            !empty($slug)){
+                if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+                !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$slug)||
+                !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)||
+                !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$features)) {
+                    $_SESSION['errorMessage'] = "Invalid data";
+                    header('location: '.BASE_PATH.'products/create/?error=true');
+                    
+                }
+                else{
+                    return true;
+                }
+            }else{
+                $_SESSION['errorMessage'] = "Missing data";
+                header('location: '.BASE_PATH.'products/create/?error=true');
+            }
+    }
     #Get todos los productos:
     public function getTodo(){
 
@@ -127,7 +149,8 @@ class ProdController{
         var_dump($response);
         
         if (isset ($response->code) && $response->code > 0){
-            header('location: '.BASE_PATH.'products');
+            $_SESSION['errorMessage'] = "";
+            header('location: '.BASE_PATH.'products?success=true');
         } else {
             header('location: '.BASE_PATH.'products?error=false');
         }
