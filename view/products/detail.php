@@ -416,19 +416,19 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_min" class="form-label">Minimum Stock</label>
-                                    <input type="text" class="form-control" id="stock_min" name="stock_min" onkeypress="return onlyNumbers(event)" placeholder="Enter min stock" required>
+                                    <input type="text" class="form-control" id="stock_min" name="stock_min" onkeypress="return onlyNumbers(event)" placeholder="Enter min stock" oninput="checkMinStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_max" class="form-label">Maximum Stock</label>
-                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" oninput="check(this)" required>
+                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" oninput="checkMaxStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="text" class="form-control" id="stock" name="stock" onkeypress="return onlyNumbers(event)" placeholder="Enter stock avaliable" required>
+                                    <input type="text" class="form-control" id="stock" name="stock" onkeypress="return onlyNumbers(event)" placeholder="Enter stock avaliable" oninput="checkAvailableStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
@@ -581,11 +581,36 @@
         } 
     }
 
-    function check(input) {
-        if (input.value < document.getElementById('stock_min').value) {
+    function checkMaxStock(input) {
+        var min = document.getElementById('stock_min').value;
+
+        if (parseInt(input.value) < parseInt(min)) {
             input.setCustomValidity('Value can´t be lower than minimum stock.');
         } else {
-            // input is valid -- reset the error message
+            input.setCustomValidity('');
+        }
+    }
+
+    function checkMinStock(input) {
+        var max = document.getElementById('stock_max').value;
+
+        if (parseInt(input.value) > parseInt(max)) {
+            input.setCustomValidity('Value can´t be higher than maximum stock.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    function checkAvailableStock(input) {
+        var min = document.getElementById('stock_min').value;
+        var max = document.getElementById('stock_max').value;
+
+        //Comparacion de valores, despues se cambia el texto de la validacion del input
+        if (parseInt(input.value) < parseInt(min)) {
+            input.setCustomValidity('Value can´t be lower than minimum stock.');
+        } else if(parseInt(input.value) > parseInt(max)) {
+            input.setCustomValidity('Value can´t be higher than maximum stock.');
+        }else {
             input.setCustomValidity('');
         }
     }
