@@ -80,9 +80,15 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <!-- TITLE -->
+                                        <?php 
+                                           if(isset( $_SESSION['errorMessage'])){
+                                                echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                            }
+                                        ?>
                                         <div class="mb-3">
+                                            
                                             <label class="form-label" for="name">Product Title</label>
-                                            <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter product title" value="<?php if($action=='update'&&isset($productsData->name)) { echo $productsData->name; } ?>" required>
+                                            <input type="text" class="form-control" id="name" name="name"  placeholder="Enter product title" value="<?php if($action=='update'&&isset($productsData->name)) { echo $productsData->name; } ?>" required>
                                         </div>
 
                                         <!-- COVER -->

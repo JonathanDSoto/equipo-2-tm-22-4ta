@@ -43,7 +43,7 @@
                                                 <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="submit" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                                 <?php 
                                                     if(isset( $_SESSION['errorMessage'])){
-                                                        echo $_SESSION['errorMessage'];
+                                                        echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
                                                     }
                                                 ?>
                                             </div>
