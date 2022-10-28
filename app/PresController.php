@@ -23,7 +23,9 @@ if(isset($_POST['action'])){
                 $imagen = $_FILES["coverPresentation"]["tmp_name"];
             
                 $pres = new PresController();
-                $pres -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount);
+                if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
+                    $pres -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount);
+                }
             }else{
                 header('location: '.BASE_PATH.'products?error=false');
             }
@@ -44,8 +46,9 @@ if(isset($_POST['action'])){
             $amount = strip_tags($_POST['amount']);
 
             $pres = new PresController();
-            $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
-
+            if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
+                $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
+            }
         break;
             
         case 'remove':
@@ -63,6 +66,7 @@ if(isset($_POST['action'])){
             var_dump($id);
             var_dump($monto);
             $pres = new PresController;
+            
             $pres -> upPrice($id,$monto);
             
         break;
@@ -73,7 +77,34 @@ if(isset($_POST['action'])){
 
 
 class PresController{
-
+    
+    public function isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount){
+        if(!empty($description)&&
+        !empty($code)&&
+        !empty($weight_in_grams)&&
+        !empty($status)&&
+        !empty($stock)&&
+        !empty($stock_min)&&
+        !empty($stock_max)&&
+        !empty($product_id)&&
+        !empty($imagen)&&
+        !empty($amount)){
+            if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)||
+                !preg_match("/^[0-9]*$/",$weight_in_grams)||
+                !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]*$/",$code)||
+                !preg_match("/^[0-9]*$/",$stock_min)||
+                !preg_match("/^[0-9]*$/",$stock_max)||
+                !preg_match("/^[0-9]*$/",$stock)||
+                !preg_match("/^[0-9]*$/",$stock)||
+                !preg_match("/^[0-9]*$/",$amount)) {
+                    $_SESSION['errorMessage'] = "Invalid data";
+                    header('location: '.BASE_PATH.'products/?error=false');
+                }
+        }else{
+            $_SESSION['errorMessage'] = "Missing data";
+            header('location: '.BASE_PATH.'products/?error=false');
+        }
+    }
     #Get Presentacion:
     public function getPres($id){
 
@@ -160,6 +191,7 @@ class PresController{
         var_dump($response);
 
         if (isset ($response->code) && $response->code > 0){
+            $_SESSION['errorMessage'] = "";
             header('location: '.BASE_PATH.'products?success=true');
         } else {
             header('location: '.BASE_PATH.'products?error=false');
@@ -194,6 +226,7 @@ class PresController{
         $response = json_decode($response);
 
         if (isset ($response->code) && $response->code > 0){
+            $_SESSION['errorMessage'] = "";
             header('location: '.BASE_PATH.'products?success=true');
         } else {
             header('location: '.BASE_PATH.'products?error=false');
