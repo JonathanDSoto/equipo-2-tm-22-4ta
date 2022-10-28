@@ -251,7 +251,7 @@ class OrderController{
     }
 
     #Get Especific Order por fechas:
-        public function grtEspOrd($fecha_1,$fecha_2){
+    public function getPerDates($fecha_1,$fecha_2){
 
             $token = $_SESSION['token'];
             $curl = curl_init();
