@@ -150,7 +150,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"  placeholder="Enter category's name" >
+                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter category's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
