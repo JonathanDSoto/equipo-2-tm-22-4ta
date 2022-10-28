@@ -6,29 +6,31 @@ include_once  "config.php";
 if(isset($_POST['action'])){
   if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
+
       case 'create':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
         $slug = strip_tags($_POST['slugBrand']);
 
         $brand = new BrandController();
 
-        $brand->create($name, $description, $slug);   
+        if($brand->isValid($name,$slug,$description)){
+          $brand->create($name, $description, $slug);   
+        }
+        
       break;
       case 'update':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
         $slug = strip_tags($_POST['slugBrand']);
 
         $brand = new BrandController;
-
-        $brand->editBrand($id,$name, $description, $slug);
+        if($brand->isValid($name,$slug,$description)){
+          $brand->editBrand($id,$name, $description, $slug);
+        }
       break;
       case 'remove':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
 
         $brand = new BrandController;
@@ -41,6 +43,26 @@ if(isset($_POST['action'])){
 
 class BrandController{
 
+    public function isValid($name,$slug,$description){
+      #Validacion de contenido en input
+      if(!empty($name)&&
+          !empty($slug)&&
+          !empty($description)){
+              if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$slug)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)) {
+                  $_SESSION['errorMessage'] = "Invalid data";
+                  header('location: '.BASE_PATH.'brands/?error=false');
+                  
+              }
+              else{
+                  return true;
+              }
+          }else{
+              $_SESSION['errorMessage'] = "Missing data";
+              header('location: '.BASE_PATH.'brands/?error=false');
+          }
+    }
     #Get de todas las brands:
     public static function getMarcas(){
         
@@ -101,6 +123,7 @@ class BrandController{
       var_dump($response);
 
       if (isset ($response->code) && $response->code > 0){
+        $_SESSION['errorMessage'] = "";
         header('location: '.BASE_PATH.'brands?success=true');
       } else {
         header('location: '.BASE_PATH.'brands?error=false');
@@ -133,6 +156,7 @@ class BrandController{
       $response = json_decode($response);
 
       if (isset ($response->code) && $response->code > 0){
+        $_SESSION['errorMessage'] = "";
         header('location: '.BASE_PATH.'brands?success=true');
       } else {
         header('location: '.BASE_PATH.'brands?error=false');
@@ -201,3 +225,4 @@ class BrandController{
   }
 
 }
+?>

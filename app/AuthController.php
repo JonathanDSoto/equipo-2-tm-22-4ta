@@ -5,19 +5,20 @@ include_once "config.php";
 if(isset($_POST['accion'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
         switch($_POST['accion']){
+
         case 'access':
             if(isset($_POST['email'])&& isset($_POST['password'])){
                 $email=strip_tags($_POST['email']);
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $_SESSION['errorMessage'] = "Invalid data.";
                     header('location: '.BASE_PATH.'login');
-                  }
-                  else{
+                }
+                else{
                     $authController =new AuthController();
 
                     $password=strip_tags($_POST['password']);
                     $authController -> login($email,$password);
-                  }
+                }
 
 
                 

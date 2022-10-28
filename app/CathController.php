@@ -5,7 +5,9 @@ include_once  "config.php";
 #CRUD
 if(isset($_POST['action'])){
   if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
+
     switch($_POST['action']){
+
       case 'create':
         #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
@@ -14,8 +16,10 @@ if(isset($_POST['action'])){
         $category_id = strip_tags($_POST['category_id']);
 
         $cath = new CathController();
-
-        $cath->create($name, $description, $slug,$category_id); 
+        if($cath->isValid($name,$slug,$description)){
+            $cath->create($name, $description, $slug,$category_id); 
+        }
+       
 
       break;
       case 'update':
@@ -27,9 +31,9 @@ if(isset($_POST['action'])){
         $category_id = strip_tags($_POST['category_id']);
 
         $cath = new CathController;
-
-        $cath->editCath($id,$name, $description, $slug,$category_id);
-
+        if($cath->isValid($name,$slug,$description)){
+            $cath->editCath($id,$name, $description, $slug,$category_id);
+        }
       break;
       case 'remove':
         #Isset pendiente (Validacion de Existencia de las Variables...)
@@ -45,6 +49,27 @@ if(isset($_POST['action'])){
 }
 
 class CathController{
+
+    public function isValid($name,$slug,$description){
+      #Validacion de contenido en input
+      if(!empty($name)&&
+          !empty($slug)&&
+          !empty($description)){
+              if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$slug)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)) {
+                  $_SESSION['errorMessage'] = "Invalid data";
+                  header('location: '.BASE_PATH.'categories/?error=false');
+                  
+              }
+              else{
+                  return true;
+              }
+          }else{
+              $_SESSION['errorMessage'] = "Missing data";
+              header('location: '.BASE_PATH.'categories/?error=false');
+          }
+    }
 
     #Get de todas las categorias:
     public static function getCath(){
@@ -102,6 +127,7 @@ class CathController{
         $response = json_decode($response);
 
         if (isset ($response->code) && $response->code > 0){
+          $_SESSION['errorMessage'] = "";
           header('location: '.BASE_PATH.'categories?success=true');
         } else {
           header('location: '.BASE_PATH.'categories?error=false');
@@ -134,9 +160,10 @@ class CathController{
       $response = json_decode($response);
 
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'categories?success=true');
+        $_SESSION['errorMessage'] = "";
+        header('location: '.BASE_PATH.'categories/?success=true');
       } else {
-        header('location: '.BASE_PATH.'categories?error=false');
+        header('location: '.BASE_PATH.'categories/?error=false');
       }
     }
 
@@ -166,9 +193,9 @@ class CathController{
         $response = json_decode($response);
 
         if (isset ($response->code) && $response->code > 0){
-          header('location: '.BASE_PATH.'categories?success=true');
+          header('location: '.BASE_PATH.'categories/?success=true');
         } else {
-          header('location: '.BASE_PATH.'categories?error=false');
+          header('location: '.BASE_PATH.'categories/?error=false');
         }
     } 
 

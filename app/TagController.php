@@ -7,30 +7,29 @@ if(isset($_POST['action'])){
   if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
       case 'create':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
         $slug = strip_tags($_POST['slugTag']);
 
         $tag = new TagController();
-
-        $tag->create($name, $description, $slug); 
+        if($tag->isValid($name,$slug,$description)){
+           $tag->create($name, $description, $slug); 
+        }
+        
 
       break;
       case 'update':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
         $name = strip_tags($_POST['name']);
         $description = strip_tags($_POST['description']);
         $slug = strip_tags($_POST['slugTag']);
 
         $tag = new TagController;
-
-        $tag->editTag($id,$name, $description, $slug);
-
+        if($tag->isValid($name,$slug,$description)){
+           $tag->editTag($id,$name, $description, $slug);
+        }
       break;
       case 'remove':
-        #Isset pendiente (Validacion de Existencia de las Variables...)
         $id = strip_tags($_POST['id']);
 
         $tag = new TagController;
@@ -44,6 +43,27 @@ if(isset($_POST['action'])){
 
 class TagController{
 
+    public function isValid($name,$slug,$description){
+      #Validacion de contenido en input
+      if(!empty($name)&&
+          !empty($slug)&&
+          !empty($description)){
+              if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$slug)||
+              !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)) {
+                  $_SESSION['errorMessage'] = "Invalid data";
+                  header('location: '.BASE_PATH.'tags/?error=false');
+                  
+              }
+              else{
+                  return true;
+              }
+          }else{
+              $_SESSION['errorMessage'] = "Missing data";
+              header('location: '.BASE_PATH.'tags/?error=false');
+          }
+    }
+  
     #Get de todos los tags:
     public static function getTags(){
         
@@ -100,6 +120,7 @@ class TagController{
         $response = json_decode($response);
         
         if (isset ($response->code) && $response->code > 0){
+          $_SESSION['errorMessage'] = "";
           header('location: '.BASE_PATH.'tags?success=true');
         } else {
           header('location: '.BASE_PATH.'tags?error=false');
@@ -132,6 +153,7 @@ class TagController{
       $response = json_decode($response);
 
       if (isset ($response->code) && $response->code > 0){
+        $_SESSION['errorMessage'] = "";
         header('location: '.BASE_PATH.'tags?success=true');
       } else {
         header('location: '.BASE_PATH.'tags?error=false');
