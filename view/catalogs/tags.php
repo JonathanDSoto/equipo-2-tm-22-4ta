@@ -140,8 +140,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="<?= BASE_PATH ?>tag">
+                    <form method="post" action="<?= BASE_PATH ?>tags">
                         <div class="row g-3">
+                            <?php 
+                                if(isset( $_SESSION['errorMessage'])){
+                                    echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                }
+                            ?>
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
