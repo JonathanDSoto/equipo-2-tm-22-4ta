@@ -52,7 +52,7 @@ class BrandController{
               !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$slug)||
               !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)) {
                   $_SESSION['errorMessage'] = "Invalid data";
-                  header('location: '.BASE_PATH.'brands/?error=false');
+                  header('location: '.BASE_PATH.'brands?error=false');
                   
               }
               else{
@@ -60,7 +60,7 @@ class BrandController{
               }
           }else{
               $_SESSION['errorMessage'] = "Missing data";
-              header('location: '.BASE_PATH.'brands/?error=false');
+              header('location: '.BASE_PATH.'brands?error=false');
           }
     }
     #Get de todas las brands:

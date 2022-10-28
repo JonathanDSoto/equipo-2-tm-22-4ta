@@ -27,7 +27,7 @@ if(isset($_POST['action'])){
                     $pres -> create($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount);
                 }
             }else{
-                header('location: '.BASE_PATH.'products?error=false');
+                header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
             }
 
         break;
@@ -98,11 +98,13 @@ class PresController{
                 !preg_match("/^[0-9]*$/",$stock)||
                 !preg_match("/^[0-9]*$/",$amount)) {
                     $_SESSION['errorMessage'] = "Invalid data";
-                    header('location: '.BASE_PATH.'products/?error=false');
+                    header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
+                }else{
+                    return true;
                 }
         }else{
             $_SESSION['errorMessage'] = "Missing data";
-            header('location: '.BASE_PATH.'products/?error=false');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
         }
     }
     #Get Presentacion:
@@ -192,9 +194,9 @@ class PresController{
 
         if (isset ($response->code) && $response->code > 0){
             $_SESSION['errorMessage'] = "";
-            header('location: '.BASE_PATH.'products?success=true');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?success=true');
         } else {
-            header('location: '.BASE_PATH.'products?error=false');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
         }
     }
 
@@ -227,9 +229,9 @@ class PresController{
 
         if (isset ($response->code) && $response->code > 0){
             $_SESSION['errorMessage'] = "";
-            header('location: '.BASE_PATH.'products?success=true');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?success=true');
         } else {
-            header('location: '.BASE_PATH.'products?error=false');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
         }
     }
 
@@ -258,9 +260,9 @@ class PresController{
         $response = json_decode($response);
 
         if (isset ($response->code) && $response->code > 0){
-            header('location: '.BASE_PATH.'products?success=true');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?success=true');
         } else {
-            header('location: '.BASE_PATH.'products?error=false');
+            header('location: '.BASE_PATH.'products/'.$_SESSION['slug'].'?error=false');
         }
           
           

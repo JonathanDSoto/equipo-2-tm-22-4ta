@@ -6,18 +6,21 @@ if(isset($_POST['action'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
     switch($_POST['action']){
         case 'create':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+            
             $name = strip_tags($_POST['name']);
             $email = strip_tags($_POST['email']);
             $phone_number = strip_tags($_POST['phone_number']);
             $is_suscribed = strip_tags($_POST['suscribed']);
 
             $cliente = new ClientController();
-            $cliente->create($name, $email, $phone_number, $is_suscribed);   
+            if($cliente->isValid($name, $email, $phone_number, $is_suscribed)){
+                $cliente->create($name, $email, $phone_number, $is_suscribed);  
+            }
+            
 
         break;
         case 'update':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+
             $id = strip_tags($_POST['id']);
             $name = strip_tags($_POST['name']);
             $email = strip_tags($_POST['email']);
@@ -26,12 +29,13 @@ if(isset($_POST['action'])){
             $level_id = strip_tags($_POST['level']);
             
             $cliente = new ClientController;
-            $cliente->editClient($name, $email, $phone_number, $is_suscribed, $level_id, $id);
-
+            if($cliente->isValid($name, $email, $phone_number, $is_suscribed)){
+                $cliente->editClient($name, $email, $phone_number, $is_suscribed, $level_id, $id);
+            }
         break;
 
         case 'remove':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+
             $id = strip_tags($_POST['id']);
             $cliente = new ClientController;
             $cliente->remove($id);
@@ -43,6 +47,26 @@ if(isset($_POST['action'])){
 
 
 class ClientController{
+
+    public function isValid($name, $email, $phone_number, $is_suscribed)
+    {
+        if(!empty($name)&&
+        !empty($email)&&
+        !empty($phone_number)&&
+        !empty($is_suscribed)){
+            if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+            !filter_var($email, FILTER_VALIDATE_EMAIL)||
+            !preg_match("/^[0-9]*$/",$phone_number)){
+                $_SESSION['errorMessage'] = "Invalid data";
+                header('location: '.BASE_PATH.'clients?error=false');
+            }else{
+                return true;
+            }
+        }else{
+            $_SESSION['errorMessage'] = "Missing data";
+              header('location: '.BASE_PATH.'clients?error=false');
+        }
+    }
 
     #Llamar a todos los clientes:
     public function getClientes(){
@@ -212,7 +236,6 @@ class ClientController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode ($response);
-        //var_dump($total);
 
         if(isset ($response->code) && $response->code > 0){
             foreach ($response->data->orders as $value) {
