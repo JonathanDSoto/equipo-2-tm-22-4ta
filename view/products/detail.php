@@ -6,7 +6,7 @@
     if(!isset($_SESSION['token'])){
     	header('location: '.BASE_PATH.'login');
 	}
-
+    $_SESSION['slug'] = $_GET['slug'];
     $productControl = new ProdController();
     $productsData = $productControl -> getPslug($_GET['slug']);
     $presentationControl = new PresController();
@@ -392,6 +392,7 @@
                             <?php 
                                 if(isset( $_SESSION['errorMessage'])){
                                     echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                    $_SESSION['errorMessage'] = null;
                                 }
                             ?>
                             <div class="col-xxl-6">

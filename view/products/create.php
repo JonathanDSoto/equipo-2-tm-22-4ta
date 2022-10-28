@@ -83,6 +83,7 @@
                                         <?php 
                                            if(isset( $_SESSION['errorMessage'])){
                                                 echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                                $_SESSION['errorMessage'] = null;
                                             }
                                         ?>
                                         <div class="mb-3">
