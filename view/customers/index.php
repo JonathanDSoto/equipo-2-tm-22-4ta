@@ -218,19 +218,19 @@
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="name" class="form-label">Name*</label>
-                                    <input type="name" class="form-control" id="name" name="name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter customer's name" required>
+                                    <input type="name" class="form-control" id="name" name="name" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter customer's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="email" class="form-label">Email*</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter an email address" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter an email address" onpaste="return false" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="phone_number" class="form-label">Phone*</label>
-                                    <input type="phone" class="form-control" id="phone_number" name="phone_number" onkeypress="return onlyNumbers(event)" placeholder="Enter a phone number" minlenght="10" maxlength="10" required>
+                                    <input type="phone" class="form-control" id="phone_number" name="phone_number" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter a phone number" minlenght="10" maxlength="10" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">

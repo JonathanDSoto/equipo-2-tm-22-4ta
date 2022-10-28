@@ -140,32 +140,38 @@
                 <div class="modal-body">
                     <form enctype="multipart/form-data" method="post" action="<?= BASE_PATH ?>users" >
                         <div class="row g-3">
+                            <?php 
+                                    if(isset( $_SESSION['errorMessage'])){
+                                        echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                        $_SESSION['errorMessage'] = null;
+                                    }
+                            ?>
                             <!-- NAME INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">First name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter firstname" onkeypress="return onlyLettersAndSpaces(event)" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter firstname" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- LASTNAME INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="lastname" class="form-label">Last name</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname" onkeypress="return onlyLettersAndSpaces(event)" required>
+                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" required>
                                 </div>
                             </div>
                             <!-- EMAIL INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" onpaste="return false" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" required>
                                 </div>
                             </div>
                             <!-- PHONE NUMBER INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="phone_number" class="form-label">Phone number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" onkeypress="return onlyNumbers(event)" required>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" onpaste="return false" onkeypress="return onlyNumbers(event)" required>
                                 </div>
                             </div>
                             <!-- ROLE INPUT -->
@@ -189,14 +195,14 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" onkeypress="return noSpaces(event)" minlength="8" required>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" onpaste="return false" onkeypress="return noSpaces(event)" minlength="8" required>
                                 </div>
                             </div>
                             <!-- CONFIRM PASSWORD INPUT -->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="confirmPassword" class="form-label">Confirm password</label>
-                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" onkeypress="return noSpaces(event)" oninput="check(this)" required>
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Repeat your password" onpaste="return false" onkeypress="return noSpaces(event)" oninput="check(this)" required>
                                 </div>
                             </div>
                             <!-- CREATED_BY INPUT -->

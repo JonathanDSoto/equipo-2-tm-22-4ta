@@ -398,19 +398,19 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="description" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="description" name="description" onkeypress="return basicText(event)" placeholder="Enter description" required>
+                                    <input type="text" class="form-control" id="description" name="description" onpaste="return false" onkeypress="return basicText(event)" placeholder="Enter description" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="weight_in_grams" class="form-label">Weight</label>
-                                    <input type="text" class="form-control" id="weight_in_grams" name="weight_in_grams" onkeypress="return onlyNumbers(event)" placeholder="Enter weight" required>
+                                    <input type="text" class="form-control" id="weight_in_grams" name="weight_in_grams" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter weight" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="code" class="form-label">Code</label>
-                                    <input type="text" class="form-control" id="code" name="code" onkeypress="return numbersLettersWithoutSpaces(event)" placeholder="Enter code" required>
+                                    <input type="text" class="form-control" id="code" name="code" onpaste="return false" onkeypress="return numbersLettersWithoutSpaces(event)" placeholder="Enter code" required>
                                 </div>
                             </div><!--end col-->
                             <div id="divCoverPresentation" class="col-xxl-6">
@@ -422,19 +422,19 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_min" class="form-label">Minimum Stock</label>
-                                    <input type="text" class="form-control" id="stock_min" name="stock_min" onkeypress="return onlyNumbers(event)" placeholder="Enter min stock" oninput="checkMinStock(this)" required>
+                                    <input type="text" class="form-control" id="stock_min" name="stock_min" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter min stock" oninput="checkMinStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock_max" class="form-label">Maximum Stock</label>
-                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" oninput="checkMaxStock(this)" required>
+                                    <input type="text" class="form-control" id="stock_max" name="stock_max" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter max stock" oninput="checkMaxStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="text" class="form-control" id="stock" name="stock" onkeypress="return onlyNumbers(event)" placeholder="Enter stock avaliable" oninput="checkAvailableStock(this)" required>
+                                    <input type="text" class="form-control" id="stock" name="stock" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter stock avaliable" oninput="checkAvailableStock(this)" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
@@ -451,14 +451,14 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="amount" class="form-label">Price</label>
-                                    <input type="text" class="form-control" id="amount" name="amount" onkeypress="return onlyNumbers(event)" placeholder="Enter price" required>
+                                    <input type="text" class="form-control" id="amount" name="amount" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter price" required>
                                 </div>
                             </div><!--end col-->
 
                             <div  class="col-xxl-6 mb-3">
                                 <div">
                                     <label id="productIdLabel" for="product_id" class="form-label">Product ID</label>
-                                    <input type="text" class="form-control" id="product_id" name="product_id" onkeypress="return onlyNumbers(event)" placeholder="Enter product ID" required>
+                                    <input type="text" class="form-control" id="product_id" name="product_id" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter product ID" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">

@@ -150,19 +150,19 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter category's name" required>
+                                    <input type="text" class="form-control" id="name" name="name" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter category's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="slugCategory" class="form-label">Slug</label>
-                                    <input type="text" class="form-control" id="slugCategory" name="slugCategory" onkeypress="return slug(event)" placeholder="Enter category's slug" required>
+                                    <input type="text" class="form-control" id="slugCategory" name="slugCategory" onpaste="return false" onkeypress="return slug(event)" placeholder="Enter category's slug" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="description" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="description" name="description" onkeypress="return basicText(event)" placeholder="Enter a description" required>
+                                    <input type="text" class="form-control" id="description" name="description" onpaste="return false" onkeypress="return basicText(event)" placeholder="Enter a description" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">

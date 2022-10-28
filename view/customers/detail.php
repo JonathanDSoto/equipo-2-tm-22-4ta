@@ -475,43 +475,43 @@
                         <div class="col-xxl-6">
                                 <div>
                                     <label for="first_name" class="form-label">First Name*</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter first name" required>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter first name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="last_name" class="form-label">Last Name*</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter last name" required>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter last name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="street_and_number" class="form-label">Street and Number*</label>
-                                    <input type="text" class="form-control" id="street_and_number" name="street_and_number" onkeypress="return streetAndNumber(event)" placeholder="Enter the street and number" required>
+                                    <input type="text" class="form-control" id="street_and_number" name="street_and_number" onpaste="return false" onkeypress="return streetAndNumber(event)" placeholder="Enter the street and number" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="postal_code" class="form-label">Postal Code*</label>
-                                    <input type="text" class="form-control" id="postal_code" name="postal_code" onkeypress="return onlyNumbers(event)" placeholder="Enter the postal code" maxlength="5" required>
+                                    <input type="text" class="form-control" id="postal_code" name="postal_code" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter the postal code" maxlength="5" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="province" class="form-label">Province*</label>
-                                    <input type="text" class="form-control" id="province" name="province" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter the province" required>
+                                    <input type="text" class="form-control" id="province" name="province" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter the province" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="city" class="form-label">City*</label>
-                                    <input type="text" class="form-control" id="city" name="city" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter the city" required>
+                                    <input type="text" class="form-control" id="city" name="city" onpaste="return false" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter the city" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="phone_number" class="form-label">Phone number*</label>
-                                    <input type="phone" class="form-control" id="phone_number" name="phone_number" onkeypress="return onlyNumbers(event)" placeholder="Enter a phone number" minlenght="10" maxlength="10" required>
+                                    <input type="phone" class="form-control" id="phone_number" name="phone_number" onpaste="return false" onkeypress="return onlyNumbers(event)" placeholder="Enter a phone number" minlenght="10" maxlength="10" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
@@ -528,7 +528,7 @@
                                 <div>
                                     <input type="checkbox" class="form-check-input" id="checkApartment" name="checkApartment">
                                     <label for="apartment" class="form-label">Apartment</label>
-                                    <input type="text" class="form-control" id="apartment" name="apartment" onkeypress="" placeholder="Enter the apartment" hidden=true>
+                                    <input type="text" class="form-control" id="apartment" name="apartment" onpaste="return false" onkeypress="" placeholder="Enter the apartment" hidden=true>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">

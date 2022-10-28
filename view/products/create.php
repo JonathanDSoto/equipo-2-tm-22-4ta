@@ -89,7 +89,7 @@
                                         <div class="mb-3">
                                             
                                             <label class="form-label" for="name">Product Title</label>
-                                            <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)"  placeholder="Enter product title" value="<?php if($action=='update'&&isset($productsData->name)) { echo $productsData->name; } ?>" required>
+                                            <input type="text" class="form-control" id="name" name="name" onpaste="return false" onkeypress="return numbersLettersSpaces(event)"  placeholder="Enter product title" value="<?php if($action=='update'&&isset($productsData->name)) { echo $productsData->name; } ?>" required>
                                         </div>
 
                                         <!-- COVER -->
@@ -104,7 +104,7 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="product-title-input">Product Description</label>
                                             <div class="input-group">
-                                                <textarea id="description" name="description" class="form-control" onkeypress="return basicText(event)" placeholder="Add short description for the product" rows="2"><?php if($action=='update'&&isset($productsData->description)) { echo $productsData->description; } ?></textarea>
+                                                <textarea id="description" name="description" class="form-control" onpaste="return false" onkeypress="return basicText(event)" placeholder="Add short description for the product" rows="2"><?php if($action=='update'&&isset($productsData->description)) { echo $productsData->description; } ?></textarea>
                                             </div>
                                         </div>
 
@@ -112,7 +112,7 @@
                                         <div>
                                             <label>Product Features</label>
                                             <div class="input-group">
-                                                <textarea id="features" name="features" class="form-control" onkeypress="return basicText(event)" placeholder="Add features for the product" rows="3"><?php if($action=='update'&&isset($productsData->features)) { echo $productsData->features; } ?></textarea>
+                                                <textarea id="features" name="features" class="form-control" onpaste="return false" onkeypress="return basicText(event)" placeholder="Add features for the product" rows="3"><?php if($action=='update'&&isset($productsData->features)) { echo $productsData->features; } ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +140,7 @@
                                         <h5 class="card-title mb-0">Product Slug</h5>
                                     </div>
                                     <div class="card-body">
-                                        <input type="text" id="slugProduct" name="slugProduct" onkeypress="return slug(event)" class="form-control" id="product-title-input" value="<?php if($action=='update'&&isset($productsData->slug)) { echo $productsData->slug; } ?>" placeholder="Enter product slug" required>
+                                        <input type="text" id="slugProduct" name="slugProduct" onpaste="return false" onkeypress="return slug(event)" class="form-control" id="product-title-input" value="<?php if($action=='update'&&isset($productsData->slug)) { echo $productsData->slug; } ?>" placeholder="Enter product slug" required>
                                     </div>
                                     <!-- end card body -->
                                 </div>

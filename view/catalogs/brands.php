@@ -151,19 +151,19 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter brand's name" required>
+                                    <input type="text" class="form-control" id="name" name="name" onpaste="return false" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter brand's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="slugBrand" class="form-label">Slug</label>
-                                    <input type="text" class="form-control" id="slugBrand" name="slugBrand" onkeypress="return slug(event)" placeholder="Enter brand's slug" required>
+                                    <input type="text" class="form-control" id="slugBrand" name="slugBrand" onpaste="return false" onkeypress="return slug(event)" placeholder="Enter brand's slug" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="description" class="form-label">Description</label>          
-                                    <textarea id="description" name="description" class="form-control" onkeypress="return basicText(event)" placeholder="Enter a description" rows="3" style="resize:none" maxlength="200" required></textarea>
+                                    <textarea id="description" name="description" class="form-control" onpaste="return false" onkeypress="return basicText(event)" placeholder="Enter a description" rows="3" style="resize:none" maxlength="200" required></textarea>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">
