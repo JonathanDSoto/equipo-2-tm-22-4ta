@@ -58,13 +58,13 @@ class ClientController{
             !filter_var($email, FILTER_VALIDATE_EMAIL)||
             !preg_match("/^[0-9]*$/",$phone_number)){
                 $_SESSION['errorMessage'] = "Invalid data";
-                header('location: '.BASE_PATH.'clients?error=false');
+                header('location: '.BASE_PATH.'customers?error=false');
             }else{
                 return true;
             }
         }else{
             $_SESSION['errorMessage'] = "Missing data";
-              header('location: '.BASE_PATH.'clients?error=false');
+              header('location: '.BASE_PATH.'customers?error=false');
         }
     }
 
