@@ -142,10 +142,15 @@
                 <div class="modal-body">
                     <form method="post" action="<?= BASE_PATH ?>cath">
                         <div class="row g-3">
+                            <?php 
+                                if(isset( $_SESSION['errorMessage'])){
+                                    echo '<label class="form-label" for="name" style="color:red">'.$_SESSION['errorMessage'].'</label>';
+                                }
+                            ?>
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return onlyLettersAndSpaces(event)" placeholder="Enter category's name" required>
+                                    <input type="text" class="form-control" id="name" name="name"  placeholder="Enter category's name" >
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
