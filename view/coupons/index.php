@@ -269,13 +269,13 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="start_date" class="form-label">Start Date</label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" oninput="getMinDate()"  required>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" oninput="getMinDate()" onkeydown="return false"  required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="end_date" class="form-label">End Date</label>
-                                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" onkeydown="return false" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
