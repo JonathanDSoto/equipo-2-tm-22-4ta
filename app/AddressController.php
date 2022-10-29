@@ -19,8 +19,11 @@ if(isset($_POST['action'])){
         $is_billing_address = strip_tags($_POST['is_billing_address']);
         $client_id = strip_tags($_POST['costumer_id']);
 
-        $Address = new AddressController();
-        $Address->create($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address, $client_id); 
+        $address = new AddressController();
+        if($address->isValid($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address,$client_id)){
+          $address->create($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address, $client_id); 
+        }
+        
 
       break;
       case 'update':
@@ -37,19 +40,19 @@ if(isset($_POST['action'])){
         $client_id = strip_tags($_POST['costumer_id']);
         $id = strip_tags($_POST['id']);
 
-        $Address = new AddressController;
-
-        $Address->editAddress($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address, $client_id, $id);
-
+        $address = new AddressController;
+        if($address->isValid($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address,$client_id)){
+          $address->editAddress($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address, $client_id, $id);
+        }
       break;
       case 'remove':
         #Isset pendiente (Validacion de Existencia de las Variables...)
         $client_id = strip_tags($_POST['client_id']);
         $id = strip_tags($_POST['id']);
 
-        $Address = new AddressController;
-
-        $Address->remove($client_id, $id);
+        $address = new AddressController;
+        
+        $address->remove($client_id, $id);
 
       break;
       }
@@ -58,6 +61,33 @@ if(isset($_POST['action'])){
 
 class AddressController{
 
+    public function isValid($first_name, $last_name, $street_and_use_number, $apartment, $postal_code, $city, $province, $phone_number, $is_billing_address,$client_id)
+    {
+        if(!empty($first_name)&&
+        !empty($last_name)&&
+        !empty($street_and_use_number)&&
+        !empty($postal_code)&&
+        !empty($city)&&
+        !empty($province)&&
+        !empty($is_billing_address)&&
+        !empty($phone_number)){
+            if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$first_name)||
+            !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$last_name)||
+            !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ# ]*$/",$street_and_use_number)||
+            !preg_match("/^[0-9]*$/",$postal_code)||
+            !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$city)||
+            !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$province)||
+            !preg_match("/^[0-9]*$/",$phone_number)){
+                $_SESSION['errorMessage'] = "Invalid data";
+                header('location: '.BASE_PATH.'customers/'.$client_id.'?error=false');
+            }else{
+                return true;
+            }
+        }else{
+            $_SESSION['errorMessage'] = "Missing data";
+              header('location: '.BASE_PATH.'customers/'.$client_id.'?error=false');
+        }
+    }
     #Get de la direccion especifica:
     public static function getAddress($id){
         

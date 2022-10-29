@@ -20,7 +20,9 @@ if(isset($_POST['action'])){
             $imagen = $_FILES["avatar"]["tmp_name"];
             
             $user = new UserController();
-            $user->create($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen);
+            if($user->isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen)){
+              $user->create($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen);
+            }
           } else {
             header('location: '.BASE_PATH.'users?error=false');
           }
@@ -41,7 +43,9 @@ if(isset($_POST['action'])){
           $password = strip_tags($_POST['password']);
           
           $user = new UserController();
-          $user->updateUsers($id, $name, $lastname, $email, $phone_number, $created_by, $role, $password);
+          if($user->isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen)){
+            $user->updateUsers($id, $name, $lastname, $email, $phone_number, $created_by, $role, $password);
+          }
         } else {
           header('location: '.BASE_PATH.'users?error=false');
         }
@@ -79,6 +83,29 @@ if(isset($_POST['action'])){
 
 class UserController{
 
+  public function isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen)
+  {
+    if(!empty($name)&&
+        !empty($lastname)&&!empty($email)&&
+        !empty($phone_number)&&!empty($created_by)&&
+        !empty($role)&&!empty($password)){
+          
+          if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
+            !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/",$lastname)||
+            !preg_match("/^[0-9]*$/",$phone_number)||
+            !filter_var($email, FILTER_VALIDATE_EMAIL)||
+            !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ!#$%&']*$/",$password)){
+                $_SESSION['errorMessage'] = "Invalid data";
+                header('location: '.BASE_PATH.'users?error=false');
+            }else{
+                return true;
+            }
+
+        }else{
+          $_SESSION['errorMessage'] = "Missing data";
+          header('location: '.BASE_PATH.'users?error=false');
+      }
+  }
   #Get todos los usuarios (Users):
   public function getUsers(){
     $token = $_SESSION['token'];

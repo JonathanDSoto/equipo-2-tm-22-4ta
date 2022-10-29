@@ -24,7 +24,7 @@ if(isset($_POST['action'])){
 
         $cupon = new CuponController();
         if($cupon->isValid($name, $code, $percentage_discount, $amount_discount, $min_amount_required, 
-        $min_product_required, $start_date, $end_date, $max_uses, $count_uses, $valid_only_first_purchase, $status, $couponable_type))
+        $min_product_required, $start_date, $end_date, $max_uses, $valid_only_first_purchase, $status, $couponable_type))
         {
             $cupon->create($name, $code, $percentage_discount, $amount_discount, $min_amount_required, $min_product_required, $start_date, $end_date, $max_uses, $count_uses, $valid_only_first_purchase, $status, $couponable_type); 
         }
@@ -48,7 +48,7 @@ if(isset($_POST['action'])){
 
         $cupon = new CuponController;
         if($cupon->isValid($name, $code, $percentage_discount, $amount_discount, $min_amount_required, 
-        $min_product_required, $start_date, $end_date, $max_uses, $count_uses, $valid_only_first_purchase, $status, $couponable_type))
+        $min_product_required, $start_date, $end_date, $max_uses, $valid_only_first_purchase, $status, $couponable_type))
         {
            $cupon->editCoupon($name, $code, $percentage_discount, $amount_discount, $min_amount_required, $min_product_required, $start_date, $end_date, $max_uses, $count_uses, $valid_only_first_purchase, $status, $couponable_type, $id);
         }
@@ -68,31 +68,29 @@ if(isset($_POST['action'])){
 class CuponController{
 
     public function isValid($name, $code, $percentage_discount, $amount_discount, $min_amount_required, 
-    $min_product_required, $start_date, $end_date, $max_uses, $count_uses, $valid_only_first_purchase, $status, $couponable_type)
+    $min_product_required, $start_date, $end_date, $max_uses, $valid_only_first_purchase, $status, $couponable_type)
     {
       if(!empty($name)&&
-        !empty($code)&&!empty($percentage_discount)&&
-        !empty($amount_discount)&&!empty($min_amount_required)&&
+        !empty($code)&&(!empty($percentage_discount) || !empty($amount_discount))&&!empty($min_amount_required)&&
         !empty($min_product_required)&&!empty($start_date)&&
         !empty($end_date)&&!empty($max_uses)&&
-        !empty($count_uses)&&!empty($valid_only_first_purchase)&&
-        !empty($status)&&!empty($couponable_type)){
+        !empty($valid_only_first_purchase)&&!empty($status)&&!empty($couponable_type)){
           if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
               !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$code)||
               !preg_match("/^[0-9]*$/",$percentage_discount)||
               !preg_match("/^[0-9]*$/",$amount_discount)||
               !preg_match("/^[0-9]*$/",$min_amount_required)||
               !preg_match("/^[0-9]*$/",$min_product_required)||
-              !preg_match("/^[0-9]*$/",$max_uses)||
-              !preg_match("/^[0-9]*$/",$count_uses)) {
+              !preg_match("/^[0-9]*$/",$max_uses)) {
                   $_SESSION['errorMessage'] = "Invalid data";
-                  header('location: '.BASE_PATH.'coupons/?error=false'); 
+                  header('location: '.BASE_PATH.'coupons?error=false'); 
               }
               else{
                   return true;
               }
       }else{  
-          header('location: '.BASE_PATH.'coupons/?error=false');
+          $_SESSION['errorMessage'] = "Missing data";
+          header('location: '.BASE_PATH.'coupons?error=false');
       }
     }
 
@@ -148,7 +146,7 @@ class CuponController{
       $response = json_decode ($response);
 
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'coupons/');
+        header('location: '.BASE_PATH.'coupons?success=true');
       } else {
         header('location: '.BASE_PATH.'coupons?error=false');
       }
@@ -180,7 +178,7 @@ class CuponController{
       $response = json_decode ($response);
       
       if (isset ($response->code) && $response->code > 0){
-        header('location: '.BASE_PATH.'coupons/');
+        header('location: '.BASE_PATH.'coupons?success=true');
       } else {
         header('location: '.BASE_PATH.'coupons?error=false');
       }
@@ -210,7 +208,7 @@ class CuponController{
         $response = json_decode ($response);
 
         if (isset ($response->code) && $response->code > 0){
-          header('location: '.BASE_PATH.'coupons/');
+          header('location: '.BASE_PATH.'coupons?success=true');
         } else {
           header('location: '.BASE_PATH.'coupons?error=false');
         }
