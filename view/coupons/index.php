@@ -269,7 +269,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="start_date" class="form-label">Start Date</label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" oninput="getMinDate()"  required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
@@ -349,6 +349,7 @@
 </body>
 
 <script>
+
     function typeCoupon() {
         if (document.getElementById("couponable_type").selectedIndex == 0) {
             document.getElementById('divPercentageDiscount').hidden = true;
@@ -427,6 +428,20 @@
         document.getElementById("statusCoupon").selectedIndex = 0;
         document.getElementById("count_uses").value = 0;
         document.getElementById("count_uses").hidden = true;
+
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        let currentDate = `${year}-${month}-${day}`;
+        document.getElementById("start_date").min = currentDate;
+        
+    }
+
+    function getMinDate(){
+        let minEndDate = document.getElementById("start_date").value;
+        document.getElementById('end_date').min = minEndDate;
     }
     
     function editCoupon(target) {
