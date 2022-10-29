@@ -442,6 +442,7 @@
     function getMinDate(){
         let minEndDate = document.getElementById("start_date").value;
         document.getElementById('end_date').min = minEndDate;
+        document.getElementById('end_date').value = minEndDate;
     }
     
     function editCoupon(target) {
