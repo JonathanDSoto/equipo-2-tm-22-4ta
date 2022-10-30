@@ -54,33 +54,18 @@
                                                 </div>
                                             </div>
                                             <!--end col-->
-                                            <div class="col-xxl-6 col-sm-6">
-                                                <div class="search-box">
-                                                    <input type="text" class="form-control search" placeholder="Search for order ID, customer, order status or something...">
-                                                    <i class="ri-search-line search-icon"></i>
-                                                </div>
+                                            <div class="col-xxl-5 col-sm-6">
+                                                <input type="date" class="form-control" id="start_date" name="end_date" required>
                                             </div>
                                             <!--end col-->
-                                            <div class="col-xxl-3 col-sm-6">
-                                                <div>
-                                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" id="demo-datepicker" placeholder="Select date">
-                                                </div>
+                                            <div class="col-xxl-5 col-sm-6">
+                                                <input type="date" class="form-control" id="end_date" name="end_date" required>
                                             </div>
                                             <!--end col-->
                                             <div class="col-xxl-2 col-sm-4">
                                                 <div>
-                                                    <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                                        <option value="all" selected>All</option>
-                                                        <option value="Pending">Active</option>
-                                                        <option value="Inprogress">Inactive</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-xxl-1 col-sm-4">
-                                                <div>
-                                                    <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                                        Filters
+                                                    <button type="submit" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
+                                                        Filter by date
                                                     </button>
                                                 </div>
                                             </div>
