@@ -60,4 +60,7 @@ $(document).ready(function () {
 
     //TABLE DETAILS OF A COUPON - ORDERS: "view/coupons/detail.php" 
     $("#tableCouponsDetailsOrders").DataTable();
+
+    //TABLE ORDERS: "view/orders/index.php"
+    $("#tableOrders").DataTable();
 });
