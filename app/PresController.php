@@ -46,9 +46,9 @@ if(isset($_POST['action'])){
             $amount = strip_tags($_POST['amount']);
 
             $pres = new PresController();
-            if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
+            //if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
                 $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
-            }
+            //}
         break;
             
         case 'remove':
@@ -235,6 +235,37 @@ class PresController{
         }
     }
 
+    public function updateStock($stock,$id)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/presentations',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => 'stock='.$stock.'&id='.$id,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer 1215|7FaczaWqbE0sy444bREnXpDY8y2Ze5rYwW3ipnmv',
+                'Content-Type: application/x-www-form-urlencoded',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response);
+
+        if (isset ($response->code) && $response->code > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     #Elminar pres por ID:
