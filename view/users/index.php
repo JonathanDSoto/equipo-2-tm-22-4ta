@@ -84,7 +84,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="avatar-group">
-                                                            <img src="<?= $item->avatar ?>" alt="Profile pic" class="rounded-circle avatar-xxs">
+                                                            <img src="<?= $item->avatar ?>" alt="Profile pic" class="rounded-circle avatar-sm">
                                                         </div>
                                                     </td>
                                                     <td><?php if(isset($item->name)) echo $item->name; else echo "Name not found."; ?></td>
