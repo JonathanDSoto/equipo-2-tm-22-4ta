@@ -72,9 +72,8 @@ class CuponController{
     {
       if(!empty($name)&&
         !empty($code)&&(!empty($percentage_discount) || !empty($amount_discount))&&!empty($min_amount_required)&&
-        !empty($min_product_required)&&!empty($start_date)&&
-        !empty($end_date)&&!empty($max_uses)&&
-        !empty($valid_only_first_purchase)&&!empty($status)&&!empty($couponable_type)){
+        !empty($min_product_required)&&!empty($start_date)&&!empty($end_date)&&!empty($max_uses)
+        &&!empty($status)&&!empty($couponable_type)){
           if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$/",$name)||
               !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*$/",$code)||
               !preg_match("/^[0-9]*$/",$percentage_discount)||
@@ -88,9 +87,9 @@ class CuponController{
               else{
                   return true;
               }
-      }else{  
+      }else{
           $_SESSION['errorMessage'] = "Missing data";
-          header('location: '.BASE_PATH.'coupons?error=false');
+          //header('location: '.BASE_PATH.'coupons?error=false');
       }
     }
 

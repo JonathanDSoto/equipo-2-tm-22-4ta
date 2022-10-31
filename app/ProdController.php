@@ -288,8 +288,4 @@ class ProdController{
     } 
         
 }
-    
-#'jeju_19@alu.uabcs.mx'
-#O338lXPk!5k8I6
-#143|x9b5qQBIpJIehXKkKYmwz63kLObrG86yCsCeC2JN
 ?>

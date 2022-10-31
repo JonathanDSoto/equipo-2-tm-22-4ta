@@ -110,7 +110,4 @@ class AuthController{
         }
     }
 }
-
-#'jeju_19@alu.uabcs.mx'
-#O338lXPk!5k8I6
 ?>
