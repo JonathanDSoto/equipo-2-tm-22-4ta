@@ -65,16 +65,27 @@ class OrderController{
         $presentation = new PresController();  
         $coupon = new CuponController();
         
-        $intPres = array_map('intval',$idProducts);
-        $intQuantity = array_map('intval',$quantity); 
+        $intPres = array_map('floatval',$idProducts);
+        $intQuantity = array_map('floatval',$quantity); 
+        
+        $productsAmount = 0;
+        $productsPrice = 0;
+
         if(!empty($folio)&&
         !empty($is_paid)&&!empty($client_id)&&
         !empty($address_id)&&!empty($order_status_id)&&
         !empty($payment_type_id)){
+
             if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]*$/",$folio)){
                 $_SESSION['errorMessage'] = "Invalid data";
                 header('location: '.BASE_PATH.'orders?error=false');
             }else{
+                for ($i=0; $i <count($intQuantity) ; $i++) { 
+                    if ($intQuantity[$i]<1) {
+                        $_SESSION['errorMessage'] = "Invalid product quantity";
+                        header('location: '.BASE_PATH.'orders?error=false');
+                    }
+                }
                 for ($i=0; $i < count($intPres); $i++) {
                     $pres = $presentation->getEspP($intPres[$i]); 
                     
@@ -91,8 +102,30 @@ class OrderController{
                         $_SESSION['errorMessage'] = "Invalid coupon";
                         header('location: '.BASE_PATH.'orders?error=false');
                     }
-                      
+
+                    for ($i=0; $i < count($intQuantity); $i++) {
+                        $pres = $presentation->getEspP($intPres[$i]);  
+                        $productsAmount += $intQuantity[$i];
+                        $productsPrice += ($pres->current_price->amount)*($intQuantity[$i]);
+                        
+                    }
+                    
+                    if($cupon->min_amount_required>$productsPrice){
+                        $_SESSION['errorMessage'] = "Minimum requirements to use this coupon are not meet";
+                        header('location: '.BASE_PATH.'orders?error=false');
+                        var_dump($productsPrice);
+                        echo "hola1";
+                    }else if($cupon->min_product_required>$productsAmount){
+                        $_SESSION['errorMessage'] = "Minimum requirements to use this coupon are not meet";
+                        echo "hola2";
+                        var_dump($productsAmount);
+                        header('location: '.BASE_PATH.'orders?error=false');
+                    }else {
+                        return true;
+                    }
+
                 }else{
+                    echo "hola";
                     return true;
                 }
                 
@@ -105,23 +138,150 @@ class OrderController{
         
     }
 
+
+
+    #Crear orden (Order):
+    public function create($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id,$quantity,$idProducts){
+        $curl = curl_init();
+        $params = array('folio' => $folio,'total' =>$total, 'is_paid' =>$is_paid,'client_id' =>$client_id,'address_id' =>$address_id,'order_status_id' =>$order_status_id,'payment_type_id' =>$payment_type_id);
+        
+        if ($coupon_id!=0) {
+            $params+= array('coupon_id'=>$coupon_id);
+        }
+
+        for ($i=0; $i < count($idProducts); $i++) {
+            $presentations[$i]['id'] = $idProducts[$i];
+            $presentations[$i]['quantity'] = $quantity[$i];
+           
+        }
+        for ($i=0; $i < count($idProducts); $i++) { 
+            $params += ["presentations[".$i."][id]" => $presentations[$i]["id"]];
+            $params += ["presentations[".$i."][quantity]" => $presentations[$i]["quantity"]];
+        }
+        
+       /*  var_dump($params); */
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',                                                                                                                                                                                                 //ESTA PARTE LA DEJE ESTÁTICA DE MOMENTO, SE VA A TENER QUE HACER DINAMICO PARA QUE ACEPTE VARIOS PARAMENTROS, SIMILAR A TAGS O CATEGORIES DE PRODUCTOS
+            CURLOPT_POSTFIELDS => $params,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$_SESSION['token'],
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response);
+       /*  var_dump($response);
+        var_dump($params); */
+        if (isset ($response->code) && $response->code > 0){
+            $presentation = new PresController();
+            $coupon = new CuponController();
+
+            $intPres = array_map('intval',$idProducts);
+            $intQuantity = array_map('intval',$quantity);
+
+            for ($i=0; $i < count($intPres); $i++) {
+                $pres = $presentation->getEspP($intPres[$i]); 
+                $newStock = $pres->stock-$intQuantity[$i];
+                $presentation->updateStock($newStock, $intPres[$i]);
+            }
+            if ($coupon_id!=0) {
+                $cupon = $coupon->getEspecificCoupon($coupon_id);
+                $newCount_uses = $cupon->count_uses+1;
+                $coupon->updateCountUses($newCount_uses,$coupon_id);
+            }
+            return header('location: '.BASE_PATH.'orders?success=true');
+        } else {
+            return header('location: '.BASE_PATH.'orders?error=false');
+        }
+    }
+
+
+    #Editar Orden:
+    public function editPres($id, $order_status_id)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => 'id='.$id.'&order_status_id='.$order_status_id,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$_SESSION['token'],
+                'Content-Type: application/x-www-form-urlencoded',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response);
+
+        if (isset ($response->code) && $response->code > 0){
+            header('location: '.BASE_PATH.'orders');
+        } else {
+            header('location: '.BASE_PATH.'orders?error=false');
+        }   
+    }
+
+    #Elminar orden por ID:
+    public function remove($id){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders/'.$id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$_SESSION['token'],
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response);
+
+        if (isset ($response->code) && $response->code > 0){
+            header('location: '.BASE_PATH.'orders?sucess=true');
+          } else {
+            header('location: '.BASE_PATH.'orders?error=false');
+          }
+    }
+    
     public function getTotal($coupon_id,$quantity,$idProducts)
     {
         $presentation = new PresController();
         $coupon = new CuponController();
 
-        $intPres = array_map('intval',$idProducts);
-        $intQuantity = array_map('intval',$quantity);
+        $intPres = array_map('floatval',$idProducts);
+        $intQuantity = array_map('floatval',$quantity);
         $total=0;
 
-        for ($i=0; $i < count($intPres); $i++) {
+        for ($i=0; $i < count($intQuantity); $i++) {
             $pres = $presentation->getEspP($intPres[$i]);
-            $total+= $pres->current_price->amount*$intQuantity[$i];
+            $total+= ($pres->current_price->amount)*($intQuantity[$i]);
+           /*  var_dump($total); */
         }
         if($coupon_id!=0){
             $descuento = $coupon->getTotalDiscount($coupon_id);
             if($descuento[1]==true){
-                $total*= $descuento[0]/100;
+                $desc=$total * ($descuento[0]/100);
+                $total-=$desc;
             }else if($descuento[2]==true){
                 if(($total)>$descuento[0]) {
                     $total -= $descuento[0];
@@ -186,127 +346,6 @@ class OrderController{
         } else {
             return array();
         }   
-    }
-
-    #Crear orden (Order):
-    public function create($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id,$quantity,$idProducts){
-        $curl = curl_init();
-        $params = array('folio' => $folio,'total' =>$total, 'is_paid' =>$is_paid,'client_id' =>$client_id,'address_id' =>$address_id,'order_status_id' =>$order_status_id,'payment_type_id' =>$payment_type_id);
-        
-        if ($coupon_id!=0) {
-            $params+= array('coupon_id'=>$coupon_id);
-        }
-
-        for ($i=0; $i < count($idProducts); $i++) {
-            $presentations[$i]['id'] = $idProducts[$i];
-            $presentations[$i]['quantity'] = $quantity[$i];
-           
-        }
-        for ($i=0; $i < count($idProducts); $i++) { 
-            $params += ["presentations[".$i."][id]" => $presentations[$i]["id"]];
-            $params += ["presentations[".$i."][quantity]" => $presentations[$i]["quantity"]];
-        }
-        
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',                                                                                                                                                                                                 //ESTA PARTE LA DEJE ESTÁTICA DE MOMENTO, SE VA A TENER QUE HACER DINAMICO PARA QUE ACEPTE VARIOS PARAMENTROS, SIMILAR A TAGS O CATEGORIES DE PRODUCTOS
-            CURLOPT_POSTFIELDS => $params,
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$_SESSION['token'],
-            ),
-        ));
-        
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response);
-        var_dump($response);
-        //var_dump($params);
-        if (isset ($response->code) && $response->code > 0){
-            $presentation = new PresController();
-            $coupon = new CuponController();
-
-            $intPres = array_map('intval',$idProducts);
-            $intQuantity = array_map('intval',$quantity);
-
-            for ($i=0; $i < count($intPres); $i++) {
-                $pres = $presentation->getEspP($intPres[$i]); 
-                $newStock = $pres->stock-$intQuantity[$i];
-                $presentation->updateStock($newStock, $intPres[$i]);
-            }
-
-            $cupon = $coupon->getEspecificCoupon($coupon_id);
-            $newCount_uses = $cupon->count_uses+1;
-            $coupon->updateCountUses($newCount_uses,$coupon_id);
-            return header('location: '.BASE_PATH.'orders?success=true');
-        } else {
-            return header('location: '.BASE_PATH.'orders/?error=true');
-        }
-    }
-
-
-    #Editar Orden:
-    public function editPres($id, $order_status_id)
-    {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => 'id='.$id.'&order_status_id='.$order_status_id,
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$_SESSION['token'],
-                'Content-Type: application/x-www-form-urlencoded',
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response);
-
-        if (isset ($response->code) && $response->code > 0){
-            header('location: '.BASE_PATH.'orders');
-        } else {
-            header('location: '.BASE_PATH.'orders?error=false');
-        }   
-    }
-
-    #Elminar orden por ID:
-    public function remove($id){
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders/'.$id,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$_SESSION['token'],
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response);
-
-        if (isset ($response->code) && $response->code > 0){
-            header('location: '.BASE_PATH.'orders?sucess=true');
-          } else {
-            header('location: '.BASE_PATH.'orders?error=false');
-          }
     }
 
     #Get Especific Order por fechas:
