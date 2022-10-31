@@ -5,19 +5,22 @@
                 <!-- Dark Logo-->
                 <a href="<?= BASE_PATH ?>products" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="<?= BASE_PATH ?>public/images/logo-sm.png" alt="" height="22">
+                        <!-- LOGO AL MINIMIZAR LA SIDEBAR-->
+                        <img src="<?= BASE_PATH ?>public/images/uabcs_chico.logo.png" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= BASE_PATH ?>public/images/logo-dark.png" alt="" height="17">
+                        
                     </span>
                 </a>
                 <!-- Light Logo-->
                 <a href="<?= BASE_PATH ?>products" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="<?= BASE_PATH ?>public/images/logo-sm.png" alt="" height="22">
+                        <!-- LOGO AL MINIMIZAR LA SIDEBAR-->
+                        <img src="<?= BASE_PATH ?>public/images/uabcs_chico.logo.png" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= BASE_PATH ?>public/images/logo-light.png" alt="" height="17">
+                        <!-- LOGO AL MINIMIZAR LA SIDEBAR-->
+                        <img src="<?= BASE_PATH ?>public/images/logouabcs.png" alt="" height="60">
                     </span>
                 </a>
                 <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
