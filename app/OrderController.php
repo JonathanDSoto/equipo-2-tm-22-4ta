@@ -21,16 +21,6 @@ if(isset($_POST['action'])){
             $order = new OrderController();
             $coupon_id=strip_tags($_POST['coupon_id']);
 
-            var_dump($folio);
-            var_dump($is_paid);
-            var_dump($client_id);
-            var_dump($order_status_id);
-            var_dump($payment_type_id);
-            var_dump($address_id);
-            var_dump($idProducts);
-            //var_dump($idPresentations);
-            var_dump($quantity);
-
             if($order->isValid($folio, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id,$coupon_id,$quantity,$idProducts)){
                 $total = $order->getTotal($coupon_id,$quantity,$idProducts);
                 $order -> create($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id,$quantity,$idProducts);
@@ -72,13 +62,8 @@ class OrderController{
 
     public function isValid($folio, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id,$coupon_id,$quantity,$idProducts,)
     {
-        var_dump("SI ENTRA AL VALID");
-        $presentation = new PresController();
-
-        
+        $presentation = new PresController();  
         $coupon = new CuponController();
-        $cupon = $coupon->getEspecificCoupon($coupon_id);
-        
         
         $intPres = array_map('intval',$idProducts);
         $intQuantity = array_map('intval',$quantity); 
@@ -98,19 +83,25 @@ class OrderController{
                         header('location: '.BASE_PATH.'orders?error=false');
                     }
                 }
-                if(isset($cupon)&&$cupon->count_uses>=$cupon->max_uses){
-                    $_SESSION['errorMessage'] = "Invalid coupon";
-                    header('location: '.BASE_PATH.'orders?error=false');
+                
+                if($coupon_id!=0){
+                    
+                    $cupon = $coupon->getEspecificCoupon($coupon_id);
+                    if ($cupon->count_uses>=$cupon->max_uses) {
+                        $_SESSION['errorMessage'] = "Invalid coupon";
+                        header('location: '.BASE_PATH.'orders?error=false');
+                    }
+                      
                 }else{
                     return true;
                 }
                 
             }
-    }else{
-        $_SESSION['errorMessage'] = "Missing data";
-        header('location: '.BASE_PATH.'orders?error=false');
-    }    
-    var_dump($_SESSION['errorMessage']);
+        }else{
+            $_SESSION['errorMessage'] = "Missing data";
+            header('location: '.BASE_PATH.'orders?error=false');
+        }    
+    
         
     }
 
@@ -125,19 +116,18 @@ class OrderController{
 
         for ($i=0; $i < count($intPres); $i++) {
             $pres = $presentation->getEspP($intPres[$i]);
-            var_dump($pres->current_price->amount); 
             $total+= $pres->current_price->amount*$intQuantity[$i];
         }
-
-        $descuento = $coupon->getTotalDiscount($coupon_id);
-        if($descuento[1]==true){
-            $total*= $descuento[0]/100;
-        }else if($descuento[2]==true){
-            if(($total)>$descuento[0]) {
-                $total -= $descuento[0];
-              }
+        if($coupon_id!=0){
+            $descuento = $coupon->getTotalDiscount($coupon_id);
+            if($descuento[1]==true){
+                $total*= $descuento[0]/100;
+            }else if($descuento[2]==true){
+                if(($total)>$descuento[0]) {
+                    $total -= $descuento[0];
+                }
+            }
         }
-        var_dump($descuento);
 
         number_format((float)$total, 2, '.', '');
         return $total;
@@ -201,9 +191,12 @@ class OrderController{
     #Crear orden (Order):
     public function create($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id,$quantity,$idProducts){
         $curl = curl_init();
-        $params = array('folio' => $folio,'total' =>$total, 'is_paid' =>$is_paid,'client_id' =>$client_id,'address_id' =>$address_id,'order_status_id' =>$order_status_id,'payment_type_id' =>$payment_type_id,'coupon_id'=>$coupon_id);
-        var_dump(count($idProducts));
-        var_dump(count($quantity));
+        $params = array('folio' => $folio,'total' =>$total, 'is_paid' =>$is_paid,'client_id' =>$client_id,'address_id' =>$address_id,'order_status_id' =>$order_status_id,'payment_type_id' =>$payment_type_id);
+        
+        if ($coupon_id!=0) {
+            $params+= array('coupon_id'=>$coupon_id);
+        }
+
         for ($i=0; $i < count($idProducts); $i++) {
             $presentations[$i]['id'] = $idProducts[$i];
             $presentations[$i]['quantity'] = $quantity[$i];
@@ -213,12 +206,7 @@ class OrderController{
             $params += ["presentations[".$i."][id]" => $presentations[$i]["id"]];
             $params += ["presentations[".$i."][quantity]" => $presentations[$i]["quantity"]];
         }
-        /*var_dump($presentations);
-        foreach ($presentations as $key => $value) {
-            $params += ["presentations[".$key."]" => $value];
-        }*/
-
-        var_dump($params);
+        
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
             CURLOPT_RETURNTRANSFER => true,
