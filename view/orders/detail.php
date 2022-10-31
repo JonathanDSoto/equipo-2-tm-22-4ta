@@ -80,7 +80,7 @@
                                                 <tr>
                                                     <th scope="col">Product Details</th>
                                                     <th scope="col">Presentation</th>
-                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Quantity / Unit Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -106,7 +106,7 @@
                                                             </div>
                                                         </td>
                                                         <td><?php if(isset($item->code)) echo $item->code; else echo "Code not found."; ?></td>
-                                                        <td><?php if(isset($item->pivot->quantity)) echo $item->pivot->quantity; else echo "Quantity not found."; ?></td>
+                                                        <td><?php if(isset($item->pivot->quantity)) echo $item->pivot->quantity; else echo "Quantity not found."; ?> × <?php if(isset($item->current_price->amount)) echo $item->current_price->amount; else echo "Price not found."; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                                 <tr class="border-top border-top-dashed">
