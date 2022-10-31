@@ -66,11 +66,11 @@ class AuthController{
             $_SESSION['phone_number']=$response->data->phone_number;
             $_SESSION['role']=$response->data->role;
             $_SESSION['errorMessage'] = "";
-            var_dump($response);
+            
             header('location: '.BASE_PATH.'products');
         }else{
             
-            var_dump($response);
+            
             header('location: '.BASE_PATH.'?error=true');
         }
     }
@@ -98,14 +98,13 @@ class AuthController{
         curl_close($curl);
         //echo $response;
         $response=json_decode($response);
-        var_dump($response);
         if(isset($response->code) && $response->code>0)
         {
-            var_dump($response);
+            
             session_destroy();
             header('location: '.BASE_PATH.'logout');
         }else{
-            var_dump($response);
+            
             header('location: '.BASE_PATH.'?error=true');
         }
     }
