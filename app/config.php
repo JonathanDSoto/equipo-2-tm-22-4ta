@@ -7,12 +7,7 @@
     
 	$user_agent = getenv("HTTP_USER_AGENT");
 	if (!defined('BASE_PATH')) {
-		if(strpos($user_agent, "Win") !== FALSE){
-			define('BASE_PATH','http://localhost/equipo-2-tm-22-4ta/');
-		}else if(strpos($user_agent, "Mac") !== FALSE){
-			define('BASE_PATH','http://localhost:8888/equipo-2-tm-22-4ta/');
-		}
-		
+		define('BASE_PATH','https://examenu4eq3.000webhostapp.com/');
 	}
 
 ?>
