@@ -271,7 +271,7 @@ class CuponController{
     }
   
   #Get total de descuento:
-  public function getTotalDiscount($id) {
+  public function getDiscount($id) {
     $couponTemporal = new CuponController();
     $coupon = $couponTemporal->getEspecificCoupon($id);
     $couponValue = 0;
@@ -301,6 +301,47 @@ class CuponController{
     
     $cuponcito = array($couponValue,$percentage,$amount);
     return $cuponcito;
+  }
+
+  public function getTotalDiscount($id) {
+    $couponTemporal = new CuponController();
+    $coupon = $couponTemporal->getEspecificCoupon($id);
+    $couponValue = 0;
+    $totalDiscount = 0;
+    $percentage = false; 
+    $amount = false;
+    
+    if(isset($coupon->couponable_type)) {
+      if($coupon->couponable_type=="Cupon de descuento fijo") {
+        $couponValue = (float)$coupon->amount_discount;
+        $amount = true;
+      } else if($coupon->couponable_type=="Cupon de descuento") {
+        $couponValue = (float)$coupon->percentage_discount;
+        $percentage = true;
+      }
+    } else {
+      if(isset($coupon->amount_discount)||isset($coupon->percentage_discount)) {
+          if(isset($coupon->amount_discount)&&$coupon->amount_discount!='0'){
+            $couponValue = (float)$coupon->amount_discount;
+            $amount = true;
+          } else if(isset($coupon->percentage_discount)&&$coupon->percentage_discount!='0') {
+            $couponValue = (float)$coupon->percentage_discount;
+            $percentage = true;
+          }
+      }
+    }
+    foreach ($coupon->orders as $value) {
+      if($percentage) {
+        $totalDiscount += (((float)$value->total)*$couponValue)/100;
+      } else if($amount) {
+        if(((float)$value->total)<=$couponValue) {
+          $totalDiscount += (float)$value->total;
+        } else {
+          $totalDiscount += $couponValue;
+        }
+      }
+    }
+    return $totalDiscount;
   }
 
   #Get veces utilizado en orders:
