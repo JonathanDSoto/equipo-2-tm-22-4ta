@@ -46,9 +46,9 @@ if(isset($_POST['action'])){
             $amount = strip_tags($_POST['amount']);
 
             $pres = new PresController();
-            //if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
+            if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
                 $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
-            //}
+            }
         break;
             
         case 'remove':
@@ -216,7 +216,7 @@ class PresController{
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => 'description='.$description.'&code='.$code.'&weight_in_grams='.$weight_in_grams.'&status='.$status.'&stock='.$stock.'&stock_min='.$stock_min.'&stock_max='.$stock_max.'&product_id='.$product_id.'&id='.$id.'&amount='.$amount,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer 1215|7FaczaWqbE0sy444bREnXpDY8y2Ze5rYwW3ipnmv',
+                'Authorization: Bearer '.$_SESSION['token'],
                 'Content-Type: application/x-www-form-urlencoded',
             ),
         ));
@@ -249,7 +249,7 @@ class PresController{
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => 'stock='.$stock.'&id='.$id,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer 1215|7FaczaWqbE0sy444bREnXpDY8y2Ze5rYwW3ipnmv',
+                'Authorization: Bearer '.$_SESSION['token'],
                 'Content-Type: application/x-www-form-urlencoded',
             ),
         ));
@@ -314,7 +314,8 @@ class PresController{
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => 'id='.$id.'&amount='.$monto,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$token
+                'Authorization: Bearer '.$_SESSION['token'],
+                'Content-Type: application/x-www-form-urlencoded',
             ),
         ));
 
