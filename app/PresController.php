@@ -190,7 +190,7 @@ class PresController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response);
-        var_dump($response);
+        
 
         if (isset ($response->code) && $response->code > 0){
             $_SESSION['errorMessage'] = "";
@@ -323,7 +323,7 @@ class PresController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response);
-        var_dump($response);
+        
         
         if (isset ($response->code) && $response->code > 0){
             header('location: '.BASE_PATH.'products?success=true');

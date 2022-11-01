@@ -178,8 +178,7 @@ class OrderController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response);
-       /*  var_dump($response);
-        var_dump($params); */
+        
         if (isset ($response->code) && $response->code > 0){
             $presentation = new PresController();
             $coupon = new CuponController();
