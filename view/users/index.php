@@ -171,7 +171,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="phone_number" class="form-label">Phone number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" onpaste="return false" onkeypress="return onlyNumbers(event)" required>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" onpaste="return false" onkeypress="return onlyNumbers(event)" minlength="10" maxlength="10" required>
                                 </div>
                             </div>
                             <!-- ROLE INPUT -->

@@ -534,7 +534,7 @@
                                 <div>
                                     <input type="checkbox" class="form-check-input" id="checkApartment" name="checkApartment">
                                     <label for="apartment" class="form-label">Apartment</label>
-                                    <input type="text" class="form-control" id="apartment" name="apartment" onpaste="return false" onkeypress="" placeholder="Enter the apartment" hidden=true>
+                                    <input type="text" class="form-control" id="apartment" name="apartment" onpaste="return false" onkeypress="return numbersLettersSpaces(event)" placeholder="Enter the apartment" hidden=true>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">

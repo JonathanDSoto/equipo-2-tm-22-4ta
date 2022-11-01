@@ -223,7 +223,7 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" onkeypress="" onpaste="return false" placeholder="Enter coupon's name" required>
+                                    <input type="text" class="form-control" id="name" name="name" onkeypress="return numbersLettersSpaces(event)" onpaste="return false" placeholder="Enter coupon's name" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
