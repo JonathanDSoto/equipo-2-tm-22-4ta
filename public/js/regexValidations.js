@@ -11,7 +11,7 @@ function basicText(e) {
 }
 
 function numbersLettersSpaces(e) {
-    return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]/i.test(e.key);
+    return /[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ% ]/i.test(e.key);
 }
 
 function numbersLettersWithoutSpaces(e) {
