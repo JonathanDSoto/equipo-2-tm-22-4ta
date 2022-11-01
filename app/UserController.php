@@ -282,7 +282,9 @@ class UserController{
     curl_close($curl);
     $response = json_decode ($response);
     if (isset ($response->code) && $response->code > 0){
+      if($_SESSION['id']==$id){
       $_SESSION['avatar'] = $response->data->avatar;
+      }
       header('location: '.BASE_PATH.'users/'.$id.'?success=true');
     } else {
       header('location: '.BASE_PATH.'users/'.$id.'?error=false');
