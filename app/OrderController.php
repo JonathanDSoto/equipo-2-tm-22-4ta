@@ -113,12 +113,11 @@ class OrderController{
                     if($cupon->min_amount_required>$productsPrice){
                         $_SESSION['errorMessage'] = "Minimum requirements to use this coupon are not meet";
                         header('location: '.BASE_PATH.'orders?error=false');
-                        var_dump($productsPrice);
+                        
                         echo "hola1";
                     }else if($cupon->min_product_required>$productsAmount){
                         $_SESSION['errorMessage'] = "Minimum requirements to use this coupon are not meet";
-                        echo "hola2";
-                        var_dump($productsAmount);
+                        
                         header('location: '.BASE_PATH.'orders?error=false');
                     }else {
                         return true;

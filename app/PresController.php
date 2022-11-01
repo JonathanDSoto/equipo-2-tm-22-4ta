@@ -63,8 +63,6 @@ if(isset($_POST['action'])){
             #Isset pendiente (Validacion de Existencia de las Variables...)
             $id = strip_tags($_POST['idPresentation']);
             $monto = strip_tags($_POST['amount']);
-            var_dump($id);
-            var_dump($monto);
             $pres = new PresController;
             
             $pres -> upPrice($id,$monto);

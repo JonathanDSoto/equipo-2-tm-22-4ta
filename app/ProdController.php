@@ -122,8 +122,6 @@ class ProdController{
         foreach ($tags as $key => $value) {
             $params += ["tags[".$key."]" => $value];
         }
-
-        var_dump($params);
     
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
