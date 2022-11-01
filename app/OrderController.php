@@ -274,7 +274,7 @@ class OrderController{
            /*  var_dump($total); */
         }
         if($coupon_id!=0){
-            $descuento = $coupon->getTotalDiscount($coupon_id);
+            $descuento = $coupon->getDiscount($coupon_id);
             if($descuento[1]==true){
                 $desc=$total * ($descuento[0]/100);
                 $total-=$desc;
