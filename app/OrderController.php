@@ -185,8 +185,7 @@ class OrderController{
 
             for ($i=0; $i < count($intPres); $i++) {
                 $pres = $presentation->getEspP($intPres[$i]); 
-                $newStock = $pres->stock-$intQuantity[$i];
-                $presentation->updateStock($newStock, $intPres[$i]);
+                $presentation->updateStock($pres->stock, $intPres[$i]);
             }
             if ($coupon_id!=0) {
                 $cupon = $coupon->getEspecificCoupon($coupon_id);

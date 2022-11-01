@@ -7,7 +7,7 @@ if(isset($_POST['action'])){
     if (isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token'] ){
     switch($_POST['action']){
         case 'create':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+
             $description = strip_tags($_POST['description']);
             $code = strip_tags($_POST['code']);
             $weight_in_grams = strip_tags($_POST['weight_in_grams']);
@@ -33,7 +33,7 @@ if(isset($_POST['action'])){
         break;
             
         case 'update':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+
             $id = strip_tags($_POST['id']);
             $description = strip_tags($_POST['description']);
             $code = strip_tags($_POST['code']);
@@ -46,13 +46,13 @@ if(isset($_POST['action'])){
             $amount = strip_tags($_POST['amount']);
 
             $pres = new PresController();
-            if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount)){
+            if($pres->isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $amount)){
                 $pres->editPres($description, $code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $id, $amount);
             }
         break;
             
         case 'remove':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+
             $id = strip_tags($_POST['id']);
             $pres = new PresController;
             $pres->remove($id);
@@ -60,7 +60,7 @@ if(isset($_POST['action'])){
         break;
             
         case 'update_p':
-            #Isset pendiente (Validacion de Existencia de las Variables...)
+            
             $id = strip_tags($_POST['idPresentation']);
             $monto = strip_tags($_POST['amount']);
             $pres = new PresController;
@@ -76,7 +76,7 @@ if(isset($_POST['action'])){
 
 class PresController{
     
-    public function isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id,$imagen, $amount){
+    public function isValid($description,$code, $weight_in_grams, $status, $stock, $stock_min, $stock_max, $product_id, $amount){
         if(!empty($description)&&
         !empty($code)&&
         !empty($weight_in_grams)&&
@@ -85,14 +85,12 @@ class PresController{
         !empty($stock_min)&&
         !empty($stock_max)&&
         !empty($product_id)&&
-        !empty($imagen)&&
         !empty($amount)){
             if (!preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,. ]*$/",$description)||
                 !preg_match("/^[0-9]*$/",$weight_in_grams)||
                 !preg_match("/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]*$/",$code)||
                 !preg_match("/^[0-9]*$/",$stock_min)||
                 !preg_match("/^[0-9]*$/",$stock_max)||
-                !preg_match("/^[0-9]*$/",$stock)||
                 !preg_match("/^[0-9]*$/",$stock)||
                 !preg_match("/^[0-9]*$/",$amount)) {
                     $_SESSION['errorMessage'] = "Invalid data";
