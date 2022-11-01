@@ -70,7 +70,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="card-title flex-grow-1 mb-0">Folio #VL2667</h5>
+                                    <h5 class="card-title flex-grow-1 mb-0"><?= 'Folio #'.$_GET['folio'] ?></h5>
                                     </div>
                                 </div>
                                 <div class="card-body">
