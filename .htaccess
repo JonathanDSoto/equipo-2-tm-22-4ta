@@ -1,0 +1,44 @@
+Options +FollowSymLinks -MultiViews
+RewriteEngine on
+
+RewriteRule ^login/?$ index.php
+RewriteRule ^logout/?$ view/profile/logout.php
+
+RewriteRule ^profile/?$ view/profile/index.php
+RewriteRule ^users/?$ view/users/index.php
+RewriteRule ^users/([a-zA-Z0-9-]*)?$ view/users/detail.php?id=$1
+
+RewriteRule ^customers/?$ view/customers/index.php
+RewriteRule ^customers/([0-9]*)?$ view/customers/detail.php?id=$1
+
+RewriteRule ^products/?$ view/index.php
+RewriteRule ^products/create/?$ view/products/create.php
+RewriteRule ^products/edit/([a-zA-Z0-9-]*)?$ view/products/create.php?slug=$1
+RewriteRule ^products/([a-zA-Z0-9-]*)?$ view/products/detail.php?slug=$1
+
+RewriteRule ^brands/?$ view/catalogs/brands.php
+RewriteRule ^categories/?$ view/catalogs/categories.php
+RewriteRule ^tags/?$ view/catalogs/tags.php
+
+RewriteRule ^coupons/?$ view/coupons/index.php
+RewriteRule ^coupons/([a-zA-Z0-9-]*)?$ view/coupons/detail.php?code=$1
+
+RewriteRule ^orders/?$ view/orders/index.php
+RewriteRule ^orders/([a-zA-Z0-9-]*)?$ view/orders/detail.php?folio=$1
+ 
+RewriteRule ^auth$ app/AuthController.php
+RewriteRule ^brand$ app/BrandController.php
+RewriteRule ^client$ app/ClientController.php
+RewriteRule ^prod$ app/ProdController.php
+RewriteRule ^user$ app/UserController.php
+RewriteRule ^address$ app/AddressController.php
+RewriteRule ^cath$ app/CathController.php
+RewriteRule ^cupon$ app/CuponController.php
+RewriteRule ^order$ app/OrderController.php
+RewriteRule ^pres$ app/PresController.php
+RewriteRule ^tag$ app/TagController.php
+
+
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME}.php -f
+# RewriteRule ^(.+)$ $1.php
