@@ -43,7 +43,7 @@ if(isset($_POST['action'])){
           $password = strip_tags($_POST['password']);
           
           $user = new UserController();
-          if($user->isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen)){
+          if($user->isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password)){
             $user->updateUsers($id, $name, $lastname, $email, $phone_number, $created_by, $role, $password);
           }
         } else {
@@ -83,7 +83,7 @@ if(isset($_POST['action'])){
 
 class UserController{
 
-  public function isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password, $imagen)
+  public function isValid($name, $lastname, $email, $phone_number, $created_by, $role, $password)
   {
     if(!empty($name)&&
         !empty($lastname)&&!empty($email)&&
@@ -165,6 +165,7 @@ class UserController{
   }
 
   #Editar usuarios (Users):
+  #Editar usuarios (Users):
   public function updateUsers($id, $name, $lastname, $email, $phone_number, $created_by, $role, $password){
     $token = $_SESSION['token'];
     $curl  = curl_init();
@@ -192,6 +193,8 @@ class UserController{
       if($_SESSION['id']==$id){
         $_SESSION['name']=$response->data->name;
         $_SESSION['lastname']=$response->data->lastname;
+        $_SESSION['created_by']=$response->data->created_by;
+        $_SESSION['phone_number']=$response->data->phone_number;
       }
       header('location: '.BASE_PATH.'users?success=true');
     } else {
